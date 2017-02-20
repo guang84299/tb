@@ -1,0 +1,45 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        mtk6 {
+            keyAlias 'eason'
+            keyPassword '111111'
+            storeFile file('D:/ubuntu/pk8_keystore/platform.keystore')
+            storePassword '123456'
+        }
+    }
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.android.system.manager"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        signingConfig signingConfigs.mtk6
+//        resConfigs “en”, “fr”
+//        resConfigs “nodpi”, “hdpi”, “xhdpi”, “xxhdpi”, “xxxhdpi”
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.mtk6
+        }
+        debug {
+            signingConfig signingConfigs.mtk6
+        }
+    }
+    productFlavors {
+    }
+    lintOptions{
+        abortOnError false
+    }
+}
+
+dependencies {
+    provided fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'xiaofei.library:hermes:0.7.0'
+}

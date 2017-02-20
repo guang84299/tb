@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Turbo Battery</string>
+    <string name="window_service_label">Turbo Battery</string>
+    <string name="window_service_desc">开启后可为手机进行深度省电与加速</string>
+    <string name="main_title">Turbo Battery</string>
+    <string name="battery_title">剩余电量</string>
+    <string name="usage_time">可用时间</string>
+    <string name="temperature">当前温度</string>
+    <string name="power_saving_mode">省电模式</string>
+    <string name="degree_celsius">℃</string>
+    <string name="power_mode_game">游戏模式</string>
+    <string name="power_mode_smart">智能模式</string>
+    <string name="power_mode_performance">性能模式</string>
+    <string name="power_mode_game_desc">此模式下只保留常用通讯应用在后台运行</string>
+    <string name="power_mode_smart_desc">此模式下将根据您的使用习惯，限制不常用的应用后台运行</string>
+    <string name="power_mode_performance_desc">此模式不会限制任何应用在后台运行</string>
+    <string name="battery_current_unit">" mAh"</string>
+    <string name="battery_capacity">电池容量</string>
+    <string name="custom_smart_mode">自定义智能模式</string>
+    <string name="installed_apps">已安装</string>
+    <string name="system_apps">系统应用</string>
+    <string name="unknow">未知</string>
+    <string name="not_limit">不限制</string>
+    <string name="smart_power_saving">智能省电</string>
+    <string name="smart_description">根据您的使用习惯决定是否将此应用限制后台运行</string>
+    <string name="not_limit_description">此应用将不会被限制后台运行</string>
+    <string name="hour">小时</string>
+    <string name="minute">分钟</string>
+</resources>

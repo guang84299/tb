@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Turbo Battery</string>
+    <string name="window_service_label">Turbo Battery</string>
+    <string name="window_service_desc">enable to auto boost your phone</string>
+    <string name="main_title">Super Battery</string>
+    <string name="battery_title">Battery</string>
+    <string name="usage_time">Usage time</string>
+    <string name="temperature">Temperature</string>
+    <string name="power_saving_mode">Power Saving Mode</string>
+    <string name="degree_celsius">℃</string>
+    <string name="power_mode_game">Game mode</string>
+    <string name="power_mode_smart">Smart mode</string>
+    <string name="power_mode_performance">Performance mode</string>
+    <string name="power_mode_game_desc">This mode will only keep most used IM apps running in the background</string>
+    <string name="power_mode_smart_desc">This mode will limit not used recent apps running in the background</string>
+    <string name="power_mode_performance_desc">This mode will not limit any apps running int the background</string>
+    <string name="battery_current_unit">" mAh"</string>
+    <string name="battery_capacity">Battery capacity</string>
+    <string name="custom_smart_mode">Custom Smart Mode</string>
+    <string name="installed_apps">Installed apps</string>
+    <string name="system_apps">System apps</string>
+    <string name="unknow">unknow</string>
+    <string name="not_limit">Not limit</string>
+    <string name="smart_power_saving">Smart power saving</string>
+    <string name="smart_description">According to you habits to decide whether to retain the background</string>
+    <string name="not_limit_description">This app will be allowed to the background</string>
+    <string name="hour">hrs</string>
+    <string name="minute">mins</string>
+</resources>
