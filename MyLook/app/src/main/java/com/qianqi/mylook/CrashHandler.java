@@ -2,6 +2,7 @@ package com.qianqi.mylook;
 
 import android.content.Context;
 
+import com.qianqi.mylook.utils.CommonUtils;
 import com.qianqi.mylook.utils.L;
 import com.umeng.analytics.MobclickAgent;
 
@@ -32,9 +33,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         if (!handleException(ex) && mDefaultHandler != null) {
              mDefaultHandler.uncaughtException(thread, ex);
         } else {
-            MobclickAgent.onKillProcess(MainApplication.getInstance());
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(0);
+            CommonUtils.exit();
         }
     }
 

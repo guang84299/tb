@@ -21,11 +21,6 @@
     <!-- android:process="system"> -->
 
         <service
-            android:name="xiaofei.library.hermes.HermesService$HermesService0"
-            android:exported="true">
-        </service>
-
-        <service
             android:name=".SService"
             android:process="system"
             android:exported="false">
@@ -34,6 +29,7 @@
         <receiver android:name=".LaunchReceiver">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.SYSTEM_MANAGER" />
             </intent-filter>
         </receiver>
 

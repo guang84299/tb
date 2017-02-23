@@ -3,10 +3,8 @@ package com.android.system.manager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 
-import com.android.system.manager.fw.FWManager;
-import com.android.system.manager.utils.L;
+import com.android.system.manager.f.M;
 
 /**
  * Created by Administrator on 2017/1/19.
@@ -14,22 +12,21 @@ import com.android.system.manager.utils.L;
 
 public class SService extends Service{
 
-    private FWManager fw;
+    private M m;
 
     @Override
     public void onCreate() {
         super.onCreate();
 //        L.d("SService onCreate:"+android.os.Process.myPid());
-        fw = new FWManager(this.getApplicationContext());
+        m = new M(this.getApplicationContext());
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        fw.initProcessFirewall();
+        m.i();
         return super.onStartCommand(intent, flags, startId);
     }
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -38,6 +35,6 @@ public class SService extends Service{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        fw.onDestroy();
+        m.d();
     }
 }

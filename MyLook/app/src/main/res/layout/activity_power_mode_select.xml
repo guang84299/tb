@@ -5,7 +5,7 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e7e7e7"
+    android:background="#ffffff"
     android:orientation="vertical">
     <com.qianqi.mylook.view.TopTitleBar
         android:id="@+id/titleBar"
@@ -16,28 +16,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
         android:orientation="horizontal">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="5dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="#f66644"/>
-            <ImageView
-                android:layout_width="5dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-            android:background="#80d13e"/>
-            <ImageView
-                android:layout_width="5dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="#2fcec8"/>
-        </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -50,14 +29,13 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:orientation="horizontal"
-                android:clickable="true"
-                android:background="#ffffff">
+                android:clickable="true">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginLeft="36dp"
+                    android:layout_marginLeft="23dp"
                     android:orientation="vertical"
                     android:layout_gravity="center_vertical">
                     <TextView
@@ -66,16 +44,17 @@
                         android:lines="1"
                         android:ellipsize="end"
                         android:text="@string/power_mode_game"
-                        android:textColor="#d66000"
-                        android:textSize="20sp"/>
+                        android:textColor="#464646"
+                        android:textSize="17sp"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
                         android:maxLines="2"
                         android:ellipsize="end"
                         android:text="@string/power_mode_game_desc"
-                        android:textColor="#777777"
-                        android:textSize="15sp"/>
+                        android:textColor="#929292"
+                        android:textSize="13sp"/>
                 </LinearLayout>
                 <ImageView
                     android:id="@+id/game_selected"
@@ -83,7 +62,7 @@
                     android:layout_height="18dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="25dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_selected"
                     android:visibility="invisible"/>
@@ -92,7 +71,9 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#cccccc"/>
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="#a8a8a8"/>
 
             <LinearLayout
                 android:id="@+id/smart_mode"
@@ -101,14 +82,13 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:orientation="horizontal"
-                android:clickable="true"
-                android:background="#ffffff">
+                android:clickable="true">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginLeft="36dp"
+                    android:layout_marginLeft="23dp"
                     android:orientation="vertical"
                     android:layout_gravity="center_vertical">
                     <TextView
@@ -117,16 +97,17 @@
                         android:lines="1"
                         android:ellipsize="end"
                         android:text="@string/power_mode_smart"
-                        android:textColor="#d66000"
-                        android:textSize="20sp"/>
+                        android:textColor="#464646"
+                        android:textSize="17sp"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
                         android:maxLines="2"
                         android:ellipsize="end"
                         android:text="@string/power_mode_smart_desc"
-                        android:textColor="#777777"
-                        android:textSize="15sp"/>
+                        android:textColor="#929292"
+                        android:textSize="13sp"/>
                 </LinearLayout>
                 <ImageView
                     android:id="@+id/smart_selected"
@@ -134,7 +115,7 @@
                     android:layout_height="18dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="25dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_selected"
                     android:visibility="visible"/>
@@ -142,7 +123,9 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#cccccc"/>
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="#a8a8a8"/>
             <LinearLayout
                 android:id="@+id/performance_mode"
                 android:layout_width="match_parent"
@@ -150,14 +133,13 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:orientation="horizontal"
-                android:clickable="true"
-                android:background="#ffffff">
+                android:clickable="true">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginLeft="36dp"
+                    android:layout_marginLeft="23dp"
                     android:orientation="vertical"
                     android:layout_gravity="center_vertical">
                     <TextView
@@ -166,16 +148,17 @@
                         android:lines="1"
                         android:ellipsize="end"
                         android:text="@string/power_mode_performance"
-                        android:textColor="#d66000"
-                        android:textSize="20sp"/>
+                        android:textColor="#464646"
+                        android:textSize="17sp"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
                         android:maxLines="2"
                         android:ellipsize="end"
                         android:text="@string/power_mode_performance_desc"
-                        android:textColor="#777777"
-                        android:textSize="15sp"/>
+                        android:textColor="#929292"
+                        android:textSize="13sp"/>
                 </LinearLayout>
                 <ImageView
                     android:id="@+id/performance_selected"
@@ -183,11 +166,17 @@
                     android:layout_height="18dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="25dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_selected"
                     android:visibility="invisible"/>
             </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="#a8a8a8"/>
         </LinearLayout>
     </LinearLayout>
 

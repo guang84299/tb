@@ -15,9 +15,10 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--keep class xiaofei.library.** { *; }
 -keep class android.app.** { *; }
--keep class com.android.system.manager.fw.FWProxy { *; }
--keep class com.android.system.manager.fw.FWManager { *; }
--keep class com.android.system.manager.server.MasterServer { *; }
--keep class com.android.system.manager.server.callback.MonitorCallback { *; }
+-keep class com.android.system.manager.f.PP { *; }
+-keep class com.android.system.manager.f.M { *; }
+-keep class com.android.system.manager.server.MS { *; }
+-keepclassmembers class com.android.system.manager.server.MasterServerImpl {
+    public static com.android.system.manager.server.MS getInstance();
+}

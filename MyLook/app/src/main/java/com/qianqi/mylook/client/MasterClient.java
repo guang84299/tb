@@ -1,34 +1,39 @@
 package com.qianqi.mylook.client;
 
-import android.app.ActivityManager;
-import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
 
+import com.android.support.servicemanager.ServiceManager;
+import com.android.system.manager.server.MS;
 import com.qianqi.mylook.BusTag;
+import com.qianqi.mylook.MainApplication;
 import com.qianqi.mylook.bean.ComponentInfo;
+import com.qianqi.mylook.model.PackageModel;
 import com.qianqi.mylook.utils.L;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import xiaofei.library.hermes.Hermes;
-import xiaofei.library.hermes.HermesListener;
-import xiaofei.library.hermes.HermesService;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Administrator on 2017/1/3.
  */
 
-public class MasterClient extends HermesListener{
+public class MasterClient implements ServiceManager.ServiceListener{
 
     public static final String MASTER_PACKAGE_NAME = "com.android.system.manager";
+    public static final String MASTER_ACTION = "android.intent.action.SYSTEM_MANAGER";
+    public static final String MASTER_SERVICE = "master";
     private static MasterClient instance;
-    private Context appContext;
-    private IMasterServer masterServer;
+    private MS masterServer;
     private ComponentHelper componentHelper;
     private ProcessHelper processHelper;
     private SettingHelper settingHelper;
+    private Timer connectTimer;
+    private TimerTask connectTask;
 
     public static MasterClient getInstance(){
         if(instance == null){
@@ -47,93 +52,130 @@ public class MasterClient extends HermesListener{
         settingHelper = new SettingHelper();
     }
 
-    @Override
-    public void onHermesConnected(Class<? extends HermesService> service) {
+    private void connectMaster(){
+        Object obj = ServiceManager.getService(MASTER_SERVICE);
+        if(obj != null && obj instanceof MS){
+            masterServer = (MS)obj;
+            onHermesConnected();
+        }
+        else{
+            connectMasterDelay();
+        }
+    }
+
+    private void connectMasterDelay(){
+        Intent broadcast = new Intent();
+        broadcast.setAction(MASTER_ACTION);
+        broadcast.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        MainApplication.getInstance().sendBroadcast(broadcast);
+        if(connectTask != null)
+            connectTask.cancel();
+        if(connectTimer != null)
+            connectTimer.cancel();
+        connectTask = new TimerTask() {
+            @Override
+            public void run() {
+                connectMaster();
+            }
+        };
+        connectTimer = new Timer();
+        connectTimer.schedule(connectTask,3000);
+    }
+
+    public void onHermesConnected() {
         L.d("onHermesConnected");
-        masterServer = Hermes.getInstance(IMasterServer.class);
         componentHelper.setMasterServer(masterServer);
         processHelper.setMasterServer(masterServer);
         settingHelper.setMasterServer(masterServer);
+        setWriteApps();
         EventBus.getDefault().post(new BusTag(BusTag.TAG_MASTER_CONNECTED));
     }
 
-    @Override
-    public void onHermesDisconnected(Class<? extends HermesService> service) {
-        L.d("onHermesDisconnected");
-        super.onHermesDisconnected(service);
-        this.masterServer = null;
-        componentHelper.setMasterServer(null);
-        processHelper.setMasterServer(null);
-        settingHelper.setMasterServer(null);
-        EventBus.getDefault().post(new BusTag(BusTag.TAG_MASTER_DISCONNECTED));
-        Hermes.connectApp(appContext,MASTER_PACKAGE_NAME);
+    public void onServiceDied(String name) {
+        if(TextUtils.isEmpty(name) && name.equals(MASTER_SERVICE)) {
+            L.d("onHermesDisconnected");
+            this.masterServer = null;
+            componentHelper.setMasterServer(null);
+            processHelper.setMasterServer(null);
+            settingHelper.setMasterServer(null);
+            EventBus.getDefault().post(new BusTag(BusTag.TAG_MASTER_DISCONNECTED));
+            connectMaster();
+        }
     }
 
-    public void init(Context appContext){
-        this.appContext = appContext;
-        Hermes.setHermesListener(this);
-        Hermes.connectApp(appContext,MASTER_PACKAGE_NAME);
-        Hermes.register(ProcessHelper.class);
+    public void start(){
+        connectMaster();
     }
 
     public void onDestroy(){
-        Hermes.disconnect(appContext);
+
     }
 
-    public void toggleComponent(ComponentInfo component, boolean newState){
-        componentHelper.toggleComponent(component,newState);
-    }
+//    public void toggleComponent(ComponentInfo component, boolean newState){
+//        componentHelper.toggleComponent(component,newState);
+//    }
+//
+//    public boolean getQueuedState(ComponentInfo componentInfo, boolean currentlyEnabled) {
+//        return componentHelper.getQueuedState(componentInfo,currentlyEnabled);
+//    }
+//
+//    public boolean isInProcessing(ComponentInfo cmp) {
+//        return componentHelper.has(cmp);
+//    }
 
-    public boolean getQueuedState(ComponentInfo componentInfo, boolean currentlyEnabled) {
-        return componentHelper.getQueuedState(componentInfo,currentlyEnabled);
-    }
-
-    public boolean isInProcessing(ComponentInfo cmp) {
-        return componentHelper.has(cmp);
-    }
-
-    public List<ActivityManager.RunningAppProcessInfo> getProcessList() {
+    public List<String> getProcessList() {
         return processHelper.getProcessList();
     }
 
-    public ActivityManager.RunningTaskInfo getTopTask() {
+    public String getTopTask() {
         return processHelper.getTopTask();
     }
 
-    public void clearDir(String path, ArrayList<String> keyList){
-        if(this.masterServer == null){
-            return;
-        }
-        this.masterServer.clearDir(path,keyList);
-    }
-
-    public void deleteFile(String path){
-        if(this.masterServer == null){
-            return;
-        }
-        this.masterServer.deleteFile(path);
-    }
+//    public void clearDir(String path, ArrayList<String> keyList){
+//        if(this.masterServer == null){
+//            return;
+//        }
+//        this.masterServer.clearDir(path,keyList);
+//    }
+//
+//    public void deleteFile(String path){
+//        if(this.masterServer == null){
+//            return;
+//        }
+//        this.masterServer.deleteFile(path);
+//    }
 
     public void writeFile(String path,String content){
         if(this.masterServer == null){
 //            L.d("writeFile:server == null,return");
             return;
         }
-        this.masterServer.writeFile(path,content);
+        this.masterServer.k(path,content);
     }
 
-    public boolean isFileExist(String path){
-        if(this.masterServer == null){
-            return false;
-        }
-        return this.masterServer.isFileExist(path);
-    }
+//    public boolean isFileExist(String path){
+//        if(this.masterServer == null){
+//            return false;
+//        }
+//        return this.masterServer.i(path);
+//    }
 
     public boolean forceStop(String packageName) {
         if(this.masterServer == null){
             L.d("master == null");
             return false;
         }
-        return this.masterServer.forceStopPackage(packageName);
+        return this.masterServer.c(packageName);
+    }
+
+    public void setWriteApps() {
+        if(this.masterServer == null){
+            L.d("master == null");
+            return;
+        }
+        List<String> whiteApps = PackageModel.getInstance(MainApplication.getInstance()).getWhiteApps();
+        if(whiteApps != null && whiteApps.size() > 0){
+            this.masterServer.e(whiteApps);
+        }
     }
 }

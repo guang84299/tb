@@ -1,13 +1,10 @@
 package com.qianqi.mylook.client;
 
 import android.content.ComponentName;
-import android.os.Binder;
-import android.provider.Settings;
 
-import com.qianqi.mylook.BusTag;
+import com.android.system.manager.server.MS;
 import com.qianqi.mylook.MainApplication;
-import com.qianqi.mylook.accessibility.WindowService;
-import com.qianqi.mylook.utils.L;
+import com.qianqi.mylook.core.WindowService;
 
 /**
  * Created by Administrator on 2017/1/17.
@@ -15,9 +12,9 @@ import com.qianqi.mylook.utils.L;
 
 public class SettingHelper {
 
-    private IMasterServer masterServer;
+    private MS masterServer;
 
-    public void setMasterServer(IMasterServer server){
+    public void setMasterServer(MS server){
         this.masterServer = server;
         if(this.masterServer != null){
             checkAccessibility();
@@ -26,7 +23,7 @@ public class SettingHelper {
 
     private void checkAccessibility() {
         ComponentName com = new ComponentName(MainApplication.getInstance(), WindowService.class.getName());
-        masterServer.enableAccessibilityService(com.flattenToString());
+        masterServer.g(com.flattenToString());
     }
 
 }

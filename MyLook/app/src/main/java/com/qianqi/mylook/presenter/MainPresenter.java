@@ -1,6 +1,7 @@
 package com.qianqi.mylook.presenter;
 
 import com.qianqi.mylook.BusTag;
+import com.qianqi.mylook.MainApplication;
 import com.qianqi.mylook.PreferenceHelper;
 import com.qianqi.mylook.activity.MainActivity;
 import com.qianqi.mylook.model.PackageModel;
@@ -68,7 +69,7 @@ public class MainPresenter{
     )
     public void onPowerModeUpdate(BusTag event){
         if(event.tag.equals(BusTag.TAG_POWER_MODE_UPDATE)){
-            curPowerMode = (int) event.data;
+            curPowerMode = PackageModel.getInstance(MainApplication.getInstance()).getPowerMode();;
             this.activity.updatePowerMode(curPowerMode);
         }
     }

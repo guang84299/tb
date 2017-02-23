@@ -3,7 +3,9 @@ package com.qianqi.mylook;
 import android.app.Application;
 import android.content.Intent;
 
+import com.android.support.servicemanager.ServiceManager;
 import com.qianqi.mylook.client.MasterClient;
+import com.qianqi.mylook.core.CoreService;
 import com.qianqi.mylook.model.PackageModel;
 import com.qianqi.mylook.utils.CommonUtils;
 import com.umeng.analytics.MobclickAgent;
@@ -25,16 +27,19 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        MobclickAgent.enableEncrypt(true);
-//        MobclickAgent.setDebugMode( true );
         PreferenceHelper.getInstance().initContext(getApplicationContext());
         CrashHandler.getInstance().init(getApplicationContext());
+        PackageModel.getInstance(getApplicationContext()).startLoad();
         String processName = CommonUtils.getProcessName(getApplicationContext());
         if(processName.equals(getApplicationContext().getPackageName())){
-            MasterClient.getInstance().init(getApplicationContext());
-            PackageModel.getInstance(getApplicationContext()).startLoad();
-            startCoreService();
+            MobclickAgent.enableEncrypt(true);
+            //        MobclickAgent.setDebugMode( true );
         }
+        else if(processName.contains(":core")){
+            ServiceManager.init(this,MasterClient.getInstance());
+            MasterClient.getInstance().start();
+        }
+        startCoreService();
     }
 
     public static MainApplication getInstance(){
@@ -44,10 +49,10 @@ public class MainApplication extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
+        PackageModel.getInstance(getApplicationContext()).onDestroy();
         String processName = CommonUtils.getProcessName(getApplicationContext());
-        if(processName.equals(getApplicationContext().getPackageName())){
+        if(processName.contains(":core")){
             MasterClient.getInstance().onDestroy();
-            PackageModel.getInstance(getApplicationContext()).onDestroy();
         }
     }
 

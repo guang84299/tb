@@ -1,6 +1,5 @@
 package com.qianqi.mylook.boost;
 
-import android.app.ActivityManager;
 import android.util.Log;
 
 import com.qianqi.mylook.BusTag;
@@ -10,15 +9,12 @@ import com.qianqi.mylook.client.MasterClient;
 import com.qianqi.mylook.learning.UsagePredictor;
 import com.qianqi.mylook.model.PackageFilter;
 import com.qianqi.mylook.model.PackageModel;
-import com.qianqi.mylook.utils.CollectionUtils;
 import com.qianqi.mylook.utils.L;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,8 +33,8 @@ public class BoostHelper {
         comparator.setMode(mode);
     }
 
-    public void updateMode(){
-        mode = PackageModel.getInstance(MainApplication.getInstance()).getPowerMode();
+    public void updateMode(int mode){
+        this.mode = mode;
         comparator.setMode(mode);
     }
 

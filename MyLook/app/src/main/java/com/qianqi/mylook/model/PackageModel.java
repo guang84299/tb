@@ -1,6 +1,5 @@
 package com.qianqi.mylook.model;
 
-import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -12,6 +11,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.text.TextUtils;
 
 import com.qianqi.mylook.BusTag;
 import com.qianqi.mylook.MainApplication;
@@ -19,13 +19,13 @@ import com.qianqi.mylook.PreferenceHelper;
 import com.qianqi.mylook.R;
 import com.qianqi.mylook.bean.EnhancePackageInfo;
 import com.qianqi.mylook.client.MasterClient;
+import com.qianqi.mylook.utils.CommonUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -49,6 +49,8 @@ public class PackageModel extends BroadcastReceiver{
     public static final int MSG_LOAD = 1;
     public static final int MSG_PACKAGE_ADD = 2;
     public static final int MSG_PACKAGE_REMOVE = 3;
+    public static final String ACTION_MODE_UPDATE = "mylook.action.mode_update";
+    public static final String ACTION_SMART_UPDATE = "mylook.action.smart_update";
 
     public static List<String> qianqiApps = null;
     public static List<String> smartSystemApps = null;
@@ -59,6 +61,8 @@ public class PackageModel extends BroadcastReceiver{
     private ArrayList<String> gameModeList = null;
     private ArrayList<String> smartModeList = null;
     private ArrayList<EnhancePackageInfo> packageList;
+    private List<String> whiteApps;
+    private String topPackageName = "";
     private PackageReader reader;
     private HandlerThread thread;
     private Handler handler;
@@ -94,6 +98,10 @@ public class PackageModel extends BroadcastReceiver{
         filter.addAction(Intent.ACTION_PACKAGE_CHANGED);
         filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
         this.appContext.registerReceiver(this,filter);
+        IntentFilter syncFilter = new IntentFilter();
+        syncFilter.addAction(ACTION_MODE_UPDATE);
+        syncFilter.addAction(ACTION_SMART_UPDATE);
+        this.appContext.registerReceiver(this,syncFilter);
         reader = new PackageReader(appContext);
         thread = new HandlerThread(PackageModel.class.getSimpleName());
         thread.start();
@@ -137,7 +145,7 @@ public class PackageModel extends BroadcastReceiver{
         values.put("_key", "powerMode");
         values.put("_value",mode);
         resolver.insert(URI_SETTING,values);
-        EventBus.getDefault().post(new BusTag(BusTag.TAG_POWER_MODE_UPDATE,mode));
+        appContext.sendBroadcast(new Intent(ACTION_MODE_UPDATE));
     }
 
     public boolean getAutoStart(String packageName){
@@ -164,28 +172,10 @@ public class PackageModel extends BroadcastReceiver{
     }
 
     public void setSmartState(String packageName,boolean bool){
-        if(smartModeList == null)
-            return;
-        if(packageList != null){
-            for (int i = 0;i < packageList.size();i++){
-                EnhancePackageInfo p = packageList.get(i);
-                if(p.packageName.equals(packageName))
-                    p.setInSmartList(bool);
-            }
-        }
-        if(bool && !smartModeList.contains(packageName)){
-            smartModeList.add(packageName);
-            Set<String> set = new HashSet<>(smartModeList.size());
-            set.addAll(smartModeList);
-            PreferenceHelper.getInstance().power().edit().putStringSet(KEY_SMART_MODE_LIST, set).commit();
-        }
-        if(!bool && smartModeList.contains(packageName)){
-            smartModeList.remove(packageName);
-            Set<String> set = new HashSet<>(smartModeList.size());
-            set.addAll(smartModeList);
-            PreferenceHelper.getInstance().power().edit().putStringSet(KEY_SMART_MODE_LIST, set).commit();
-        }
-        EventBus.getDefault().post(new BusTag(BusTag.TAG_PACKAGE_SMART_UPDATE));
+        Intent intent = new Intent(ACTION_SMART_UPDATE);
+        intent.putExtra("packageName",packageName);
+        intent.putExtra("bool",bool);
+        appContext.sendBroadcast(intent);
     }
 
     private void deleteAutoStart(String packageName){
@@ -245,43 +235,37 @@ public class PackageModel extends BroadcastReceiver{
     )
     public void onProcessUpdate(BusTag event){
 //        L.d("on process update");
-        if(event.tag.equals(BusTag.TAG_PROCESS_UPDATE) && event.data != null){
-            updateProcessInfo((List<ActivityManager.RunningAppProcessInfo>) event.data);
+        if(event.tag.equals(BusTag.TAG_REQUEST_PROCESS_UPDATE)){
+            List<String> runningPackages = MasterClient.getInstance().getProcessList();
+            updateProcessInfo(runningPackages);
             postPackageList(BusTag.TAG_PACKAGE_PROCESS_UPDATE);
         }
     }
 
-    private void updateProcessInfo(List<ActivityManager.RunningAppProcessInfo> processList){
-        if(packageList != null){
-            List<String> runningPackages = null;
-            if(processList != null){
-                runningPackages = new ArrayList<String>(processList.size());
-                ActivityManager.RunningTaskInfo topTask = MasterClient.getInstance().getTopTask();
-                String topPackage = "";
-                if(topTask != null && topTask.topActivity != null){
-                    topPackage = topTask.topActivity.getPackageName();
+    @Subscribe(
+            threadMode = ThreadMode.POSTING
+    )
+    public void onWindowChanged(BusTag event){
+        if(event.tag.equals(BusTag.TAG_WINDOW_CHANGED)){
+            if(event.data != null && event.data instanceof String){
+                String top = (String) event.data;
+                if(!top.equals(topPackageName)) {
+                    topPackageName = top;
+                    EventBus.getDefault().post(new BusTag(BusTag.TAG_TOP_TASK_CHANGED));
                 }
-                for(ActivityManager.RunningAppProcessInfo process:processList){
-                    String[] pkgList = process.pkgList;
-                    boolean canStop = true;
-                    for(String packageName:pkgList){
-                        EnhancePackageInfo info = getPackageInfo(packageName);
-                        if(info == null || info.isPersistent || packageName.equals(topPackage)){
-                            canStop = false;
-                            break;
-                        }
-                    }
-                    if(canStop)
-                        Collections.addAll(runningPackages, pkgList);
+            }
+        }
+    }
+
+    private void updateProcessInfo(List<String> runningPackages){
+        if(packageList != null && runningPackages != null){
+            for(EnhancePackageInfo p:packageList){
+                String packageName = p.packageName;
+                if(!runningPackages.contains(packageName)){
+                    p.isRunning = false;
                 }
-                for(EnhancePackageInfo p:packageList){
-                    String packageName = p.packageName;
-                    if(!runningPackages.contains(packageName)){
-                        p.isRunning = false;
-                    }
-                    else{
-                        p.isRunning = true;
-                    }
+                else{
+                    p.isRunning = true;
                 }
             }
         }
@@ -341,21 +325,37 @@ public class PackageModel extends BroadcastReceiver{
         return null;
     }
 
+    public List<String> getWhiteApps() {
+        return whiteApps;
+    }
+
+    public String getTopPackageName() {
+        return topPackageName;
+    }
+
     private void handleMessage(Message msg){
         String packageName;
         switch (msg.what){
             case MSG_LOAD:
+                if(TextUtils.isEmpty(topPackageName))
+                    topPackageName = MasterClient.getInstance().getTopTask();
                 if(packageList != null) {
                     packageList.clear();
                     packageList = null;
                 }
-                reader.loadAllPackages(false, new PackageReader.OnLoadListener() {
+                boolean ignoreIcon = false;
+                String processName = CommonUtils.getProcessName(MainApplication.getInstance());
+                if(processName.contains(":core"))
+                    ignoreIcon = true;
+                reader.loadAllPackages(false, ignoreIcon, new PackageReader.OnLoadListener() {
                     @Override
-                    public void onLoadPackageInfo(ArrayList<EnhancePackageInfo> list) {
+                    public void onLoadPackageInfo(ArrayList<EnhancePackageInfo> list,List<String> whiteList) {
                         packageList = list;
+                        whiteApps = whiteList;
                         initState();
                         updateState();
                         postPackageList(BusTag.TAG_PACKAGE_UPDATE);
+                        MasterClient.getInstance().setWriteApps();
                     }
 
                     @Override
@@ -429,6 +429,35 @@ public class PackageModel extends BroadcastReceiver{
             String packageName = data.substring(8);
             msg.obj = packageName;
             handler.sendMessage(msg);
+        }
+        else if(action.equals(ACTION_MODE_UPDATE)){
+            EventBus.getDefault().post(new BusTag(BusTag.TAG_POWER_MODE_UPDATE));
+        }
+        else if(action.equals(ACTION_SMART_UPDATE)){
+            String packageName = intent.getStringExtra("packageName");
+            boolean bool = intent.getBooleanExtra("bool",false);
+            if(smartModeList == null)
+                return;
+            if(packageList != null){
+                for (int i = 0;i < packageList.size();i++){
+                    EnhancePackageInfo p = packageList.get(i);
+                    if(p.packageName.equals(packageName))
+                        p.setInSmartList(bool);
+                }
+            }
+            if(bool && !smartModeList.contains(packageName)){
+                smartModeList.add(packageName);
+                Set<String> set = new HashSet<>(smartModeList.size());
+                set.addAll(smartModeList);
+                PreferenceHelper.getInstance().power().edit().putStringSet(KEY_SMART_MODE_LIST, set).commit();
+            }
+            if(!bool && smartModeList.contains(packageName)){
+                smartModeList.remove(packageName);
+                Set<String> set = new HashSet<>(smartModeList.size());
+                set.addAll(smartModeList);
+                PreferenceHelper.getInstance().power().edit().putStringSet(KEY_SMART_MODE_LIST, set).commit();
+            }
+            EventBus.getDefault().post(new BusTag(BusTag.TAG_PACKAGE_SMART_UPDATE));
         }
     }
 }

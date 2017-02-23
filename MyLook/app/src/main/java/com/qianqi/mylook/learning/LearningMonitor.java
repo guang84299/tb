@@ -126,8 +126,8 @@ public class LearningMonitor extends ThreadTask {
     @Subscribe(
             threadMode = ThreadMode.POSTING
     )
-    public void onWindowChanged(BusTag event){
-        if(event.tag.equals(BusTag.TAG_WINDOW_CHANGED)){
+    public void onTopTaskChanged(BusTag event){
+        if(event.tag.equals(BusTag.TAG_TOP_TASK_CHANGED)){
             handler.sendEmptyMessage(MSG_TASK_CHANGED);
         }
     }

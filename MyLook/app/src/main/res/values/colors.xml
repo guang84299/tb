@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="bar_center_text">#ffffff</color>
     <color name="bar_bottom_divider">#b9b9b9</color>
-    <color name="bar_bg">#0eb3ca</color>
-    <color name="bar_bg_">#0eb3ca</color>
+    <color name="bar_bg">#24a6ff</color>
+    <color name="bg_start">#3de7ff</color>
+    <color name="bg_end">#1370ec</color>
 </resources>

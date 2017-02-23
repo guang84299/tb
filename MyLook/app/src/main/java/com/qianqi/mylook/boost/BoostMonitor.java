@@ -1,14 +1,12 @@
 package com.qianqi.mylook.boost;
 
 import android.os.Message;
-import android.view.accessibility.AccessibilityEvent;
 
 import com.qianqi.mylook.BusTag;
 import com.qianqi.mylook.MainApplication;
 import com.qianqi.mylook.bean.EnhancePackageInfo;
 import com.qianqi.mylook.model.PackageFilter;
 import com.qianqi.mylook.model.PackageModel;
-import com.qianqi.mylook.presenter.ModeSelectPresenter;
 import com.qianqi.mylook.thread.ThreadTask;
 import com.qianqi.mylook.utils.L;
 
@@ -16,7 +14,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,8 +25,9 @@ public class BoostMonitor extends ThreadTask {
     private static final int MSG_CHECK_MEM = 0;
     private static final int MSG_CHECK_AUTOSTART = 1;
 
-    private final long CHECK_MEM_INTERVAL = 10*1000;
-    private final long BOOST_MEM_INTERVAL = 10*1000;
+    private final long CHECK_MEM_INTERVAL_STANDBY = 60*60*1000;
+    private final long CHECK_MEM_INTERVAL_NORMAL = 15*1000;
+    private final long CHECK_MEM_INTERVAL_HIGH = 5*1000;
     private MemHelper memHelper;
     private BoostHelper boostHelper;
 
@@ -49,20 +47,22 @@ public class BoostMonitor extends ThreadTask {
     @Override
     protected void onLooperPrepared() {
         super.onLooperPrepared();
-        handler.sendEmptyMessage(MSG_CHECK_MEM);
+        if(boostHelper.getMode() != PackageModel.POWER_MODE_PERFORMANCE)
+            handler.sendEmptyMessage(MSG_CHECK_MEM);
     }
 
     @Override
     protected void handleMessage(Message msg) {
         switch (msg.what){
             case MSG_CHECK_MEM:
+                EventBus.getDefault().post(new BusTag(BusTag.TAG_REQUEST_PROCESS_UPDATE));
                 if(memHelper.timeToBoost()){
                     if(boostHelper.boost()){
-                        handler.sendEmptyMessageDelayed(MSG_CHECK_MEM,BOOST_MEM_INTERVAL);
+                        handler.sendEmptyMessageDelayed(MSG_CHECK_MEM,CHECK_MEM_INTERVAL_HIGH);
                         break;
                     }
                 }
-                handler.sendEmptyMessageDelayed(MSG_CHECK_MEM,CHECK_MEM_INTERVAL);
+                handler.sendEmptyMessageDelayed(MSG_CHECK_MEM,CHECK_MEM_INTERVAL_NORMAL);
                 break;
             case MSG_CHECK_AUTOSTART:
                 PackageFilter filter = new PackageFilter.Builder().persistent(false).qianqi(false).build();
@@ -88,14 +88,15 @@ public class BoostMonitor extends ThreadTask {
     )
     public void onModeChanged(BusTag event){
         if(event.tag.equals(BusTag.TAG_POWER_MODE_UPDATE)){
-            if((int)event.data == PackageModel.POWER_MODE_PERFORMANCE){
+            int mode = PackageModel.getInstance(MainApplication.getInstance()).getPowerMode();
+            if(mode == PackageModel.POWER_MODE_PERFORMANCE){
                 handler.removeMessages(MSG_CHECK_MEM);
             }
             else{
                 handler.removeMessages(MSG_CHECK_MEM);
                 handler.sendEmptyMessage(MSG_CHECK_MEM);
             }
-            boostHelper.updateMode();
+            boostHelper.updateMode(mode);
         }
     }
 

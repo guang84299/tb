@@ -2,7 +2,7 @@ package com.android.system.manager.utils;
 
 import android.content.Context;
 
-import com.android.system.manager.fw.FWManager;
+import com.android.system.manager.f.M;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -57,8 +57,8 @@ public class SystemServicesHelper {
                     @Override
                     protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
 //                        L.d("load class:"+name);
-                        if(name.endsWith("FWManager")){
-                            return FWManager.class;
+                        if(name.endsWith("M")){
+                            return M.class;
                         }
                         return super.loadClass(name, resolve);
                     }
@@ -104,7 +104,7 @@ public class SystemServicesHelper {
 //            L.d("localService size="+map.keySet().size());
             ArrayList mServices = (ArrayList) ReflectUtils.getValue(systemServiceManager,"mServices");
             for(Object obj:mServices){
-                L.d("find service:"+obj.getClass().getName());
+//                L.d("find service:"+obj.getClass().getName());
                 if(obj.getClass().getName().contains("ActivityManagerService$Lifecycle")){
 //                    Class lifeCycle = Class.forName("com.android.server.am.ActivityManagerService.Lifecycle");
 //                    Method method = ReflectUtils.getMethod(lifeCycle,"getService");

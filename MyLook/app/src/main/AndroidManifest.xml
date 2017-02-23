@@ -18,7 +18,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:persistent="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -89,7 +88,8 @@
         </activity>
 
         <receiver
-            android:name=".LaunchReceiver"
+            android:name=".core.CoreReceiver"
+            android:process=":core"
             android:exported="true">
             <intent-filter android:priority="2147483647">
                 <action android:name="qianqi.action.LAUNCH_MYLOOK"/>
@@ -116,21 +116,18 @@
         </receiver>
 
         <service
-            android:name=".CoreService"
+            android:name=".core.CoreService"
+            android:process=":core"
             android:enabled="true"
             android:exported="false"/>
         <service
-            android:name=".CoreService$CoreInnerService"
+            android:name=".core.CoreService$CoreInnerService"
+            android:process=":core"
             android:enabled="true"
             android:exported="false"/>
 
-        <receiver android:name=".ConnectivityReceiver">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-            </intent-filter>
-        </receiver>
-
-        <service android:name=".accessibility.WindowService"
+        <service android:name=".core.WindowService"
+                 android:process=":core"
                  android:label="@string/window_service_label"
                  android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
@@ -144,6 +141,7 @@
         <provider
             android:name="com.qianqi.mylook.db.LookProvider"
             android:authorities="com.qianqi.mylook.provider"
+            android:process=":core"
             android:exported="true"/>
 
         <meta-data android:value="58a56c1b1061d20a6100115f" android:name="UMENG_APPKEY"/>

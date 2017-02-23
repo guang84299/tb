@@ -11,7 +11,7 @@ public class MasterConstant {
     };
     public static final String[] CORE_SERVICE = new String[]{
             "com.qianqi.mylook",
-            "com.qianqi.mylook.CoreService"
+            "com.qianqi.mylook.core.CoreService"
     };
     public static final String URI_AUTOSTART = "content://com.qianqi.mylook.provider/autostart";
     public static final String URI_SETTING = "content://com.qianqi.mylook.provider/setting";

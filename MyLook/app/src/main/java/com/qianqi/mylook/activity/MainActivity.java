@@ -13,6 +13,7 @@ import com.qianqi.mylook.BusTag;
 import com.qianqi.mylook.R;
 import com.qianqi.mylook.model.PackageModel;
 import com.qianqi.mylook.presenter.MainPresenter;
+import com.qianqi.mylook.utils.CommonUtils;
 import com.qianqi.mylook.view.TopTitleBar;
 import com.qianqi.mylook.view.WaveLoadingView;
 
@@ -52,8 +53,8 @@ public class MainActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.qianqi.mylook.R.layout.activity_main);
-//        StatusBarCompat.setStatusBarColor(this, Color.parseColor("#0eb3ca"));
-        StatusBarCompat.translucentStatusBar(this);
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.bar_bg));
+//        StatusBarCompat.translucentStatusBar(this);
         ButterKnife.bind(this);
         presenter = new MainPresenter(this);
         presenter.load();
@@ -82,6 +83,7 @@ public class MainActivity extends BaseActivity{
         presenter.onDestroy();
         presenter = null;
         EventBus.getDefault().unregister(this);
+        CommonUtils.exit();
     }
 
     @Override
@@ -106,7 +108,7 @@ public class MainActivity extends BaseActivity{
     @OnClick(R.id.mode) void onSelectMode(){
         Intent intent = new Intent();
         intent.setClass(this,PowerModeSelectActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);
     }
 
@@ -135,7 +137,7 @@ public class MainActivity extends BaseActivity{
 
     public void updateRemaining(int remaining) {
         usageView.setText(getUsageTime(remaining));
-        waveView.setBottomTitle(remaining+"%");
+        waveView.setCenterTitle(remaining+"%");
         if(remaining > 95){
             remaining = 95;
         }

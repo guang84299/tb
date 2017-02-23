@@ -20,6 +20,7 @@ import java.lang.reflect.Constructor;
 
 public class BatteryHelper extends BroadcastReceiver{
 
+    public static final int DEFAULT_CAPACITY = 2000;
     public static final int INVALID_VALUE = -100;
     private int temperature = INVALID_VALUE;
     private int capacity = INVALID_VALUE;
@@ -53,6 +54,9 @@ public class BatteryHelper extends BroadcastReceiver{
                 Object powerProfile = constructor.newInstance(context);
                 double capacity = (double) ReflectUtils.invokeMethod(powerProfile,"getBatteryCapacity");
                 this.capacity = (int) capacity;
+                if(this.capacity <= 0){
+                    this.capacity = DEFAULT_CAPACITY;
+                }
 //                L.d("capacity:"+capacity);
             }
         } catch (Exception e) {

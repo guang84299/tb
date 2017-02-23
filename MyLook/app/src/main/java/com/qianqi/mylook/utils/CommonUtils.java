@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 
 import com.qianqi.mylook.MainApplication;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -13,6 +14,12 @@ import java.util.List;
  */
 
 public class CommonUtils {
+
+    public static void exit(){
+        MobclickAgent.onKillProcess(MainApplication.getInstance());
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
+    }
 
     public static int dp2px(float dpValue) {
         final float scale = MainApplication.getInstance().getResources().getDisplayMetrics().density;

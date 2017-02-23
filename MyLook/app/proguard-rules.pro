@@ -29,15 +29,17 @@
 }
 #umeng end
 
--dontwarn rx.internal.util.**
--keep class rx.** { *; }
--keep class com.hwangjr.rxbus.** { *; }
--keep class xiaofei.library.** { *; }
+#eventbus begin
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+#eventbus end
+
 -keep class * extends java.lang.annotation.Annotation { *; }
 -keep interface * extends java.lang.annotation.Annotation { *; }
--keep class com.qianqi.mylook.thread.** { *; }
--keep class com.qianqi.mylook.client.IMasterServer { *; }
--keep class com.qianqi.mylook.client.ProcessHelper { *; }
--keep class com.qianqi.mylook.client.callback.MonitorCallback { *; }
+#-keep class com.qianqi.mylook.thread.** { *; }
+-keep class com.android.system.manager.server.MS { *; }
 #-keep class com.wang.avi.** { *; }
 #-keep class com.wang.avi.indicators.** { *; }

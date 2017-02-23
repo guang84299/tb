@@ -82,13 +82,11 @@ public class UsageManager {
         return true;
     }
 
-    synchronized private void updateStat(){
+    synchronized private void updateStat(String topPackage){
         long time = System.currentTimeMillis();
         timeInfo.setTime(time);
         int networkType = NetworkUtils.getConnectedType(MainApplication.getInstance());
         networkInfo.setState(networkType);
-        ActivityManager.RunningTaskInfo topTask = MasterClient.getInstance().getTopTask();
-        String topPackage = topTask != null?topTask.topActivity.getPackageName():"";
         for (String s : appMap.keySet()) {
             AppStat item = appMap.get(s);
             item.addRecord(timeInfo, networkInfo, topPackage);
@@ -104,7 +102,7 @@ public class UsageManager {
     public void onNetworkChanged(){
         if(!check())
             return;
-        updateStat();
+        updateStat(PackageModel.getInstance(MainApplication.getInstance()).getTopPackageName());
     }
 
     public void onPackageChanged(){
@@ -114,12 +112,11 @@ public class UsageManager {
     public void onTaskChanged(){
         if(!check())
             return;
-        ActivityManager.RunningTaskInfo topTask = MasterClient.getInstance().getTopTask();
-        String curTopPackage = topTask != null?topTask.topActivity.getPackageName():"";
+        String curTopPackage = PackageModel.getInstance(MainApplication.getInstance()).getTopPackageName();
         if(!curTopPackage.equals(topPackage) && appMap.containsKey(curTopPackage)){
             topPackage = curTopPackage;
 //            L.d("update top:"+topPackage);
-            updateStat();
+            updateStat(topPackage);
         }
     }
 

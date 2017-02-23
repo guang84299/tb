@@ -12,23 +12,35 @@ import com.qianqi.mylook.utils.L;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/1/23.
  * 根据lowmemorykiller的阈值清理内存
- *
+ * TODO:内存阈值获取，进程数量限制，杀进程速度提升
  */
 
 public class MemHelper {
 
+    public static final int GC_COUNT = 10;
     public static final float MIN_FREE_ADJUST = 0.03f;
     public static final int LEVEL = 1;
+    private File zoneInfoFile = new File("/proc/zoneinfo");
 //    private Object memInfoReader;
     private long minFree = 200*1024*1024;
     private ActivityManager am;
     private long totalMem = -1;
+    private char[] zoneBuffer = new char[8192];
+    private ProtectionMatcher protectionMatcher;
+    private HighMatcher highMatcher;
+    private FreeMatcher freeMatcher;
+    private FileMatcher fileMatcher;
+    private ShmemMatcher shmemMatcher;
+    private int tick = 0;
 //    private long hiddenAppThreshold = -1;
 
     public MemHelper(){
@@ -38,6 +50,11 @@ public class MemHelper {
 //        } catch (Exception e) {
 //            L.d("mem",e);
 //        }
+        protectionMatcher = new ProtectionMatcher();
+        highMatcher = new HighMatcher();
+        freeMatcher = new FreeMatcher();
+        fileMatcher = new FileMatcher();
+        shmemMatcher = new ShmemMatcher();
         am = (ActivityManager) MainApplication.getInstance().getSystemService(Context.ACTIVITY_SERVICE);
         ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
         am.getMemoryInfo(memoryInfo);
@@ -94,46 +111,265 @@ public class MemHelper {
                 }
             }
         } catch (Exception e){
-            L.d("read minfree",e);
+//            L.d("read minfree",e);
         }
         return -1;
     }
 
+    class ProtectionMatcher{
+        StringBuilder sb;
+        String target = "protection: (0, 2080, 2080)";
+        int index = -1;
+
+        public ProtectionMatcher(){
+            sb = new StringBuilder(128);
+        }
+
+        public long onChar(char c){
+            if(c == '('){
+                index = 0;
+            }
+            else if(c == ')'){
+                String s = sb.substring(0,index);
+                String[] split = s.split(",");
+                long max = 0;
+                for(String item:split){
+                    max = Math.max(max,Long.parseLong(item.trim()));
+                }
+                index = -1;
+                return max;
+            }
+            else{
+                if(index >= 0){
+                    sb.insert(index,c);
+                    index++;
+                }
+            }
+            return -1;
+        }
+    }
+
+    class HighMatcher{
+        StringBuilder sb;
+        String target = "high     3206";
+        char[] matchTarget = {'h','i','g','h'};
+        int matchIndex = 0;
+        boolean matchSuccess = false;
+        int index = -1;
+
+        public HighMatcher(){
+            sb = new StringBuilder(128);
+        }
+
+        public long onChar(char c){
+            if(!matchSuccess){
+                if(c == matchTarget[matchIndex]){
+                    if(matchIndex < matchTarget.length-1){
+                        matchIndex++;
+                    }
+                    else{
+                        matchIndex = 0;
+                        matchSuccess = true;
+                        index = 0;
+                    }
+                }
+                else{
+                    matchIndex = 0;
+                }
+            }
+            else{
+                if(Character.isDigit(c)){
+                    sb.insert(index,c);
+                    index++;
+                }
+                else{
+                    if(index > 0){
+                        String s = sb.substring(0,index);
+                        matchIndex = 0;
+                        matchSuccess = false;
+                        index = -1;
+                        return Long.parseLong(s);
+                    }
+                }
+            }
+            return -1;
+        }
+    }
+
+    class FreeMatcher{
+        StringBuilder sb;
+        String target = "nr_free_pages 8185";
+        char[] matchTarget = {'n','r','_','f','r','e','e','_','p','a','g','e','s'};
+        int matchIndex = 0;
+        boolean matchSuccess = false;
+        int index = -1;
+
+        public FreeMatcher(){
+            sb = new StringBuilder(128);
+        }
+
+        public long onChar(char c){
+            if(!matchSuccess){
+                if(c == matchTarget[matchIndex]){
+                    if(matchIndex < matchTarget.length-1){
+                        matchIndex++;
+                    }
+                    else{
+                        matchIndex = 0;
+                        matchSuccess = true;
+                        index = 0;
+                    }
+                }
+                else{
+                    matchIndex = 0;
+                }
+            }
+            else{
+                if(Character.isDigit(c)){
+                    sb.insert(index,c);
+                    index++;
+                }
+                else{
+                    if(index > 0){
+                        String s = sb.substring(0,index);
+                        index = -1;
+                        matchIndex = 0;
+                        matchSuccess = false;
+                        return Long.parseLong(s);
+                    }
+                }
+            }
+            return -1;
+        }
+    }
+
+    class FileMatcher{
+        StringBuilder sb;
+        String target = "nr_file_pages 46232";
+        char[] matchTarget = {'n','r','_','f','i','l','e','_','p','a','g','e','s'};
+        int matchIndex = 0;
+        boolean matchSuccess = false;
+        int index = -1;
+
+        public FileMatcher(){
+            sb = new StringBuilder(128);
+        }
+
+        public long onChar(char c){
+            if(!matchSuccess){
+                if(c == matchTarget[matchIndex]){
+                    if(matchIndex < matchTarget.length-1){
+                        matchIndex++;
+                    }
+                    else{
+                        matchIndex = 0;
+                        matchSuccess = true;
+                        index = 0;
+                    }
+                }
+                else{
+                    matchIndex = 0;
+                }
+            }
+            else{
+                if(Character.isDigit(c)){
+                    sb.insert(index,c);
+                    index++;
+                }
+                else{
+                    if(index > 0){
+                        String s = sb.substring(0,index);
+                        index = -1;
+                        matchIndex = 0;
+                        matchSuccess = false;
+                        return Long.parseLong(s);
+                    }
+                }
+            }
+            return -1;
+        }
+    }
+
+    class ShmemMatcher{
+        StringBuilder sb;
+        String target = "nr_shmem     433";
+        char[] matchTarget = {'n','r','_','s','h','m','e','m'};
+        int matchIndex = 0;
+        boolean matchSuccess = false;
+        int index = -1;
+
+        public ShmemMatcher(){
+            sb = new StringBuilder(128);
+        }
+
+        public long onChar(char c){
+            if(!matchSuccess){
+                if(c == matchTarget[matchIndex]){
+                    if(matchIndex < matchTarget.length-1){
+                        matchIndex++;
+                    }
+                    else{
+                        matchIndex = 0;
+                        matchSuccess = true;
+                        index = 0;
+                    }
+                }
+                else{
+                    matchIndex = 0;
+                }
+            }
+            else{
+                if(Character.isDigit(c)){
+                    sb.insert(index,c);
+                    index++;
+                }
+                else{
+                    if(index > 0){
+                        String s = sb.substring(0,index);
+                        index = -1;
+                        matchIndex = 0;
+                        matchSuccess = false;
+                        return Long.parseLong(s);
+                    }
+                }
+            }
+            return -1;
+        }
+    }
+
     private long readLmkFree(){
+        InputStreamReader reader = null;
         try{
             long freePage = 0;
             long filePage = 0;
             long shmem = 0;
             long reserve = 0;
-            File readFile = new File("/proc/zoneinfo");
-            BufferedReader reader = new BufferedReader(new FileReader(readFile));
-            String line = null;
-            while((line = reader.readLine()) != null){
-                line = line.trim();
-                String[] split = line.split("\\s+");
-                if(split.length == 2){
-                    String key = split[0];
-                    if(key.equals("nr_free_pages")){
-                        freePage += Long.parseLong(split[1]);
-                    }
-                    else if(key.equals("nr_file_pages")){
-                        filePage += Long.parseLong(split[1]);
-                    }
-                    else if(key.equals("nr_shmem")){
-                        shmem += Long.parseLong(split[1]);
-                    }
-                    else if(key.equals("high")){
-                        reserve += Long.parseLong(split[1]);
-                    }
+            FileInputStream is = new FileInputStream(zoneInfoFile);
+            reader = new InputStreamReader(is);
+            int count = reader.read(zoneBuffer);
+            int index = 0;
+            while(index < count){
+                char c = zoneBuffer[index];
+                index++;
+                long protection = protectionMatcher.onChar(c);
+                if(protection > 0){
+                    reserve += protection;
                 }
-                if(line.startsWith("protection:")){
-                    String value = line.substring(line.indexOf("(")+1,line.indexOf(")"));
-                    split = value.split(",");
-                    long max = 0;
-                    for(String s:split){
-                        max = Math.max(max,Long.parseLong(s.trim()));
-                    }
-                    reserve += max;
+                long high = highMatcher.onChar(c);
+                if(high > 0){
+                    reserve += high;
+                }
+                long free = freeMatcher.onChar(c);
+                if(free > 0){
+                    freePage += free;
+                }
+                long file = fileMatcher.onChar(c);
+                if(file > 0){
+                    filePage += file;
+                }
+                long sh = shmemMatcher.onChar(c);
+                if(sh > 0){
+                    shmem += sh;
                 }
             }
             freePage = freePage - reserve;
@@ -141,8 +377,15 @@ public class MemHelper {
             long max = Math.max(freePage,filePage);
 //            L.d("free,file="+freePage*4*1024+","+filePage*4*1024);
             return max * 4 * 1024;
-        } catch (Exception e){
-            e.printStackTrace();
+        } catch (Exception|Error e){
+            L.d("readFree",e);
+        } finally {
+            if(reader != null)
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
         return -1;
     }
@@ -215,6 +458,11 @@ public class MemHelper {
     }
 
     public boolean timeToBoost() {
+        tick++;
+        if(tick >= GC_COUNT) {
+            tick = 0;
+            Runtime.getRuntime().gc();
+        }
         if(minFree == -1){
             return false;
         }
@@ -227,6 +475,7 @@ public class MemHelper {
             runningSize = runningPackageList.size();
         }
         if(runningSize < 5){
+            L.d("running low");
             return false;
         }
         long free = readLmkFree();

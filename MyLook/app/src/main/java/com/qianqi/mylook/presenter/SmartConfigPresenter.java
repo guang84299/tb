@@ -1,12 +1,10 @@
 package com.qianqi.mylook.presenter;
 
 import com.qianqi.mylook.BusTag;
-import com.qianqi.mylook.activity.PowerModeSelectActivity;
 import com.qianqi.mylook.activity.SmartModeConfigActivity;
 import com.qianqi.mylook.bean.EnhancePackageInfo;
 import com.qianqi.mylook.model.PackageFilter;
 import com.qianqi.mylook.model.PackageModel;
-import com.qianqi.mylook.utils.CollectionUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

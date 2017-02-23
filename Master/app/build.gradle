@@ -41,5 +41,5 @@ android {
 
 dependencies {
     provided fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'xiaofei.library:hermes:0.7.0'
+    compile project(':servicemanager')
 }

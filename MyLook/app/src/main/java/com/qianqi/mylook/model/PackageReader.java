@@ -62,7 +62,7 @@ public class PackageReader {
 	private final static String SDK_NS_RESOURCES = "http://schemas.android.com/apk/res/android";
 
 	public interface OnLoadListener {
-		public void onLoadPackageInfo(ArrayList<EnhancePackageInfo> list);
+		public void onLoadPackageInfo(ArrayList<EnhancePackageInfo> list,List<String> whiteApps);
 		public void onLoadPackageIcon(ArrayList<EnhancePackageInfo> list);
 	}
 
@@ -90,9 +90,9 @@ public class PackageReader {
 		mPackageManager = mContext.getPackageManager();
 	}
 
-	public void loadAllPackages(boolean ignoreSystem, OnLoadListener mOnLoadListener){
+	public void loadAllPackages(boolean ignoreSystem, boolean ignoreIcon, OnLoadListener mOnLoadListener){
 		ArrayList<EnhancePackageInfo> mResult = new ArrayList<EnhancePackageInfo>();
-
+		List<String> whiteApps = new ArrayList<>(0);
 		List<PackageInfo> packages = null;
 		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
 			packages = mPackageManager.getInstalledPackages(PackageManager.MATCH_DISABLED_COMPONENTS);
@@ -109,10 +109,19 @@ public class PackageReader {
 			android.content.pm.PackageInfo p = packages.get(i);
 //			L.v("Processing package "+p.packageName);
 			mCurrentPackage = loadPackage(ignoreSystem,false,p);
-			if(mCurrentPackage != null)
+			if(mCurrentPackage != null){
 				mResult.add(mCurrentPackage);
+				if(mCurrentPackage.isPersistent){
+					whiteApps.add(p.packageName);
+				}
+			}
+			else {
+				whiteApps.add(p.packageName);
+			}
 		}
-		mOnLoadListener.onLoadPackageInfo(mResult);
+		mOnLoadListener.onLoadPackageInfo(mResult,whiteApps);
+		if(ignoreIcon)
+			return;
 		packageCount = mResult.size();
 		for (int i=0; i<packageCount; i++) {
 			EnhancePackageInfo p = mResult.get(i);

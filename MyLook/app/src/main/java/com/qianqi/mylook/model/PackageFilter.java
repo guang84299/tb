@@ -2,6 +2,7 @@ package com.qianqi.mylook.model;
 
 import android.app.ActivityManager;
 
+import com.qianqi.mylook.MainApplication;
 import com.qianqi.mylook.bean.EnhancePackageInfo;
 import com.qianqi.mylook.client.MasterClient;
 
@@ -51,11 +52,7 @@ public class PackageFilter {
         if(packageInfoList == null)
             return null;
         List<EnhancePackageInfo> res = new ArrayList<>();
-        ActivityManager.RunningTaskInfo topTask = MasterClient.getInstance().getTopTask();
-        String topPackage = "";
-        if(topTask != null && topTask.topActivity != null){
-            topPackage = topTask.topActivity.getPackageName();
-        }
+        String topPackage = PackageModel.getInstance(MainApplication.getInstance()).getTopPackageName();
         for(EnhancePackageInfo p:packageInfoList){
             if(persistent == NEGATIVE && p.isPersistent){
                 continue;

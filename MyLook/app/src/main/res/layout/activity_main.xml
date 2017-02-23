@@ -5,350 +5,355 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0eb3ca"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#ffffff">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="35dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_gravity="center_vertical"
-            android:scaleType="centerInside"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/ic_battery"/>
-        <TextView
-            android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@drawable/main_bg">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:gravity="left"
-            android:text="@string/main_title"
-            android:textColor="#cdeaf0"
-            android:textSize="16sp"
-            android:lines="1"
-            android:ellipsize="end"/>
-        <ImageView
-            android:id="@+id/setting"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_gravity="center_vertical"
-            android:scaleType="centerInside"
-            android:layout_marginLeft="5dp"
-            android:visibility="invisible"
-            android:src="@drawable/ic_setting"/>
+            android:paddingTop="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerInside"
+                android:layout_marginRight="4dp"
+                android:src="@drawable/ic_turbo"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:gravity="left|center_vertical"
+                android:text="@string/main_title"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:lines="1"
+                android:ellipsize="end"/>
+            <ImageView
+                android:id="@+id/setting"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerInside"
+                android:layout_marginLeft="5dp"
+                android:visibility="invisible"
+                android:src="@drawable/ic_setting"/>
+        </LinearLayout>
+
+        <com.qianqi.mylook.view.WaveLoadingView
+            android:id="@+id/waveLoadingView"
+            android:layout_width="224dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="60dp"
+            app:wlv_borderColor="#ffffff"
+            app:wlv_borderWidth="2dp"
+            app:wlv_progressValue="70"
+            app:wlv_round_rectangle="true"
+            app:wlv_shapeType="circle"
+            app:wlv_titleBottom="@string/battery_title"
+            app:wlv_titleBottomColor="#ffffff"
+            app:wlv_titleBottomSize="18sp"
+            app:wlv_titleCenter="70%"
+            app:wlv_titleCenterColor="#ffffff"
+            app:wlv_titleCenterSize="36sp"
+            app:wlv_triangle_direction="north"
+            app:wlv_waveAmplitude="50"
+            app:wlv_waveColor="#99a4d6ff"
+            app:wlv_wave_background_Color="#3352f1ff"/>
     </LinearLayout>
 
-    <com.qianqi.mylook.view.WaveLoadingView
-        android:id="@+id/waveLoadingView"
-        android:layout_width="175dp"
-        android:layout_height="175dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        app:wlv_borderColor="#9fe1ea"
-        app:wlv_borderWidth="3dp"
-        app:wlv_progressValue="70"
-        app:wlv_round_rectangle="true"
-        app:wlv_shapeType="circle"
-        app:wlv_titleBottom="70%"
-        app:wlv_titleBottomColor="#ffffff"
-        app:wlv_titleBottomSize="24sp"
-        app:wlv_triangle_direction="north"
-        app:wlv_waveAmplitude="70"
-        app:wlv_waveColor="#0c3753"
-        app:wlv_wave_background_Color="#107aa6"/>
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginTop="15dp"-->
+        <!--android:layout_marginBottom="25dp"-->
+        <!--android:text="@string/battery_title"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:textSize="18sp"/>-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="25dp"
-        android:text="@string/battery_title"
-        android:textColor="#ffffff"
-        android:textSize="18sp"/>
-
-    <ImageView
+<!--    <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:background="#0fa2c4"/>
+        android:background="#0fa2c4"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="#ffffff">
         <!--usage time-->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_time"/>
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="10dp"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:scaleType="centerInside"-->
+                    <!--android:src="@drawable/ic_time"/>-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:paddingLeft="5dp"
-                    android:paddingStart="5dp"
                     android:lines="1"
                     android:ellipsize="end"
                     android:text="@string/usage_time"
-                    android:textColor="#cdeaf0"
-                    android:textSize="12sp"/>
+                    android:textColor="#464646"
+                    android:textSize="15sp"/>
             </LinearLayout>
             <TextView
                 android:id="@+id/usage_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="12dp"
                 android:lines="1"
                 android:ellipsize="end"
                 android:text="--:--"
-                android:textColor="#e7f8fa"
-                android:textSize="20sp"/>
+                android:textColor="#14aeec"
+                android:textSize="13sp"/>
         </LinearLayout>
+            <ImageView
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="#a8a8a8"/>
         <!--temperature-->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:orientation="vertical"
-            android:background="#0fa9c5">
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
-                <ImageView
+<!--                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_temperature"/>
+                    android:src="@drawable/ic_temperature"/>-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:paddingLeft="5dp"
-                    android:paddingStart="5dp"
                     android:lines="1"
                     android:ellipsize="end"
                     android:text="@string/temperature"
-                    android:textColor="#cdeaf0"
-                    android:textSize="12sp"/>
+                    android:textColor="#464646"
+                    android:textSize="15sp"/>
             </LinearLayout>
             <TextView
                 android:id="@+id/temperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="12dp"
                 android:lines="1"
                 android:ellipsize="end"
                 android:text="-℃"
-                android:textColor="#e7f8fa"
-                android:textSize="20sp"/>
+                android:textColor="#14aeec"
+                android:textSize="13sp"/>
         </LinearLayout>
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="#a8a8a8"/>
         <!--battery-->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_battery_capacity"/>
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="10dp"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:scaleType="centerInside"-->
+                    <!--android:src="@drawable/ic_battery_capacity"/>-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:paddingLeft="5dp"
-                    android:paddingStart="5dp"
                     android:lines="1"
                     android:ellipsize="end"
                     android:text="@string/battery_capacity"
-                    android:textColor="#cdeaf0"
-                    android:textSize="12sp"/>
+                    android:textColor="#464646"
+                    android:textSize="15sp"/>
             </LinearLayout>
             <TextView
                 android:id="@+id/battery_capacity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="12dp"
                 android:lines="1"
                 android:ellipsize="end"
                 android:text="2500 mAh"
-                android:textColor="#e7f8fa"
-                android:textSize="20sp"/>
+                android:textColor="#14aeec"
+                android:textSize="13sp"/>
         </LinearLayout>
     </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="#0fa2c4"/>
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="#a8a8a8"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!--mode select-->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:id="@+id/mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:orientation="horizontal">
             <ImageView
-                android:layout_width="5dp"
-                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_power_mode"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#f3d00c"/>
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:text="@string/power_saving_mode"
+                    android:textColor="#464646"
+                    android:textSize="17sp"/>
+                <TextView
+                    android:id="@+id/cur_power_mode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:text="@string/power_mode_smart"
+                    android:textColor="#929292"
+                    android:textSize="13sp"/>
+            </LinearLayout>
             <ImageView
-                android:layout_width="5dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="#f66644"/>
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="25dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_arrow_right"/>
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="#a8a8a8"/>
+
+        <!--mode config-->
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <!--mode select-->
-            <LinearLayout
-                android:id="@+id/mode"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:background="#ffffff">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
-                    android:layout_gravity="center_vertical"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_power_mode"/>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_gravity="center_vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:lines="1"
-                        android:ellipsize="end"
-                        android:text="@string/power_saving_mode"
-                        android:textColor="#d66000"
-                        android:textSize="20sp"/>
-                    <TextView
-                        android:id="@+id/cur_power_mode"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:lines="1"
-                        android:ellipsize="end"
-                        android:text="@string/power_mode_smart"
-                        android:textColor="#777777"
-                        android:textSize="15sp"/>
-                </LinearLayout>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="18dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_arrow_right"/>
-            </LinearLayout>
+            android:id="@+id/config"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#cccccc"/>
-
-            <!--mode config-->
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_mode_setting"/>
             <LinearLayout
-                android:id="@+id/config"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal"
-                android:background="#ffffff">
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
+                <TextView
+                    android:id="@+id/mode_name"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="36dp"
-                    android:orientation="vertical"
-                    android:layout_gravity="center_vertical">
-                    <TextView
-                        android:id="@+id/mode_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:lines="1"
-                        android:ellipsize="end"
-                        android:text="@string/power_mode_smart"
-                        android:textColor="#d66000"
-                        android:textSize="20sp"/>
-                    <TextView
-                        android:id="@+id/mode_description"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="2"
-                        android:ellipsize="end"
-                        android:text="@string/power_mode_smart_desc"
-                        android:textColor="#777777"
-                        android:textSize="15sp"/>
-                </LinearLayout>
-                <ImageView
-                    android:id="@+id/config_action"
-                    android:layout_width="wrap_content"
-                    android:layout_height="18dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_arrow_right"/>
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:text="@string/power_mode_smart"
+                    android:textColor="#464646"
+                    android:textSize="17sp"/>
+                <TextView
+                    android:id="@+id/mode_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:text="@string/power_mode_smart_desc"
+                    android:textColor="#929292"
+                    android:textSize="13sp"/>
             </LinearLayout>
+            <ImageView
+                android:id="@+id/config_action"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="25dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_arrow_right"/>
         </LinearLayout>
     </LinearLayout>
 

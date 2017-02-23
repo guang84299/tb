@@ -1,8 +1,6 @@
 package com.qianqi.mylook.client;
 
-import android.content.ComponentName;
-
-import com.qianqi.mylook.BusTag;
+import com.android.system.manager.server.MS;
 import com.qianqi.mylook.bean.ComponentInfo;
 import com.qianqi.mylook.utils.L;
 
@@ -17,7 +15,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class ComponentHelper {
 
-    private IMasterServer masterServer;
+    private MS masterServer;
     protected HashMap<ComponentInfo, Boolean> mStates;
     protected LinkedBlockingQueue<ComponentInfo> mQueue;
     private ComponentInfo mItemBeingProcessed = null;
@@ -28,7 +26,7 @@ public class ComponentHelper {
         mQueue = new LinkedBlockingQueue<ComponentInfo>();
     }
 
-    public void setMasterServer(IMasterServer server){
+    public void setMasterServer(MS server){
         this.masterServer = server;
     }
 
