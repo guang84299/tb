@@ -1,6 +1,7 @@
 package com.qianqi.mylook.boost;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.qianqi.mylook.BusTag;
 import com.qianqi.mylook.MainApplication;
@@ -26,6 +27,7 @@ public class BoostHelper {
 
     private int mode;
     private BoostComparator comparator;
+    public static String boostPackageName = "";
 
     public BoostHelper(){
         mode = PackageModel.getInstance(MainApplication.getInstance()).getPowerMode();
@@ -65,7 +67,9 @@ public class BoostHelper {
             PackageModel.getInstance(MainApplication.getInstance()).setAutoStart(lastApp.packageName,false);
             boolean res = MasterClient.getInstance().forceStop(lastApp.packageName);
             L.d("boost:"+lastApp.packageName+","+res);
-            Log.d("MyLookLog","boost:"+lastApp.packageName);
+            if(L.DEBUG){
+                boostPackageName = lastApp.packageName;
+            }
             return true;
         }
         return false;

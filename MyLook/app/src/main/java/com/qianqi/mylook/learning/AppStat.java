@@ -57,7 +57,9 @@ public class AppStat {
     public void addRecord(TimeInfo timeInfo, NetworkInfo networkInfo, String top) {
         long curTime = timeInfo.getTime();
         float[] input = getInput(timeInfo,networkInfo);
-        boolean isTop = top.equals(packageName);
+        boolean isTop = false;
+        if(top != null)
+            isTop = top.equals(packageName);
         if(isTop){
             lastStartTime = curTime;
             PreferenceHelper.getInstance().start().edit().putLong(packageName,curTime).apply();

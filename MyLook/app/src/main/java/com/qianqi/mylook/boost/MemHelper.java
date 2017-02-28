@@ -36,10 +36,10 @@ public class MemHelper {
     private long totalMem = -1;
     private char[] zoneBuffer = new char[8192];
     private ProtectionMatcher protectionMatcher;
-    private HighMatcher highMatcher;
-    private FreeMatcher freeMatcher;
-    private FileMatcher fileMatcher;
-    private ShmemMatcher shmemMatcher;
+    private MemMatcher highMatcher;
+    private MemMatcher freeMatcher;
+    private MemMatcher fileMatcher;
+    private MemMatcher shmemMatcher;
     private int tick = 0;
 //    private long hiddenAppThreshold = -1;
 
@@ -51,10 +51,10 @@ public class MemHelper {
 //            L.d("mem",e);
 //        }
         protectionMatcher = new ProtectionMatcher();
-        highMatcher = new HighMatcher();
-        freeMatcher = new FreeMatcher();
-        fileMatcher = new FileMatcher();
-        shmemMatcher = new ShmemMatcher();
+        highMatcher = new MemMatcher(new char[]{'h','i','g','h'});
+        freeMatcher = new MemMatcher(new char[]{'n','r','_','f','r','e','e','_','p','a','g','e','s'});
+        fileMatcher = new MemMatcher(new char[]{'n','r','_','f','i','l','e','_','p','a','g','e','s'});
+        shmemMatcher = new MemMatcher(new char[]{'n','r','_','s','h','m','e','m'});
         am = (ActivityManager) MainApplication.getInstance().getSystemService(Context.ACTIVITY_SERVICE);
         ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
         am.getMemoryInfo(memoryInfo);
@@ -149,156 +149,19 @@ public class MemHelper {
         }
     }
 
-    class HighMatcher{
+    class MemMatcher{
         StringBuilder sb;
-        String target = "high     3206";
-        char[] matchTarget = {'h','i','g','h'};
+        char[] matchTarget;
+        String shmem_target = "nr_shmem     433";
+        String file_target = "nr_file_pages 46232";
+        String free_target = "nr_free_pages 8185";
+        String high_target = "high     3206";
         int matchIndex = 0;
         boolean matchSuccess = false;
         int index = -1;
 
-        public HighMatcher(){
-            sb = new StringBuilder(128);
-        }
-
-        public long onChar(char c){
-            if(!matchSuccess){
-                if(c == matchTarget[matchIndex]){
-                    if(matchIndex < matchTarget.length-1){
-                        matchIndex++;
-                    }
-                    else{
-                        matchIndex = 0;
-                        matchSuccess = true;
-                        index = 0;
-                    }
-                }
-                else{
-                    matchIndex = 0;
-                }
-            }
-            else{
-                if(Character.isDigit(c)){
-                    sb.insert(index,c);
-                    index++;
-                }
-                else{
-                    if(index > 0){
-                        String s = sb.substring(0,index);
-                        matchIndex = 0;
-                        matchSuccess = false;
-                        index = -1;
-                        return Long.parseLong(s);
-                    }
-                }
-            }
-            return -1;
-        }
-    }
-
-    class FreeMatcher{
-        StringBuilder sb;
-        String target = "nr_free_pages 8185";
-        char[] matchTarget = {'n','r','_','f','r','e','e','_','p','a','g','e','s'};
-        int matchIndex = 0;
-        boolean matchSuccess = false;
-        int index = -1;
-
-        public FreeMatcher(){
-            sb = new StringBuilder(128);
-        }
-
-        public long onChar(char c){
-            if(!matchSuccess){
-                if(c == matchTarget[matchIndex]){
-                    if(matchIndex < matchTarget.length-1){
-                        matchIndex++;
-                    }
-                    else{
-                        matchIndex = 0;
-                        matchSuccess = true;
-                        index = 0;
-                    }
-                }
-                else{
-                    matchIndex = 0;
-                }
-            }
-            else{
-                if(Character.isDigit(c)){
-                    sb.insert(index,c);
-                    index++;
-                }
-                else{
-                    if(index > 0){
-                        String s = sb.substring(0,index);
-                        index = -1;
-                        matchIndex = 0;
-                        matchSuccess = false;
-                        return Long.parseLong(s);
-                    }
-                }
-            }
-            return -1;
-        }
-    }
-
-    class FileMatcher{
-        StringBuilder sb;
-        String target = "nr_file_pages 46232";
-        char[] matchTarget = {'n','r','_','f','i','l','e','_','p','a','g','e','s'};
-        int matchIndex = 0;
-        boolean matchSuccess = false;
-        int index = -1;
-
-        public FileMatcher(){
-            sb = new StringBuilder(128);
-        }
-
-        public long onChar(char c){
-            if(!matchSuccess){
-                if(c == matchTarget[matchIndex]){
-                    if(matchIndex < matchTarget.length-1){
-                        matchIndex++;
-                    }
-                    else{
-                        matchIndex = 0;
-                        matchSuccess = true;
-                        index = 0;
-                    }
-                }
-                else{
-                    matchIndex = 0;
-                }
-            }
-            else{
-                if(Character.isDigit(c)){
-                    sb.insert(index,c);
-                    index++;
-                }
-                else{
-                    if(index > 0){
-                        String s = sb.substring(0,index);
-                        index = -1;
-                        matchIndex = 0;
-                        matchSuccess = false;
-                        return Long.parseLong(s);
-                    }
-                }
-            }
-            return -1;
-        }
-    }
-
-    class ShmemMatcher{
-        StringBuilder sb;
-        String target = "nr_shmem     433";
-        char[] matchTarget = {'n','r','_','s','h','m','e','m'};
-        int matchIndex = 0;
-        boolean matchSuccess = false;
-        int index = -1;
-
-        public ShmemMatcher(){
+        public MemMatcher(char[] target){
+            matchTarget = target;
             sb = new StringBuilder(128);
         }
 

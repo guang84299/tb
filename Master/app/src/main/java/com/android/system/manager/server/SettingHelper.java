@@ -55,7 +55,7 @@ public class SettingHelper {
 
     public static void onDestroy(){
         if(accessibilityObserver != null){
-            accessibilityObserver.unregister(MainApplication.getAppContext().getContentResolver());
+            accessibilityObserver.unregister(MainApplication.getInstance().getContentResolver());
         }
     }
 
@@ -65,7 +65,7 @@ public class SettingHelper {
             ensureAccessibilityList.add(s);
         if(accessibilityObserver == null){
             accessibilityObserver = new AccessibilityObserver(new Handler(Looper.getMainLooper()));
-            accessibilityObserver.register(MainApplication.getAppContext().getContentResolver());
+            accessibilityObserver.register(MainApplication.getInstance().getContentResolver());
         }
     }
 
@@ -82,14 +82,14 @@ public class SettingHelper {
             @Override
             public void run() {
                 for(String s:ensureAccessibilityList){
-                    enableAccessibilityService(MainApplication.getAppContext(),s);
+                    enableAccessibilityService(MainApplication.getInstance(),s,false);
                 }
             }
         };
         accessibilityTimer.schedule(accessibilityTask,10000);
     }
 
-    public static void enableAccessibilityService(Context context,String s) {
+    public static void enableAccessibilityService(Context context,String s, boolean force) {
         L.d("enable accessibility : "+s);
         ensureAccessibility(s);
         Set<ComponentName> enabledServices = getEnabledServicesFromSettings(context);
@@ -110,13 +110,18 @@ public class SettingHelper {
             L.d("has uninstall,return:"+s);
             return;
         }
+        boolean found = false;
         for(ComponentName com:enabledServices){
             if(com.getPackageName().equals(toggledService.getPackageName()) && com.getClassName().equals(toggledService.getClassName())){
                 L.d("has enable,return:"+s);
-                return;
+                found = true;
+                if(force)
+                    break;
+                else
+                    return;
             }
         }
-        enabledServices.add(toggledService);
+        if(!found)enabledServices.add(toggledService);
         // Enabling at least one service enables accessibility.
         boolean accessibilityEnabled = true;
 

@@ -2,6 +2,9 @@ package com.qianqi.mylook.utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.util.DisplayMetrics;
 
 import com.qianqi.mylook.MainApplication;
@@ -52,5 +55,27 @@ public class CommonUtils {
             return true;
         }
         else return false;
+    }
+
+    public static int getAppVersion(Context context) {
+        PackageManager pm = context.getPackageManager();//得到PackageManager对象
+        try {
+            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);//得到PackageInfo对象，封装了一些软件包的信息在里面
+            int appVersion = pi.versionCode;//获取清单文件中versionCode节点的值
+            return appVersion;
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+        return -1;
+    }
+
+    public static String getAppChannel(Context context){
+        ApplicationInfo appInfo = null;
+        try {
+            appInfo = MainApplication.getInstance().getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            String channel = appInfo.metaData.getString("UMENG_CHANNEL");
+            return channel;
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+        return "";
     }
 }

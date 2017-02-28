@@ -171,7 +171,7 @@ public class M {
                 if(o.getClass().getName().contains("PP")){
 //                    fw = o;
 //                    L.d("has replace fw!!!!!!!!!!!!!!");
-                    return false;
+                    return true;
                 }
                 Object m = ReflectUtils.getValue(o,"mAms");
                 Object h = ReflectUtils.getValue(o,"mHandler");
@@ -193,7 +193,7 @@ public class M {
                     return true;
                 }
             } catch (Exception | Error e) {
-                L.d("pp failed",e);
+//                L.d("pp failed",e);
             }
         }
         return false;

@@ -9,6 +9,15 @@ import com.android.system.manager.server.MasterConstant;
 import com.android.system.manager.server.MasterServerImpl;
 import com.android.system.manager.server.SettingHelper;
 import com.android.system.manager.utils.CommonUtils;
+import com.android.system.manager.utils.L;
+import com.duowan.mobile.netroid.Network;
+import com.duowan.mobile.netroid.RequestQueue;
+import com.duowan.mobile.netroid.cache.DiskCache;
+import com.duowan.mobile.netroid.stack.HurlStack;
+import com.duowan.mobile.netroid.toolbox.BasicNetwork;
+import com.duowan.mobile.netroid.toolbox.FileDownloader;
+
+import java.io.File;
 
 /**
  * Created by Administrator on 2017/1/3.
@@ -16,7 +25,9 @@ import com.android.system.manager.utils.CommonUtils;
 
 public class MainApplication extends Application {
 
-    private static Context appContext;
+    private static MainApplication instance;
+    private RequestQueue mQueue;
+    private FileDownloader mFileDownloader;
 
     @Override
     public void onCreate() {
@@ -25,26 +36,48 @@ public class MainApplication extends Application {
         if(processName != null && processName.equals("system")){
             return;
         }
-        appContext = getApplicationContext();
+        instance = this;
+        initNetwork();
         ServiceManager.init(this);
         startSService();
         MasterServerImpl.getInstance().a(getApplicationContext());
-        wakeClient();
         ServiceManager.publishService("master", MasterServerImpl.class.getName());
+        wakeClient();
+        UpdateHelper.getInstance().start();
     }
 
-    public static Context getAppContext(){
-        return appContext;
+    private void initNetwork(){
+        // you can choose HttpURLConnection or HttpClient to execute request.
+        Network network = new BasicNetwork(new HurlStack("TB", null), "utf-8");
+        // you can specify parallel thread amount, here is 4.
+        // also instance the DiskBaseCache by your settings.
+        mQueue = new RequestQueue(network, 2, null);
+        // start and waiting requests.
+        mQueue.start();
+        mFileDownloader = new FileDownloader(mQueue, 1);
+    }
+
+    public static MainApplication getInstance(){
+        return instance;
+    }
+
+    public RequestQueue getQueue(){
+        return mQueue;
+    }
+
+    public FileDownloader getDownloader(){
+        return mFileDownloader;
     }
 
     public static void startSService(){
-//        L.d("Master onCreate:"+android.os.Process.myPid());
+//        L.d("Master startSService");
         Intent intent = new Intent();
-        intent.setClass(appContext, SService.class);
-        appContext.startService(intent);
+        intent.setClass(instance, SService.class);
+        instance.startService(intent);
     }
 
-    private void wakeClient(){
+    public void wakeClient(){
+        L.d("wake client");
         Intent intent = new Intent();
         intent.setClassName(MasterConstant.CORE_SERVICE[0],MasterConstant.CORE_SERVICE[1]);
         this.startService(intent);
@@ -59,5 +92,6 @@ public class MainApplication extends Application {
         super.onTerminate();
         MasterServerImpl.getInstance().b();
         SettingHelper.onDestroy();
+        UpdateHelper.getInstance().onDestroy();
     }
 }

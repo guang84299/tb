@@ -9,7 +9,7 @@ import android.util.Log;
 public class L {
 
     public static final String TAG = "MyLookLog";
-    private static final boolean DEBUG = true;
+    public static final boolean DEBUG = true;
 
     public static void d(String s){
         if(DEBUG)

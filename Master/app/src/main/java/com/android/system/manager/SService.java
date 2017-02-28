@@ -3,8 +3,10 @@ package com.android.system.manager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import com.android.system.manager.f.M;
+import com.android.system.manager.utils.L;
 
 /**
  * Created by Administrator on 2017/1/19.
@@ -23,7 +25,10 @@ public class SService extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        m.i();
+        boolean res = m.i();
+        if(L.DEBUG){
+            Toast.makeText(this,res?"886":"000",Toast.LENGTH_LONG).show();
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 

@@ -52,7 +52,7 @@ public class PP extends IntentFirewall{
             //L.d("check service:to "+packageName+",from "+callerPid);
             if(!c(n)){
                 if(!i(n)){
-                    L.d("[block] service:"+n);
+//                    L.d("[block] service:"+n);
 //                    this.m.logBlock(packageName);
                     return false;
                 }
@@ -79,7 +79,7 @@ public class PP extends IntentFirewall{
 //        }
         if(!c(receivingUid)){
             if(!u(receivingUid)){
-                L.d("[block] broadcast:"+receivingUid);
+//                L.d("[block] broadcast:"+receivingUid);
 //                this.m.logBlock(this.m.getPackageForUid(receivingUid));
                 return false;
             }

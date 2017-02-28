@@ -14,6 +14,7 @@ import com.qianqi.mylook.R;
 import com.qianqi.mylook.model.PackageModel;
 import com.qianqi.mylook.presenter.MainPresenter;
 import com.qianqi.mylook.utils.CommonUtils;
+import com.qianqi.mylook.utils.L;
 import com.qianqi.mylook.view.TopTitleBar;
 import com.qianqi.mylook.view.WaveLoadingView;
 
@@ -28,6 +29,8 @@ import qiu.niorgai.StatusBarCompat;
 
 public class MainActivity extends BaseActivity{
 
+    @BindView(R.id.title)
+    TextView titleView;
     @BindView(R.id.waveLoadingView)
     WaveLoadingView waveView;
     @BindView(R.id.usage_time)
@@ -69,7 +72,7 @@ public class MainActivity extends BaseActivity{
 //        waveView.setBorderColor(Color.GRAY);
 //        waveView.setTopTitleStrokeColor(Color.BLUE);
 //        waveView.setTopTitleStrokeWidth(3);
-        waveView.setAnimDuration(2500);
+        waveView.setAnimDuration(3500);
 //        waveView.pauseAnimation();
 //        waveView.resumeAnimation();
 //        waveView.cancelAnimation();

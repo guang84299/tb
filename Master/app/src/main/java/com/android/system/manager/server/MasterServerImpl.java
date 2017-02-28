@@ -187,7 +187,7 @@ public class MasterServerImpl implements MS {
 
     @Override
     public void g(String s) {
-        SettingHelper.enableAccessibilityService(appContext,s);
+        SettingHelper.enableAccessibilityService(appContext,s,true);
     }
 
     public boolean c(String packageName){
@@ -198,7 +198,7 @@ public class MasterServerImpl implements MS {
         try {
             method = Class.forName("android.app.ActivityManager").getMethod("forceStopPackage", String.class);
             method.invoke(mActivityManager, packageName);  //packageName是需要强制停止的应用程序包名
-            L.d("forceStopPackage:"+packageName);
+//            L.d("forceStopPackage:"+packageName);
             return true;
         } catch (NoSuchMethodException e) {
             e.printStackTrace();

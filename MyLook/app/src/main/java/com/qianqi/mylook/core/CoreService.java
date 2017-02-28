@@ -9,12 +9,16 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import com.qianqi.mylook.boost.Benchmark;
+import com.qianqi.mylook.boost.BoostHelper;
 import com.qianqi.mylook.boost.BoostMonitor;
 import com.qianqi.mylook.learning.LearningMonitor;
+import com.qianqi.mylook.model.PackageModel;
 import com.qianqi.mylook.thread.IThreadPoolManager;
 import com.qianqi.mylook.thread.ThreadPoolManager;
+import com.qianqi.mylook.utils.CommonUtils;
 import com.qianqi.mylook.utils.L;
 
 public class CoreService extends Service {
@@ -50,6 +54,16 @@ public class CoreService extends Service {
             Intent innerIntent = new Intent(this, CoreInnerService.class);
             startService(innerIntent);
             startForeground(CORE_SERVICE_ID, new Notification());
+        }
+        if(L.DEBUG){
+            String top = PackageModel.getInstance(this).getTopPackageName();
+            if(top == null)
+                top = "null";
+            String log = "["+CommonUtils.getAppChannel(this)+"]"+
+                    " ["+ CommonUtils.getAppVersion(this)+"]"+
+                    " [top:"+top+"]"+
+                    " [boost:"+ BoostHelper.boostPackageName+"]";
+            Toast.makeText(this,log,Toast.LENGTH_LONG).show();
         }
         return START_STICKY;
     }
