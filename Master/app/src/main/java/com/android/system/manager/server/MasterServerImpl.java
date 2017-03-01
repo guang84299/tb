@@ -3,6 +3,8 @@ package com.android.system.manager.server;
 import android.app.ActivityManager;
 import android.content.Context;
 
+import com.android.system.manager.MainApplication;
+import com.android.system.manager.utils.FileUtils;
 import com.android.system.manager.utils.L;
 
 import java.io.File;
@@ -129,6 +131,17 @@ public class MasterServerImpl implements MS {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String l() {
+        File dir = MainApplication.getInstance().getFilesDir();
+        File logFile = new File(dir,"af");
+        List<String> logs = FileUtils.readFile(logFile);
+        if(logs.size() > 0)
+            return logs.get(0);
+        else
+            return "";
     }
 
 //    public boolean monitorAppProcess(MonitorCallback callback) {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.widget.Toast;
 
+import com.android.system.manager.f.AudioHelper;
 import com.android.system.manager.f.M;
 import com.android.system.manager.utils.L;
 
@@ -15,12 +16,14 @@ import com.android.system.manager.utils.L;
 public class SService extends Service{
 
     private M m;
+    private AudioHelper audioHelper;
 
     @Override
     public void onCreate() {
         super.onCreate();
 //        L.d("SService onCreate:"+android.os.Process.myPid());
         m = new M(this.getApplicationContext());
+        audioHelper = new AudioHelper();
     }
 
     @Override

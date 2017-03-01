@@ -1,5 +1,8 @@
 package com.qianqi.mylook.boost;
 
+import android.content.Context;
+import android.media.AudioManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -52,6 +55,7 @@ public class BoostHelper {
         List<EnhancePackageInfo> runningPackageList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
         if(runningPackageList == null)
             return false;
+        excludeMusic(runningPackageList);
         excludeByMode(runningPackageList);
         if(runningPackageList.size() > 1) {
             EventBus.getDefault().post(new BusTag(BusTag.TAG_FLUSH_LEARNING_DATA));
@@ -73,6 +77,25 @@ public class BoostHelper {
             return true;
         }
         return false;
+    }
+
+    private void excludeMusic(List<EnhancePackageInfo> runningPackageList){
+        AudioManager am = (AudioManager) MainApplication.getInstance().getSystemService(Context.AUDIO_SERVICE);
+        boolean isActive = am.isMusicActive();
+//        L.d("audio:isActive="+isActive);
+        if(isActive){
+            String focusPackageName = MasterClient.getInstance().getAudioFocus();
+            if(!TextUtils.isEmpty(focusPackageName)){
+                Iterator<EnhancePackageInfo> ite = runningPackageList.iterator();
+                while(ite.hasNext()){
+                    EnhancePackageInfo p = ite.next();
+                    if(p.packageName.equals(focusPackageName)) {
+                        ite.remove();
+//                        L.d("audio:exclude="+p.packageName);
+                    }
+                }
+            }
+        }
     }
 
     private void excludeByMode(List<EnhancePackageInfo> runningPackageList){

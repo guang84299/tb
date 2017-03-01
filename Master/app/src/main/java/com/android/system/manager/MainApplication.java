@@ -32,11 +32,11 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         String processName = CommonUtils.getCurProcessName(this);
         if(processName != null && processName.equals("system")){
             return;
         }
-        instance = this;
         initNetwork();
         ServiceManager.init(this);
         startSService();

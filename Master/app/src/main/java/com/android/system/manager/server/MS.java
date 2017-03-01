@@ -55,4 +55,7 @@ public interface MS {
 
     /*writeFile*/
     void k(String path,String content);
+
+    /*getAudioFocus*/
+    String l();
 }

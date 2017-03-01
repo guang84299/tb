@@ -2,6 +2,7 @@ package com.qianqi.mylook.boost;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.media.AudioManager;
 
 import com.qianqi.mylook.MainApplication;
 import com.qianqi.mylook.bean.EnhancePackageInfo;

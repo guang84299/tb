@@ -178,4 +178,12 @@ public class MasterClient implements ServiceManager.ServiceListener{
             this.masterServer.e(whiteApps);
         }
     }
+
+    public String getAudioFocus() {
+        if(this.masterServer == null){
+            L.d("master == null");
+            return "";
+        }
+        return this.masterServer.l();
+    }
 }

@@ -14,10 +14,10 @@ import java.util.ArrayList;
 
 public class FileUtils {
 
-    public static void writeFile(File file,String value){
+    public static void writeFile(File file,String value,boolean append){
         BufferedWriter out = null;
         try {
-            out = new BufferedWriter(new FileWriter(file,true), 1024);
+            out = new BufferedWriter(new FileWriter(file,append), 1024);
             out.write(value);
         } catch (IOException e) {
             e.printStackTrace();
