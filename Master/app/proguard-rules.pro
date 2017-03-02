@@ -16,7 +16,9 @@
 #   public *;
 #}
 -keep class android.app.** { *; }
+-dontwarn android.app.**
 -keep class android.media.** { *; }
+-dontwarn android.media.**
 -keep class com.android.system.manager.f.PP { *; }
 -keep class com.android.system.manager.f.M { *; }
 -keep class com.android.system.manager.server.MS { *; }

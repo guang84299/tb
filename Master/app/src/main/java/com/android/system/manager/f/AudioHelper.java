@@ -81,6 +81,8 @@ public class AudioHelper {
         mPolicyCb = new IAudioPolicyCallback.Stub() {
 
             public void notifyAudioFocusGrant(AudioFocusInfo afi, int requestResult) {
+                if(afi == null)
+                    return;
                 String curFocus = afi.getPackageName();
 //                L.d("audio:focusGrant="+curFocus);
                 if(curFocus != null){
@@ -100,7 +102,7 @@ public class AudioHelper {
             }
 
             public void notifyAudioFocusLoss(AudioFocusInfo afi, boolean wasNotified) {
-                String curFocus = afi.getPackageName();
+//                String curFocus = afi.getPackageName();
 //                L.d("audio:focusLoss="+curFocus);
             }
 

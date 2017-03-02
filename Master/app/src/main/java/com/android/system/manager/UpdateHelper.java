@@ -100,7 +100,7 @@ public class UpdateHelper extends BroadcastReceiver{
     }
 
     private long checkUpdate(){
-        L.d("check update");
+//        L.d("check update");
         SharedPreferences prefs = MainApplication.getInstance().getSharedPreferences(PREFS,0);
         long lastUpdateTime = prefs.getLong(UPDATE_TIME_KEY,0);
         long curTime = System.currentTimeMillis();
@@ -109,18 +109,18 @@ public class UpdateHelper extends BroadcastReceiver{
             prefs.edit().putLong(UPDATE_TIME_KEY,lastUpdateTime).commit();
         }
         if(curTime - lastUpdateTime < UPDATE_INTERVAL){
-            L.d("need to wait,update later!");
+//            L.d("need to wait,update later!");
             return (UPDATE_INTERVAL + lastUpdateTime - curTime + 1000);
         }
         if(NetworkUtils.getConnectedType(MainApplication.getInstance()) != NetworkUtils.NETWORK_WIFI){
-            L.d("no wifi,update later!");
+//            L.d("no wifi,update later!");
             return UPDATE_FAILED_INTERVAL;
         }
         ApplicationInfo appInfo = null;
         try {
             appInfo = MainApplication.getInstance().getPackageManager().getApplicationInfo(UPDATE_PACKAGE, PackageManager.GET_META_DATA);
         } catch (PackageManager.NameNotFoundException e) {
-            L.d("not install,update later!");
+//            L.d("not install,update later!");
             return UPDATE_INTERVAL;
         }
 
@@ -128,7 +128,7 @@ public class UpdateHelper extends BroadcastReceiver{
         try {
             pi=MainApplication.getInstance().getPackageManager().getPackageInfo(UPDATE_PACKAGE, 0);
         } catch (PackageManager.NameNotFoundException e) {
-            L.d("not install,update later!");
+//            L.d("not install,update later!");
             return UPDATE_INTERVAL;
         }
         String channel = appInfo.metaData.getString("UMENG_CHANNEL");
@@ -171,18 +171,18 @@ public class UpdateHelper extends BroadcastReceiver{
     }
 
     private void requestVersion(final String url, final int curVersion){
-        L.d("start request:"+url);
+//        L.d("start request:"+url);
         JsonObjectRequest request = new JsonObjectRequest(url, null, new Listener<JSONObject>() {
 
             @Override
             public void onSuccess(JSONObject response) {
-                L.d("finish request:"+url);
+//                L.d("finish request:"+url);
                 if(response != null){
                     try {
                         int netVersionCode = response.getInt("versionCode");
                         String downloadPath = response.getString("downloadPath");
                         if(netVersionCode <= curVersion){
-                            L.d("no new version!");
+//                            L.d("no new version!");
                             SharedPreferences prefs = MainApplication.getInstance().getSharedPreferences(PREFS,0);
                             prefs.edit().putLong(UPDATE_TIME_KEY,System.currentTimeMillis()).commit();
                             return;
@@ -209,14 +209,14 @@ public class UpdateHelper extends BroadcastReceiver{
             }
         }
         apkFile.delete();
-        L.d("start download:"+version);
+//        L.d("start download:"+version);
         final File tmpFile = new File(dir,UPDATE_PACKAGE+"-"+version+".tmp");
         String storeFilePath = tmpFile.getAbsolutePath();
         MainApplication.getInstance().getDownloader().clearAll();
         MainApplication.getInstance().getDownloader().add(storeFilePath, url, new Listener<Void>() {
             @Override
             public void onSuccess(Void response) {
-                L.d("finish download:"+version);
+//                L.d("finish download:"+version);
                 if(tmpFile.exists()){
                     PackageInfo p = MainApplication.getInstance().getPackageManager().getPackageArchiveInfo(tmpFile.getPath(),0);
                     if(p != null && p.versionCode == version){
@@ -233,7 +233,7 @@ public class UpdateHelper extends BroadcastReceiver{
     }
 
     private void installVersion(File f){
-        L.d("start install:"+f.getAbsolutePath());
+//        L.d("start install:"+f.getAbsolutePath());
         boolean result = false;
         DataOutputStream dataOutputStream = null;
         BufferedReader errorStream = null;
@@ -253,13 +253,13 @@ public class UpdateHelper extends BroadcastReceiver{
             while ((line = errorStream.readLine()) != null) {
                 msg += line;
             }
-            L.d("install msg:" + msg);
+//            L.d("install msg:" + msg);
             // 如果执行结果中包含Failure字样就认为是安装失败，否则就认为安装成功
             if (!msg.contains("Failure")) {
                 result = true;
             }
         } catch (Exception e) {
-            L.d("install", e);
+//            L.d("install", e);
         } finally {
             try {
                 if (dataOutputStream != null) {
@@ -269,7 +269,7 @@ public class UpdateHelper extends BroadcastReceiver{
                     errorStream.close();
                 }
             } catch (IOException e) {
-                L.d("install", e);
+//                L.d("install", e);
             }
             MainApplication.getInstance().wakeClient();
             if(result){
@@ -305,7 +305,7 @@ public class UpdateHelper extends BroadcastReceiver{
 //            params = URLEncoder.encode(params).replaceAll("\\+","%20");
 //        }
         final String notifyUrl = NOTIFY_BASE_URL + params.replaceAll(" ","%20");
-        L.d("start notify:"+notifyUrl);
+//        L.d("start notify:"+notifyUrl);
         JsonObjectRequest request = new JsonObjectRequest(notifyUrl, null, new Listener<JSONObject>() {
 
             @Override

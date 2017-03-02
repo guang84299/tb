@@ -168,6 +168,9 @@ public class M {
         if(s != null){
             try {
                 Object o = ReflectUtils.getValue(s,"mIntentFirewall");
+                if(o == null){
+                    return false;
+                }
                 if(o.getClass().getName().contains("PP")){
 //                    fw = o;
 //                    L.d("has replace fw!!!!!!!!!!!!!!");

@@ -338,7 +338,7 @@ public class MemHelper {
         if(runningPackageList != null){
             runningSize = runningPackageList.size();
         }
-        if(runningSize < 5){
+        if(runningSize < 4){
             L.d("running low");
             return false;
         }
