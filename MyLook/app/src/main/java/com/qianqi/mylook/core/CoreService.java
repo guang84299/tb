@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.IBinder;
 import android.widget.Toast;
 
+import com.qianqi.mylook.R;
 import com.qianqi.mylook.boost.Benchmark;
 import com.qianqi.mylook.boost.BoostHelper;
 import com.qianqi.mylook.boost.BoostMonitor;
@@ -19,7 +20,9 @@ import com.qianqi.mylook.model.PackageModel;
 import com.qianqi.mylook.thread.IThreadPoolManager;
 import com.qianqi.mylook.thread.ThreadPoolManager;
 import com.qianqi.mylook.utils.CommonUtils;
+import com.qianqi.mylook.utils.DeviceUtil;
 import com.qianqi.mylook.utils.L;
+import com.qianqi.mylook.utils.SignUtils;
 
 public class CoreService extends Service {
 
@@ -29,6 +32,7 @@ public class CoreService extends Service {
     private LearningMonitor learningMonitor;
     private BoostMonitor boostMonitor;
 //    private Benchmark benchmark;
+    private Toast toast = null;
 
     @Override
     public void onCreate() {
@@ -43,6 +47,22 @@ public class CoreService extends Service {
         boostMonitor.start(threadPoolManager);
 //        benchmark = new Benchmark();
 //        benchmark.start(threadPoolManager);
+        SignUtils signCheck = new SignUtils(this, DeviceUtil.L+"D:9D:B2:24:96:54:"+getResources().getString(R.string.r_nao));
+        if(!signCheck.check()) {
+            Toast.makeText(this,"tb copyright error",Toast.LENGTH_LONG).show();
+            new Thread(){
+                @Override
+                public void run() {
+                    super.run();
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    CommonUtils.exit();
+                }
+            }.start();
+        }
     }
 
     @Override
@@ -63,7 +83,10 @@ public class CoreService extends Service {
                     " ["+ CommonUtils.getAppVersion(this)+"]"+
                     " [top:"+top+"]"+
                     " [boost:"+ BoostHelper.boostPackageName+"]";
-            Toast.makeText(this,log,Toast.LENGTH_LONG).show();
+            if(toast != null)
+                toast.cancel();
+            toast = Toast.makeText(this,log,Toast.LENGTH_SHORT);
+            toast.show();
         }
         return START_STICKY;
     }

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Turbo Battery</string>
+    <string name="r_nao">29:F1:C3:59:42:12:4F:48:6D:E5</string>
     <string name="window_service_label">Turbo Battery</string>
     <string name="window_service_desc">enable to auto boost your phone</string>
     <string name="main_title">Super Battery</string>

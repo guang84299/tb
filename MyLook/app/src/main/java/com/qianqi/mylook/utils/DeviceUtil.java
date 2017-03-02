@@ -13,6 +13,7 @@ import java.util.UUID;
  * 设备信息工具类
  */
 public final class DeviceUtil {
+    public static final String L = "0F:14:F6:81:2";
     private Context mContext;
     private static DeviceUtil sDeviceUtil;
     private static TelephonyManager sTelephonyManager;
