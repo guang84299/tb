@@ -25,10 +25,12 @@ import java.util.Map;
 
 public class UsageManager {
 
+    public static final int GC_COUNT = 10;
     private HashMap<String,AppStat> appMap;
     private TimeInfo timeInfo;
     private NetworkInfo networkInfo;
     private String topPackage = "";
+    private int tick = 0;
 
     public UsageManager(){
         timeInfo = new TimeInfo();
@@ -83,6 +85,11 @@ public class UsageManager {
     }
 
     synchronized private void updateStat(String topPackage){
+        tick++;
+        if(tick >= GC_COUNT) {
+            tick = 0;
+            Runtime.getRuntime().gc();
+        }
         long time = System.currentTimeMillis();
         timeInfo.setTime(time);
         int networkType = NetworkUtils.getConnectedType(MainApplication.getInstance());

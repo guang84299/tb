@@ -10,8 +10,8 @@ import android.net.Uri;
 import android.os.RemoteException;
 
 import com.android.system.manager.server.MasterConstant;
-import com.android.system.manager.utils.SystemServicesHelper;
 import com.android.system.manager.utils.L;
+import com.android.system.manager.utils.SystemServicesHelper;
 import com.android.system.manager.utils.ReflectUtils;
 
 import java.lang.reflect.Constructor;
@@ -37,7 +37,7 @@ public class M {
     private List<String> d = null;//disallowAutoStartList
 //    private List<String> blockList = new ArrayList<>();
     private IProcessObserver po;
-    private int p = D;
+    private int pk = D;
 
     public M(Context appContext){
         this.t = appContext;
@@ -131,11 +131,11 @@ public class M {
 
     synchronized public void ls(){
         ContentResolver resolver = t.getContentResolver();
-        Cursor cursor = resolver.query(Uri.parse(SettingObserver.URI), null, "_key=\"p\"", null, null);
+        Cursor cursor = resolver.query(Uri.parse(SettingObserver.URI), null, "_key=\"powerMode\"", null, null);
         if(cursor == null)
             return;
         if(cursor.moveToNext()){
-            p = cursor.getInt(cursor.getColumnIndex("_value"));
+            pk = cursor.getInt(cursor.getColumnIndex("_value"));
         }
         cursor.close();
     }
@@ -215,7 +215,7 @@ public class M {
 
     /*allowAutoStart*/
     public boolean c(String packageName) {
-        if(p == P) {
+        if(pk == P) {
 //            L.d("performance mode,allow");
             return true;
         }
@@ -230,7 +230,7 @@ public class M {
     }
 
     public boolean c(int u) {
-        if(p == P) {
+        if(pk == P) {
 //            L.d("performance mode,allow");
             return true;
         }

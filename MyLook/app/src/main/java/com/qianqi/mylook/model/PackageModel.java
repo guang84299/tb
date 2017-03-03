@@ -19,6 +19,7 @@ import com.qianqi.mylook.PreferenceHelper;
 import com.qianqi.mylook.R;
 import com.qianqi.mylook.bean.EnhancePackageInfo;
 import com.qianqi.mylook.client.MasterClient;
+import com.qianqi.mylook.learning.UsageCache;
 import com.qianqi.mylook.utils.CommonUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -394,6 +395,7 @@ public class PackageModel extends BroadcastReceiver{
                         break;
                     }
                 }
+                UsageCache.deleteDir(packageName);
                 break;
         }
     }
