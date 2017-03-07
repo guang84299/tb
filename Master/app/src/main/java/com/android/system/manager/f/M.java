@@ -125,7 +125,7 @@ public class M {
                 r.invoke(m, po);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            L.d("process",e);
         }
     }
 

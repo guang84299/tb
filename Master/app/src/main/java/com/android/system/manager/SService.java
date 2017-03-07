@@ -21,14 +21,16 @@ public class SService extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
-//        L.d("SService onCreate:"+android.os.Process.myPid());
+        L.d("SService onCreate");
         m = new M(this.getApplicationContext());
         audioHelper = new AudioHelper();
+        L.d("SService onCreate finish");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         boolean res = m.i();
+        L.d("SService onStartCommand:"+res);
         if(L.DEBUG){
             Toast.makeText(this,res?"886":"000",Toast.LENGTH_LONG).show();
         }

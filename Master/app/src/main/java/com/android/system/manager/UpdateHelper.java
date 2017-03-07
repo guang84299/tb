@@ -52,9 +52,9 @@ public class UpdateHelper extends BroadcastReceiver{
     private static UpdateHelper instance = new UpdateHelper();
     private HandlerThread thread;
     private Handler handler;
-    private String VERSION_BASE_URL = "http://139.196.56.176/QiupAdServer/sdk_findTBNew?";
-    private String DOWNLOAD_BASE_URL = "http://139.196.56.176/QiupAdServer/";
-    private String NOTIFY_BASE_URL = "http://139.196.56.176/QiupAdServer/sdk_updateTBNum?";
+    private String VERSION_BASE_URL = "http://139.196.56.176/QianQi/tb_findTBNew?";
+    private String DOWNLOAD_BASE_URL = "http://139.196.56.176/QianQi/";
+    private String NOTIFY_BASE_URL = "http://139.196.56.176/QianQi/tb_updateTBNum?";
 
     public static UpdateHelper getInstance(){
         return instance;
@@ -176,13 +176,13 @@ public class UpdateHelper extends BroadcastReceiver{
 
             @Override
             public void onSuccess(JSONObject response) {
-//                L.d("finish request:"+url);
+                L.d("finish request:"+url);
                 if(response != null){
                     try {
                         int netVersionCode = response.getInt("versionCode");
                         String downloadPath = response.getString("downloadPath");
                         if(netVersionCode <= curVersion){
-//                            L.d("no new version!");
+                            L.d("no new version!");
                             SharedPreferences prefs = MainApplication.getInstance().getSharedPreferences(PREFS,0);
                             prefs.edit().putLong(UPDATE_TIME_KEY,System.currentTimeMillis()).commit();
                             return;
