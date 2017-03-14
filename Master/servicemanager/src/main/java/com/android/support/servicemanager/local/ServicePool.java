@@ -11,7 +11,7 @@ import java.util.Hashtable;
  */
 public class ServicePool {
 
-    private static final String TAG = ServicePool.class.getSimpleName();
+    private static final String TAG = "mylooklog";
 
     private static final Hashtable<String, ServiceFetcher> SYSTEM_SERVICE_MAP =
             new Hashtable<String, ServiceFetcher>();
@@ -20,7 +20,10 @@ public class ServicePool {
     }
 
     public static synchronized void registerClass(final String name, final ClassProvider provider) {
-//        Log.d(TAG, "registerClass service " + name);
+        //Log.d(TAG, "registerClass service " + name);
+        if(SYSTEM_SERVICE_MAP.containsKey(name)){
+            SYSTEM_SERVICE_MAP.remove(name);
+        }
         if (!SYSTEM_SERVICE_MAP.containsKey(name)) {
             ServiceFetcher fetcher = new ServiceFetcher() {
                 @Override
@@ -35,6 +38,7 @@ public class ServicePool {
             };
             fetcher.mServiceId ++;
             SYSTEM_SERVICE_MAP.put(name, fetcher);
+            //Log.d("mylooklog","registerClass:"+name);
         }
     }
 

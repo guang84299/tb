@@ -157,7 +157,7 @@ public class ServiceProvider extends ContentProvider {
     }
 
     private void removeAllRecordorForPid(int pid) {
-        Log.w("ServiceProvider", "remove all service recordor for pid" + pid);
+        Log.w("mylooklog", "remove all service recordor for pid" + pid);
 
         //服务提供方进程挂了,或者服务提供方进程主动通知清理服务, 则先清理服务注册表, 再通知所有客户端清理自己的本地缓存
         processBinder.remove(pid);

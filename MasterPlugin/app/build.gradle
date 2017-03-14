@@ -1,0 +1,45 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        qianqi {
+            keyAlias 'qianqi'
+            keyPassword '103369'
+            storeFile file('D:/tools/qianqi/sign/mylook.jks')
+            storePassword '103369'
+        }
+    }
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.android.system.manager.plugin"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 12
+        versionName "1.1.12"
+        signingConfig signingConfigs.qianqi
+//        resConfigs “en”, “fr”
+//        resConfigs “nodpi”, “hdpi”, “xhdpi”, “xxhdpi”, “xxxhdpi”
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.qianqi
+        }
+        debug {
+            signingConfig signingConfigs.qianqi
+        }
+    }
+    productFlavors {
+    }
+    lintOptions{
+        abortOnError false
+    }
+}
+
+dependencies {
+    provided fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.duowan.android.netroid:netroid:1.2.1'
+}

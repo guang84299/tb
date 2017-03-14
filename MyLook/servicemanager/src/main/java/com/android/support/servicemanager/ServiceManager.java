@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Process;
+import android.util.Log;
 
 import com.android.support.servicemanager.compat.BundleCompat;
 import com.android.support.servicemanager.compat.ContentProviderCompat;
@@ -33,8 +34,11 @@ public class ServiceManager {
         argsBundle.putInt(ServiceProvider.PID, pid);
         //为每个进程发布一个binder
         BundleCompat.putBinder(argsBundle, ServiceProvider.BINDER, new ProcessBinder(ProcessBinder.class.getName() + "_" + pid));
-        ContentProviderCompat.call(ServiceProvider.buildUri(),
-                ServiceProvider.REPORT_BINDER, null, argsBundle);
+        try{
+            ContentProviderCompat.call(ServiceProvider.buildUri(),
+                    ServiceProvider.REPORT_BINDER, null, argsBundle);
+        }catch (Exception | Error e){
+        }
 
         ServiceManager.sApplication.registerReceiver(new BroadcastReceiver() {
             @Override
@@ -66,9 +70,12 @@ public class ServiceManager {
 
         if (service == null) {
             //向远端器查询
-            Bundle bundle = ContentProviderCompat.call(ServiceProvider.buildUri(),
-                    ServiceProvider.QUERY_INTERFACE, name, null);
-
+            Bundle bundle = null;
+            try{
+                bundle = ContentProviderCompat.call(ServiceProvider.buildUri(),
+                        ServiceProvider.QUERY_INTERFACE, name, null);
+            }catch (Exception | Error e){
+            }
             if (bundle != null) {
                 String interfaceClassName = bundle.getString(ServiceProvider.QUERY_INTERFACE_RESULT);
 
@@ -81,7 +88,6 @@ public class ServiceManager {
                 }
             }
         }
-
         return service;
     }
 

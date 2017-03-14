@@ -19,9 +19,10 @@
 -dontwarn android.app.**
 -keep class android.media.** { *; }
 -dontwarn android.media.**
--keep class com.android.system.manager.f.PP { *; }
--keep class com.android.system.manager.f.M { *; }
--keep class com.android.system.manager.server.MS { *; }
--keepclassmembers class com.android.system.manager.server.MasterServerImpl {
-    public static com.android.system.manager.server.MS getInstance();
+-keep class com.android.system.manager.system.PP { *; }
+-keep class com.android.system.manager.system.M { *; }
+-keep class com.android.system.manager.ILoader { *; }
+-keepclassmembers class com.android.system.manager.MasterLoader {
+    public static com.android.system.manager.MasterLoader ins();
 }
+-keepclassmembers class com.android.support.servicemanager.ServiceManager { *; }

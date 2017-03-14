@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,8 +46,8 @@ public class MainActivity extends BaseActivity{
     LinearLayout configLayout;
     @BindView(R.id.mode_name)
     TextView modeNameView;
-    @BindView(R.id.mode_description)
-    TextView modeDescriptionView;
+//    @BindView(R.id.mode_description)
+//    TextView modeDescriptionView;
     @BindView(R.id.config_action)
     ImageView configActionView;
     private MainPresenter presenter;
@@ -149,21 +150,23 @@ public class MainActivity extends BaseActivity{
 
     public void updatePowerMode(int mode) {
         String modeName = this.getResources().getStringArray(R.array.power_mode_name)[mode];
-        String modeDesc = this.getResources().getStringArray(R.array.power_mode_desc)[mode];
+//        String modeDesc = this.getResources().getStringArray(R.array.power_mode_desc)[mode];
         curModeView.setText(modeName);
-        modeNameView.setText(modeName);
-        modeDescriptionView.setText(modeDesc);
+//        modeNameView.setText(modeName);
+//        modeDescriptionView.setText(modeDesc);
         if(mode == PackageModel.POWER_MODE_SMART){
+            configLayout.setVisibility(View.VISIBLE);
             configLayout.setClickable(true);
             configLayout.setBackgroundColor(Color.WHITE);
-            modeDescriptionView.setTextColor(Color.parseColor("#777777"));
+//            modeDescriptionView.setTextColor(Color.parseColor("#777777"));
             configActionView.setImageResource(R.drawable.ic_arrow_right);
         }
         else{
-            configLayout.setClickable(false);
-            configLayout.setBackgroundColor(Color.parseColor("#e7e7e7"));
-            modeDescriptionView.setTextColor(Color.parseColor("#979797"));
-            configActionView.setImageResource(R.drawable.ic_selected);
+            configLayout.setVisibility(View.INVISIBLE);
+//            configLayout.setClickable(false);
+//            configLayout.setBackgroundColor(Color.parseColor("#e7e7e7"));
+//            modeDescriptionView.setTextColor(Color.parseColor("#979797"));
+//            configActionView.setImageResource(R.drawable.ic_selected);
         }
     }
 

@@ -70,7 +70,7 @@
             app:wlv_titleCenterColor="#ffffff"
             app:wlv_titleCenterSize="36sp"
             app:wlv_triangle_direction="north"
-            app:wlv_waveAmplitude="50"
+            app:wlv_waveAmplitude="40"
             app:wlv_waveColor="#99a4d6ff"
             app:wlv_wave_background_Color="#3352f1ff"/>
     </LinearLayout>
@@ -102,8 +102,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingTop="25dp"
-            android:paddingBottom="25dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -123,7 +123,7 @@
                     android:lines="1"
                     android:ellipsize="end"
                     android:text="@string/usage_time"
-                    android:textColor="#464646"
+                    android:textColor="#676666"
                     android:textSize="15sp"/>
             </LinearLayout>
             <TextView
@@ -149,8 +149,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingTop="25dp"
-            android:paddingBottom="25dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -170,7 +170,7 @@
                     android:lines="1"
                     android:ellipsize="end"
                     android:text="@string/temperature"
-                    android:textColor="#464646"
+                    android:textColor="#676666"
                     android:textSize="15sp"/>
             </LinearLayout>
             <TextView
@@ -196,8 +196,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingTop="25dp"
-            android:paddingBottom="25dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -217,7 +217,7 @@
                     android:lines="1"
                     android:ellipsize="end"
                     android:text="@string/battery_capacity"
-                    android:textColor="#464646"
+                    android:textColor="#676666"
                     android:textSize="15sp"/>
             </LinearLayout>
             <TextView
@@ -249,13 +249,11 @@
         <LinearLayout
             android:id="@+id/mode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
+            android:layout_height="65dp"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="27dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_gravity="center_vertical"
@@ -273,7 +271,7 @@
                     android:lines="1"
                     android:ellipsize="end"
                     android:text="@string/power_saving_mode"
-                    android:textColor="#464646"
+                    android:textColor="#676666"
                     android:textSize="17sp"/>
                 <TextView
                     android:id="@+id/cur_power_mode"
@@ -307,14 +305,12 @@
         <LinearLayout
             android:id="@+id/config"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
+            android:layout_height="65dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="27dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_gravity="center_vertical"
@@ -332,19 +328,19 @@
                     android:layout_height="wrap_content"
                     android:lines="1"
                     android:ellipsize="end"
-                    android:text="@string/power_mode_smart"
-                    android:textColor="#464646"
+                    android:text="@string/power_mode_smart_config"
+                    android:textColor="#676666"
                     android:textSize="17sp"/>
-                <TextView
-                    android:id="@+id/mode_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:maxLines="2"
-                    android:ellipsize="end"
-                    android:text="@string/power_mode_smart_desc"
-                    android:textColor="#929292"
-                    android:textSize="13sp"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/mode_description"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="3dp"-->
+                    <!--android:maxLines="2"-->
+                    <!--android:ellipsize="end"-->
+                    <!--android:text="@string/power_mode_smart_desc"-->
+                    <!--android:textColor="#929292"-->
+                    <!--android:textSize="13sp"/>-->
             </LinearLayout>
             <ImageView
                 android:id="@+id/config_action"

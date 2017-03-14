@@ -3,6 +3,7 @@ package com.qianqi.mylook.learning;
 import android.content.Context;
 
 import com.qianqi.mylook.MainApplication;
+import com.qianqi.mylook.utils.FileUtils;
 import com.qianqi.mylook.utils.StringUtils;
 
 import java.io.BufferedReader;
@@ -28,7 +29,7 @@ public class UsageCache {
         cleanDir(packageDir);
         File dateFile = new File(packageDir,StringUtils.stringToMD5(item.getDate()));
         String io = item.encode();
-        writeFile(dateFile,io+"\n");
+        FileUtils.writeFile(dateFile,io+"\n");
     }
 
     public static ArrayList<RecordItem> read(Context context,String packageName){
@@ -40,7 +41,7 @@ public class UsageCache {
             records = new ArrayList<>();
             for(File dateFile:files){
                 String date = dateFile.getName();
-                ArrayList<String> lines = readFile(dateFile);
+                ArrayList<String> lines = FileUtils.readFile(dateFile);
                 for(String s:lines){
                     RecordItem item = new RecordItem(packageName,date);
                     item.decode(s);
@@ -54,7 +55,7 @@ public class UsageCache {
     public static void deleteDir(String packageName){
         File dir = MainApplication.getInstance().getFilesDir();
         File packageDir = new File(dir, StringUtils.stringToMD5(packageName));
-        deleteFile(packageDir);
+        FileUtils.deleteFile(packageDir);
     }
 
     private static void cleanDir(File dir){
@@ -72,61 +73,5 @@ public class UsageCache {
         }
         if(oldFile != null)
             oldFile.delete();
-    }
-
-    public static void deleteFile(File file) {
-        if (file.exists()) {
-            if (file.isFile()) {
-                file.delete();
-            } else if (file.isDirectory()) {
-                File files[] = file.listFiles();
-                for (int i = 0; i < files.length; i++) {
-                    deleteFile(files[i]);
-                }
-                file.delete();
-            }
-        }
-    }
-
-    private static void writeFile(File file,String value){
-        BufferedWriter out = null;
-        try {
-            out = new BufferedWriter(new FileWriter(file,true), 1024);
-            out.write(value);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (out != null) {
-                try {
-                    out.flush();
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    private static ArrayList<String> readFile(File file){
-        ArrayList<String> lines = new ArrayList<>();
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(new FileReader(file));
-            String currentLine;
-            while ((currentLine = in.readLine()) != null) {
-                lines.add(currentLine);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return lines;
-        }
     }
 }

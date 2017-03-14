@@ -3,11 +3,6 @@
 
     <application>
 
-        <provider
-            android:exported="true"
-            android:authorities="${applicationId}.svcmgr"
-            android:name="com.android.support.servicemanager.ServiceProvider"/>
-
     </application>
 
 </manifest>

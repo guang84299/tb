@@ -3,6 +3,7 @@ package com.android.support.servicemanager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.util.Log;
 
 import com.android.support.servicemanager.compat.BundleCompat;
 import com.android.support.servicemanager.compat.ContentProviderCompat;
@@ -37,7 +38,6 @@ public class MethodRouter {
 
         String name = extras.getString(ParamUtil.service_name);
         String methodName = extras.getString(ParamUtil.method_name);;
-
         Object service = ServicePool.getService(name);
         Object result = null;
         if (service != null && !Proxy.isProxyClass(service.getClass())) {
@@ -48,10 +48,8 @@ public class MethodRouter {
                         m.setAccessible(true);
                     }
                     result = m.invoke(service, ParamUtil.unwrapperParams(extras));
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    Log.d("mylooklog","invoke",e);
                 }
             }
         }

@@ -15,8 +15,8 @@ android {
         applicationId "com.android.system.manager"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 11
-        versionName "1.0.11"
+        versionCode 12
+        versionName "1.1.12"
         signingConfig signingConfigs.mtk6
 //        resConfigs “en”, “fr”
 //        resConfigs “nodpi”, “hdpi”, “xhdpi”, “xxhdpi”, “xxxhdpi”
@@ -42,5 +42,4 @@ android {
 dependencies {
     provided fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':servicemanager')
-    compile 'com.duowan.android.netroid:netroid:1.2.1'
 }

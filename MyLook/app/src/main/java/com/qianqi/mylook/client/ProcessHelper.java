@@ -2,7 +2,8 @@ package com.qianqi.mylook.client;
 
 import android.app.ActivityManager;
 
-import com.android.system.manager.server.MS;
+import com.android.system.manager.plugin.master.MS;
+import com.qianqi.mylook.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +41,10 @@ public class ProcessHelper {
 //    }
 
     public List<String> getProcessList(){
-        if(this.masterServer == null)
+        if(this.masterServer == null) {
+            L.d("master=null");
             return null;
+        }
         return this.masterServer.d();
     }
 

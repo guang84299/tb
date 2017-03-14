@@ -119,7 +119,7 @@
             android:name=".core.CoreService"
             android:process=":core"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="true"/>
         <service
             android:name=".core.CoreService$CoreInnerService"
             android:process=":core"
@@ -145,8 +145,8 @@
             android:exported="true"/>
 
         <meta-data android:value="58a56c1b1061d20a6100115f" android:name="UMENG_APPKEY"/>
-        <!--<meta-data android:value="CW1002" android:name="UMENG_CHANNEL"/>-->
-        <meta-data android:value="RH1001" android:name="UMENG_CHANNEL"/>
+        <meta-data android:value="CW1002" android:name="UMENG_CHANNEL"/>
+        <!--<meta-data android:value="RH1001" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="PUBLIC" android:name="UMENG_CHANNEL"/>-->
     </application>
 

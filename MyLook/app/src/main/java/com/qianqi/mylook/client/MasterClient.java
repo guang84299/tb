@@ -1,19 +1,22 @@
 package com.qianqi.mylook.client;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.text.TextUtils;
 
 import com.android.support.servicemanager.ServiceManager;
-import com.android.system.manager.server.MS;
+import com.android.system.manager.ILoader;
+import com.android.system.manager.plugin.master.MS;
 import com.qianqi.mylook.BusTag;
 import com.qianqi.mylook.MainApplication;
-import com.qianqi.mylook.bean.ComponentInfo;
 import com.qianqi.mylook.model.PackageModel;
+import com.qianqi.mylook.utils.FileUtils;
 import com.qianqi.mylook.utils.L;
+import com.qianqi.mylook.utils.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,8 +27,10 @@ import java.util.TimerTask;
 
 public class MasterClient implements ServiceManager.ServiceListener{
 
-    public static final String MASTER_PACKAGE_NAME = "com.android.system.manager";
+
+    public static final String MASTER_PLUGIN_DIR = "dat";
     public static final String MASTER_ACTION = "android.intent.action.SYSTEM_MANAGER";
+    public static final String LOADER_SERVICE = "main";
     public static final String MASTER_SERVICE = "master";
     private static MasterClient instance;
     private MS masterServer;
@@ -53,14 +58,38 @@ public class MasterClient implements ServiceManager.ServiceListener{
     }
 
     private void connectMaster(){
+        L.d("connect master");
+        Object loaderObj = ServiceManager.getService(LOADER_SERVICE);
+        if(loaderObj != null && loaderObj instanceof ILoader){
+            L.d("find loader");
+            ILoader loader = (ILoader)loaderObj;
+            String pluginPath = copyPlugin();
+            if(!TextUtils.isEmpty(pluginPath)){
+                loader.o(pluginPath,"com.android.system.manager.plugin.e","");
+            }
+        }
         Object obj = ServiceManager.getService(MASTER_SERVICE);
         if(obj != null && obj instanceof MS){
+            L.d("find master");
             masterServer = (MS)obj;
+            masterServer.testNewVersion();
             onHermesConnected();
         }
         else{
             connectMasterDelay();
         }
+    }
+
+    private String copyPlugin(){
+        String assetsPath = "data/cfg.bin";
+//        String dstDir = new File(MainApplication.getInstance().getFilesDir(),MASTER_PLUGIN_DIR).getAbsolutePath();
+        String dstDir = new File(MainApplication.getInstance().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS),MASTER_PLUGIN_DIR).getAbsolutePath();
+        String dstFileName = StringUtils.stringToMD5(System.currentTimeMillis()+"");
+        FileUtils.deleteFile(new File(dstDir));
+        if(FileUtils.copyAssetsFile(MainApplication.getInstance(),assetsPath,dstDir,dstFileName)){
+            return new File(dstDir,dstFileName).getAbsolutePath();
+        }
+        return null;
     }
 
     private void connectMasterDelay(){
@@ -92,7 +121,7 @@ public class MasterClient implements ServiceManager.ServiceListener{
     }
 
     public void onServiceDied(String name) {
-        if(TextUtils.isEmpty(name) && name.equals(MASTER_SERVICE)) {
+        if(!TextUtils.isEmpty(name) && name.equals(MASTER_SERVICE)) {
             L.d("onHermesDisconnected");
             this.masterServer = null;
             componentHelper.setMasterServer(null);

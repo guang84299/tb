@@ -29,7 +29,12 @@ public class MethodRouter {
     }
 
     public static Object routerToProvider(String name, Bundle argsBundle) {
-        Bundle bundle = ContentProviderCompat.call(ServiceProvider.buildUri(), ServiceProvider.CALL_SERVICE, name, argsBundle);
+        Bundle bundle = null;
+        try {
+            bundle = ContentProviderCompat.call(ServiceProvider.buildUri(), ServiceProvider.CALL_SERVICE, name, argsBundle);
+        } catch (Exception | Error e){
+
+        }
         return ParamUtil.getResult(bundle);
     }
 

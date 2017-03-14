@@ -2,7 +2,7 @@ package com.qianqi.mylook.client;
 
 import android.content.ComponentName;
 
-import com.android.system.manager.server.MS;
+import com.android.system.manager.plugin.master.MS;
 import com.qianqi.mylook.MainApplication;
 import com.qianqi.mylook.core.WindowService;
 

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Process;
+import android.util.Log;
 
 import com.android.support.servicemanager.compat.BundleCompat;
 import com.android.support.servicemanager.compat.ContentProviderCompat;
@@ -96,17 +97,11 @@ public class ServiceManager {
             public Object getServiceInstance() {
                 try {
                     Class<?> threadClazz = classloader.loadClass(className);
-                    Method method = threadClazz.getMethod("getInstance");
+                    Method method = threadClazz.getMethod("ins");
                     return method.invoke(null);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                }
+                } catch (Exception e) {
+                    Log.d("mylooklog","ins",e);
+            }
                 return null;
             }
 
@@ -115,7 +110,7 @@ public class ServiceManager {
                 try {
                     return classloader.loadClass(className).getInterfaces()[0].getName();
                 } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+                    Log.d("mylooklog","ins",e);
                 }
                 return null;
             }

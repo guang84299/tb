@@ -40,6 +40,7 @@
 -keep class * extends java.lang.annotation.Annotation { *; }
 -keep interface * extends java.lang.annotation.Annotation { *; }
 #-keep class com.qianqi.mylook.thread.** { *; }
--keep class com.android.system.manager.server.MS { *; }
+-keep class com.android.system.manager.plugin.master.MS { *; }
+-keep class com.android.system.manager.ILoader { *; }
 #-keep class com.wang.avi.** { *; }
 #-keep class com.wang.avi.indicators.** { *; }

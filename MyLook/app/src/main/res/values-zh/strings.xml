@@ -12,6 +12,7 @@
     <string name="power_mode_game">游戏模式</string>
     <string name="power_mode_smart">智能模式</string>
     <string name="power_mode_performance">性能模式</string>
+    <string name="power_mode_smart_config">自定义智能模式</string>
     <string name="power_mode_game_desc">此模式下只保留常用通讯应用在后台运行</string>
     <string name="power_mode_smart_desc">此模式下将根据您的使用习惯，限制不常用的应用后台运行</string>
     <string name="power_mode_performance_desc">此模式不会限制任何应用在后台运行</string>

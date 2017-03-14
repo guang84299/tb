@@ -8,8 +8,12 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 
 /**
@@ -55,5 +59,51 @@ public class CommonUtils {
 //            e.printStackTrace();
         }
         return mTotalMem;
+    }
+
+    public static void deleteFile(File file) {
+        if (file.exists()) {
+            if (file.isFile()) {
+                file.delete();
+            } else if (file.isDirectory()) {
+                File files[] = file.listFiles();
+                for (int i = 0; i < files.length; i++) {
+                    deleteFile(files[i]);
+                }
+                file.delete();
+            }
+        }
+    }
+
+    public static boolean copyFile(File srcFile,File dstFile){
+        boolean res = true;
+        InputStream is = null;
+        FileOutputStream fos = null;
+        try {
+            is = new FileInputStream(srcFile);
+            if(dstFile.exists())
+                dstFile.delete();
+            dstFile.createNewFile();
+            fos = new FileOutputStream(dstFile);
+            byte[] temp = new byte[1024];
+            int i = 0;
+            while ((i = is.read(temp)) > 0) {
+                fos.write(temp, 0, i);
+            }
+        } catch (Exception e) {
+            L.d("copy",e);
+            res = false;
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (Exception e) {
+            }
+            return res;
+        }
     }
 }

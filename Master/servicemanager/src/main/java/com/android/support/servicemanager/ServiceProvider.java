@@ -3,8 +3,10 @@ package com.android.support.servicemanager;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -62,16 +64,24 @@ public class ServiceProvider extends ContentProvider {
 
     @Override
     public Bundle call(String method, String arg, Bundle extras) {
-
         Runtime.getRuntime().gc();
-        if (Build.VERSION.SDK_INT >= 19) {
-            Log.d("call", "callingPackage = " + getCallingPackage());
+        int callingUid = Binder.getCallingUid();
+        PackageManager pm = this.getContext().getPackageManager();
+        String[] pkgs = pm.getPackagesForUid(callingUid);
+        if(pkgs == null) {
+            return null;
         }
-
-        Log.d("call", "Thead : id = " + Thread.currentThread().getId()
-                + ", name = " + Thread.currentThread().getName()
-                + ", method = " + method
-                + ", arg = " + arg);
+        boolean pass = false;
+        for(String pkg:pkgs){
+            if(pkg.equals("com.qianqi.mylook") ||
+                    pkg.equals(this.getContext().getPackageName())){
+                pass = true;
+                break;
+            }
+        }
+        if(!pass) {
+            return null;
+        }
 
         if (method.equals(REPORT_BINDER)) {
             final int pid = extras.getInt(PID);
@@ -127,6 +137,8 @@ public class ServiceProvider extends ContentProvider {
             if (recorder != null) {
                 bundle.putString(QUERY_INTERFACE_RESULT, recorder.interfaceClass);
             }
+            else{
+            }
             return bundle;
         } else if (method.equals(QUERY_SERVICE)) {
             String serviceName = arg;
@@ -158,7 +170,7 @@ public class ServiceProvider extends ContentProvider {
     }
 
     private void removeAllRecordorForPid(int pid) {
-        Log.w("ServiceProvider", "remove all service recordor for pid" + pid);
+        Log.w("mylooklog", "remove all service recordor for pid" + pid);
 
         //服务提供方进程挂了,或者服务提供方进程主动通知清理服务, 则先清理服务注册表, 再通知所有客户端清理自己的本地缓存
         processBinder.remove(pid);

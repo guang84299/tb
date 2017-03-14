@@ -1,6 +1,6 @@
 package com.qianqi.mylook.client;
 
-import com.android.system.manager.server.MS;
+import com.android.system.manager.plugin.master.MS;
 import com.qianqi.mylook.bean.ComponentInfo;
 import com.qianqi.mylook.utils.L;
 
