@@ -28,6 +28,7 @@ import java.util.List;
 public class MemHelper {
 
     public static final int GC_COUNT = 10;
+    public static final float DEFAULT_MIN_FREE = 0.2f;
     public static final float MIN_FREE_ADJUST = 0.03f;
     public static final int LEVEL = 1;
     private File zoneInfoFile = new File("/proc/zoneinfo");
@@ -79,11 +80,17 @@ public class MemHelper {
 //    }
 
     private long getMinFreeMem(){
+        long totalSize = totalMem;
         long sysMinFree = readAndCheckSysMinFree();
         if(sysMinFree > -1){
-            long totalSize = totalMem;
             if(totalSize > -1){
                 return (long) (sysMinFree + totalSize*MIN_FREE_ADJUST);
+            }
+        }
+        else{
+            if(totalSize > -1){
+                L.d("default min free");
+                return (long) (totalSize*DEFAULT_MIN_FREE + totalSize*MIN_FREE_ADJUST);
             }
         }
         return -1;

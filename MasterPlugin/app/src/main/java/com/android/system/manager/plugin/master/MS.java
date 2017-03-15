@@ -48,4 +48,6 @@ public interface MS {
 
     /*getAudioFocus*/
     String l();
+
+    void m(boolean bool);
 }

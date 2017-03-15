@@ -214,4 +214,10 @@ public class MasterClient implements ServiceManager.ServiceListener{
         }
         return this.masterServer.l();
     }
+
+    public void updateDebug(boolean bool){
+        if(this.masterServer != null){
+            this.masterServer.m(bool);
+        }
+    }
 }

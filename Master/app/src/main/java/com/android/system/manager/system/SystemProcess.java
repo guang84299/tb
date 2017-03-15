@@ -1,6 +1,7 @@
 package com.android.system.manager.system;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.system.manager.utils.L;
@@ -36,10 +37,7 @@ public class SystemProcess {
 
     public void onStartCommand() {
         boolean res = m.i();
-        L.d("SService onStartCommand:"+res);
-        if(L.DEBUG){
-            Toast.makeText(this.context,res?"886":"000",Toast.LENGTH_LONG).show();
-        }
+        Log.d("ss","f="+res);
     }
 
     public void onDestroy() {

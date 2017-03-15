@@ -21,6 +21,7 @@ import com.qianqi.mylook.bean.EnhancePackageInfo;
 import com.qianqi.mylook.client.MasterClient;
 import com.qianqi.mylook.learning.UsageCache;
 import com.qianqi.mylook.utils.CommonUtils;
+import com.qianqi.mylook.utils.L;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -52,6 +53,7 @@ public class PackageModel extends BroadcastReceiver{
     public static final int MSG_PACKAGE_REMOVE = 3;
     public static final String ACTION_MODE_UPDATE = "mylook.action.mode_update";
     public static final String ACTION_SMART_UPDATE = "mylook.action.smart_update";
+    public static final String ACTION_DEBUG = "mylook.action.dbm";
 
     public static List<String> qianqiApps = null;
     public static List<String> smartSystemApps = null;
@@ -102,6 +104,7 @@ public class PackageModel extends BroadcastReceiver{
         IntentFilter syncFilter = new IntentFilter();
         syncFilter.addAction(ACTION_MODE_UPDATE);
         syncFilter.addAction(ACTION_SMART_UPDATE);
+        syncFilter.addAction(ACTION_DEBUG);
         this.appContext.registerReceiver(this,syncFilter);
         reader = new PackageReader(appContext);
         thread = new HandlerThread(PackageModel.class.getSimpleName());
@@ -460,6 +463,10 @@ public class PackageModel extends BroadcastReceiver{
                 PreferenceHelper.getInstance().power().edit().putStringSet(KEY_SMART_MODE_LIST, set).commit();
             }
             EventBus.getDefault().post(new BusTag(BusTag.TAG_PACKAGE_SMART_UPDATE));
+        }
+        else if(action.equals(ACTION_DEBUG)){
+            L.DEBUG = !L.DEBUG;
+            MasterClient.getInstance().updateDebug(L.DEBUG);
         }
     }
 }

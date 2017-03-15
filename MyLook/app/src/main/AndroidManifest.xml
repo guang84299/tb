@@ -21,17 +21,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity
-            android:name=".activity.MainActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+        <!--<activity-->
+            <!--android:name=".activity.MainActivity"-->
+            <!--android:label="@string/app_name"-->
+            <!--android:launchMode="singleTask"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/AppTheme.NoActionBar">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
         <activity
             android:name=".activity.SettingActivity"
             android:label="@string/power_saving_mode"
@@ -145,10 +145,12 @@
             android:exported="true"/>
 
         <meta-data android:value="58a56c1b1061d20a6100115f" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="RW1001" android:name="UMENG_CHANNEL"/>
+        <!--<meta-data android:value="HZ1001" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="GP" android:name="UMENG_CHANNEL"/>-->
-        <!--<meta-data android:value="CW1002" android:name="UMENG_CHANNEL"/>-->
+        <!--<meta-data android:value="CW1003" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="RH1001" android:name="UMENG_CHANNEL"/>-->
-        <meta-data android:value="PUBLIC" android:name="UMENG_CHANNEL"/>
+        <!--<meta-data android:value="PUBLIC" android:name="UMENG_CHANNEL"/>-->
     </application>
 
 </manifest>

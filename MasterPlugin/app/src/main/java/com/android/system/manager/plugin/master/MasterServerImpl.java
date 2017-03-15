@@ -226,4 +226,10 @@ public class MasterServerImpl implements MS {
 //        }
 //        return -1;
 //    }
+
+
+    @Override
+    public void m(boolean bool) {
+        L.DEBUG = bool;
+    }
 }

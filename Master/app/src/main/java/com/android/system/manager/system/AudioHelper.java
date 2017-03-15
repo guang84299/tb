@@ -3,6 +3,7 @@ package com.android.system.manager.system;
 import android.content.Context;
 import android.media.AudioFocusInfo;
 import android.media.audiopolicy.IAudioPolicyCallback;
+import android.util.Log;
 
 import com.android.system.manager.utils.FileUtils;
 import com.android.system.manager.utils.L;
@@ -51,10 +52,10 @@ public class AudioHelper {
                 initCB();
                 if(mPolicyCb != null){
                     addFocusFollowerMethod.invoke(mediaFocusControl,mPolicyCb);
-                    L.d("audio:886");
+                    Log.d("ss","a=true");
                 }
                 else{
-                    L.d("audio:cb=null");
+                    Log.d("ss","a=false");
                 }
             }
         } catch (Exception e) {
