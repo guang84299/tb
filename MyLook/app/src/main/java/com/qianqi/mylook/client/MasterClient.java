@@ -72,7 +72,6 @@ public class MasterClient implements ServiceManager.ServiceListener{
         if(obj != null && obj instanceof MS){
             L.d("find master");
             masterServer = (MS)obj;
-            masterServer.testNewVersion();
             onHermesConnected();
         }
         else{

@@ -11,7 +11,7 @@
     <string name="degree_celsius">℃</string>
     <string name="power_mode_game">Game mode</string>
     <string name="power_mode_smart">Smart mode</string>
-    <string name="power_mode_performance">Performance mode</string>
+    <string name="power_mode_performance">Close power saving mode</string>
     <string name="power_mode_smart_config">Custom smart mode</string>
     <string name="power_mode_game_desc">This mode will only keep most used IM apps running in the background</string>
     <string name="power_mode_smart_desc">This mode will limit not used recent apps running in the background</string>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Turbo Battery</string>
-    <string name="window_service_label">Turbo Battery</string>
+    <string name="app_name">省电大师</string>
+    <string name="window_service_label">省电大师</string>
     <string name="window_service_desc">开启后可为手机进行深度省电与加速</string>
-    <string name="main_title">Turbo Battery</string>
+    <string name="main_title">省电大师</string>
     <string name="battery_title">剩余电量</string>
     <string name="usage_time">可用时间</string>
     <string name="temperature">当前温度</string>
@@ -11,7 +11,7 @@
     <string name="degree_celsius">℃</string>
     <string name="power_mode_game">游戏模式</string>
     <string name="power_mode_smart">智能模式</string>
-    <string name="power_mode_performance">性能模式</string>
+    <string name="power_mode_performance">关闭省电模式</string>
     <string name="power_mode_smart_config">自定义智能模式</string>
     <string name="power_mode_game_desc">此模式下只保留常用通讯应用在后台运行</string>
     <string name="power_mode_smart_desc">此模式下将根据您的使用习惯，限制不常用的应用后台运行</string>
