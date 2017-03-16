@@ -38,8 +38,8 @@ public class MainActivity extends BaseActivity{
     TextView usageView;
     @BindView(R.id.temperature)
     TextView temperatureView;
-    @BindView(R.id.battery_capacity)
-    TextView capacityView;
+//    @BindView(R.id.battery_capacity)
+//    TextView capacityView;
     @BindView(R.id.cur_power_mode)
     TextView curModeView;
     @BindView(R.id.config)
@@ -172,7 +172,7 @@ public class MainActivity extends BaseActivity{
 
     public void updateCapacity(int capacity) {
         this.capacity = capacity;
-        capacityView.setText(capacity+getString(R.string.battery_current_unit));
+//        capacityView.setText(capacity+getString(R.string.battery_current_unit));
     }
 
     @Subscribe(

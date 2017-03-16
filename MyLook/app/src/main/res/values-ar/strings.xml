@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">المتمرس في حفظ البطارية</string>
+    <string name="window_service_label">المتمرس في حفظ البطارية</string>
+    <string name="window_service_desc">بعد الفتح يقوم بتسريع الهاتف وحفظ البطارية بشكل كبير</string>
+    <string name="main_title">المتمرس في حفظ البطارية</string>
+    <string name="battery_title">البطارية المتبقية</string>
+    <string name="usage_time">الوقت المتاح</string>
+    <string name="temperature">درجة الحرارة الحالية</string>
+    <string name="power_saving_mode">وضع حفظ البطارية</string>
+    <string name="degree_celsius">℃</string>
+    <string name="power_mode_game">وضع الألعاب</string>
+    <string name="power_mode_smart">الوضع الذكي</string>
+    <string name="power_mode_performance">وضع اغلاق حفظ البطارية</string>
+    <string name="power_mode_smart_config">الوضع الذكي المخصص</string>
+    <string name="power_mode_game_desc">في هذا الوضع يمكن فقط الابقاء على تطبيقات التواصل الشائعة أن تعمل في الخلفية</string>
+    <string name="power_mode_smart_desc">في هذا الوضع استنادا على عاداتك في الاستخدام، الحد من التطبيقات الغير شائعة أن تعمل في الخلفية</string>
+    <string name="power_mode_performance_desc">في هذا الوضع لن يقوم بالحد من أي تطبيق أن يعمل في الخلفية </string>
+    <string name="battery_current_unit">" mAh"</string>
+    <string name="battery_capacity">قدرة البطارية</string>
+    <string name="custom_smart_mode">الوضع الذكي المخصص</string>
+    <string name="installed_apps">تم التثبيت</string>
+    <string name="system_apps">تطبيقات النظام</string>
+    <string name="unknow">مجهول</string>
+    <string name="not_limit">غير محدود</string>
+    <string name="smart_power_saving">حفظ البطارية الذكي</string>
+    <string name="smart_description">استنادا على عاداتك في الاستخدام سيقرر منع عمل التطبيق في الخلفية أم لا </string>
+    <string name="not_limit_description">هذا التطبيق لن يمنع من العمل في الخلفية</string>
+    <string name="hour">ساعة</string>
+    <string name="minute">دقيقة</string>
+</resources>

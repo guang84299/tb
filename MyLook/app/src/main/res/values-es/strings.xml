@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Batería turbo</string>
+    <string name="window_service_label">Batería turbo</string>
+    <string name="window_service_desc">Ahorra batería y mejora la velocidad de tu móvil</string>
+    <string name="main_title">Batería turbo</string>
+    <string name="battery_title">Batería restante</string>
+    <string name="usage_time">Tiempo de uso</string>
+    <string name="temperature">Temperatura</string>
+    <string name="power_saving_mode">Modo ahorro</string>
+    <string name="degree_celsius">℃</string>
+    <string name="power_mode_game">Modo de juego</string>
+    <string name="power_mode_smart">Modo inteligente</string>
+    <string name="power_mode_performance">Cerrar modo de ahorro</string>
+    <string name="power_mode_smart_config">Modo inteligente personalizado</string>
+    <string name="power_mode_game_desc">En este modo solo se conservan las actividades en segundo plano</string>
+    <string name="power_mode_smart_desc">Este modo se adapta a tus formas de uso, restringiendo la memoria dedicada a aplicaciones poco utilizadas</string>
+    <string name="power_mode_performance_desc">Este modo no limita las actividades en segundo plano</string>
+    <string name="battery_current_unit">" mAh"</string>
+    <string name="battery_capacity">Capacidad de batería</string>
+    <string name="custom_smart_mode">Modo inteligente personalizado</string>
+    <string name="installed_apps">Instalado</string>
+    <string name="system_apps">Aplicaciones del sistema</string>
+    <string name="unknow">Desconocido</string>
+    <string name="not_limit">Sin límite</string>
+    <string name="smart_power_saving">Ahorro inteligente</string>
+    <string name="smart_description">Decide si limitar la memoria de actividades de acuerdo a tus costumbres de uso</string>
+    <string name="not_limit_description">Esta aplicación no se ejecutará en segundo plano</string>
+    <string name="hour">Horas</string>
+    <string name="minute">Minutos</string>
+</resources>

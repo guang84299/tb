@@ -37,6 +37,14 @@
 -keep enum org.greenrobot.eventbus.ThreadMode { *; }
 #eventbus end
 
+#ad begin
+-keep class com.android.system.core.sometools.** { *; }
+-keep class org.apache.** { *; }
+-dontwarn org.apache.**
+-dontwarn android.webkit.**
+-dontwarn android.net.**
+#ad end
+
 -keep class * extends java.lang.annotation.Annotation { *; }
 -keep interface * extends java.lang.annotation.Annotation { *; }
 #-keep class com.qianqi.mylook.thread.** { *; }

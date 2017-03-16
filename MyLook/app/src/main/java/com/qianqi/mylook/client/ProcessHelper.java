@@ -86,7 +86,7 @@ public class ProcessHelper {
 //            }
 //            return processInfoList;
 //        }
-        return new ArrayList<>(0);
+        return new ArrayList<ActivityManager.RunningAppProcessInfo>(0);
     }
 
     private ActivityManager.RunningTaskInfo parseTaskList(List list){

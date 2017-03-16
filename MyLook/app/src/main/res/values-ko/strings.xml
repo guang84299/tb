@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">터보 배터리</string>
+    <string name="window_service_label">터보 배터리</string>
+    <string name="window_service_desc">오픈후 핸드폰은 초절전 모드에 진입하며 가속할수 있습니다.</string>
+    <string name="main_title">터보 배터리</string>
+    <string name="battery_title">배터리 용량 표시</string>
+    <string name="usage_time">남은 예상 사용 시간</string>
+    <string name="temperature">현재 온도</string>
+    <string name="power_saving_mode">절전 모드</string>
+    <string name="degree_celsius">℃</string>
+    <string name="power_mode_game">게임 모드</string>
+    <string name="power_mode_smart">지능 모드</string>
+    <string name="power_mode_performance">절전 모드 해제</string>
+    <string name="power_mode_smart_config">지능 모드 설정</string>
+    <string name="power_mode_game_desc">해당 모드에선 자주 사용하는 통신 어플만 백그라운드에서 실행합니다.</string>
+    <string name="power_mode_smart_desc">해당 모드에선 유저의 습관에 따라 자주 사용되지 않는 어플을 백그라운드에서의 실행을 제한합니다.</string>
+    <string name="power_mode_performance_desc">해당 모드에선 모든 어플을 백그라운드에서의 실행을 제한하지 않습니다.</string>
+    <string name="battery_current_unit">" mAh"</string>
+    <string name="battery_capacity">배터리 용량</string>
+    <string name="custom_smart_mode">지능 모드 설정</string>
+    <string name="installed_apps">이미 설치</string>
+    <string name="system_apps">시스템 어플</string>
+    <string name="unknow">알수 없음</string>
+    <string name="not_limit">제한 하지 않음</string>
+    <string name="smart_power_saving">지능 절전</string>
+    <string name="smart_description">유저의 사용 습관에 따라 어플이 백그라운드 실행을 판단합니다.</string>
+    <string name="not_limit_description">해당 어플은 백그라운드 실행을 제한하지 않습니다.</string>
+    <string name="hour">시간</string>
+    <string name="minute">분</string>
+</resources>

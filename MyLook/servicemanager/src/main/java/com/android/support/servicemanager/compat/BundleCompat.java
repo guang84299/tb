@@ -44,9 +44,14 @@ public class BundleCompat {
             mMap.put(key, value);
 
         } else if(Build.VERSION.SDK_INT > 19) {
-
-            RefIectUtil.invokeMethod(bundle, android.os.BaseBundle.class, "unparcel", (Class[])null, (Object[])null);
-            ArrayMap<String, Object> mMap = (ArrayMap<String, Object>) RefIectUtil.getFieldObject(bundle, android.os.BaseBundle.class, "mMap");
+            Class baseBundle = null;
+            try {
+                baseBundle = Class.forName("android.os.BaseBundle");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            RefIectUtil.invokeMethod(bundle, baseBundle, "unparcel", (Class[])null, (Object[])null);
+            ArrayMap<String, Object> mMap = (ArrayMap<String, Object>) RefIectUtil.getFieldObject(bundle, baseBundle, "mMap");
             mMap.put(key, value);
 
         }

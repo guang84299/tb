@@ -49,9 +49,9 @@ public class ServiceProvider extends ContentProvider {
     private static Uri CONTENT_URI;
 
     //服务名：进程ID
-    private static ConcurrentHashMap<String, Recorder> allServiceList = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String, Recorder> allServiceList = new ConcurrentHashMap<String, Recorder>();
     //进程ID：进程Binder
-    private static ConcurrentHashMap<Integer, IBinder> processBinder = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<Integer, IBinder> processBinder = new ConcurrentHashMap<Integer, IBinder>();
 
     public static Uri buildUri() {
         if (CONTENT_URI == null) {

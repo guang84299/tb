@@ -112,8 +112,8 @@ public class EggshellActivity extends BaseActivity {
                 setText(statusView, "无数据");
                 continue;
             }
-            List<float[]> inputList = new ArrayList<>();
-            List<Float> outputList = new ArrayList<>();
+            List<float[]> inputList = new ArrayList<float[]>();
+            List<Float> outputList = new ArrayList<Float>();
             for (RecordItem item : recordItems) {
                 float[] input = item.getInput();
                 float output = item.getOutput();

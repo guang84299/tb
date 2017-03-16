@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Мастер экономии батареи</string>
+    <string name="window_service_label">Мастер экономии батареи</string>
+    <string name="window_service_desc">Активировав, можно значительно сэкономить энергию батареи и ускорить работу телефона</string>
+    <string name="main_title">Мастер экономии батареи</string>
+    <string name="battery_title">Оставшийся заряд</string>
+    <string name="usage_time">Доступное время</string>
+    <string name="temperature">Температура</string>
+    <string name="power_saving_mode">Энергосберегающий режим</string>
+    <string name="degree_celsius">℃</string>
+    <string name="power_mode_game">Игровой режим</string>
+    <string name="power_mode_smart">Интеллектуальный режим</string>
+    <string name="power_mode_performance">Отключить энергосберегающий режим</string>
+    <string name="power_mode_smart_config">Пользовательский режим</string>
+    <string name="power_mode_game_desc">В данном режиме сохраняются только общие коммуникационные приложения, работающие в фоновом режиме</string>
+    <string name="power_mode_smart_desc">В данном режиме будут отключены нечасто используемые приложения, работающие в фоновом режиме</string>
+    <string name="power_mode_performance_desc">В данном режиме будут активированы все приложения, работающие в фоновом режиме</string>
+    <string name="battery_current_unit">" mAh"</string>
+    <string name="battery_capacity">Ёмкость батареи</string>
+    <string name="custom_smart_mode">Пользовательский режим</string>
+    <string name="installed_apps">Установлено</string>
+    <string name="system_apps">Системное приложение</string>
+    <string name="unknow">Неизвестно</string>
+    <string name="not_limit">Без ограничений</string>
+    <string name="smart_power_saving">Интеллектуальное энергосбережение</string>
+    <string name="smart_description">Ограничение фоновых приложений будет основываться на ваших привычках</string>
+    <string name="not_limit_description">Данное приложение будет работать в фоновом режиме</string>
+    <string name="hour">час.</string>
+    <string name="minute">мин.</string>
+</resources>

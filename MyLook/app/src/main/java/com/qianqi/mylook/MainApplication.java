@@ -40,6 +40,7 @@ public class MainApplication extends Application {
             MasterClient.getInstance().start();
         }
         startCoreService();
+        //GAdController.getInstance().init(this,true);
     }
 
     public static MainApplication getInstance(){

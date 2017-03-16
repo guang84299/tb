@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Batterie Turbo</string>
+    <string name="window_service_label">Batterie Turbo</string>
+    <string name="window_service_desc">Activez-la pour améliorer grandement la batterie et la vitesse du téléphone.</string>
+    <string name="main_title">Batterie Turbo</string>
+    <string name="battery_title">Batterie restante</string>
+    <string name="usage_time">Durée d\'utilisation</string>
+    <string name="temperature">Température</string>
+    <string name="power_saving_mode">Mode d\'économie d\'énergie</string>
+    <string name="degree_celsius">℃</string>
+    <string name="power_mode_game">Mode jeu</string>
+    <string name="power_mode_smart">Mode intelligent</string>
+    <string name="power_mode_performance">Désactiver le mode d\'économie d\'énergie</string>
+    <string name="power_mode_smart_config">Mode intelligent personnalisé</string>
+    <string name="power_mode_game_desc">Ce mode ne conserve que les applications de communication habituelles qui fonctionnent en arrière-plan.</string>
+    <string name="power_mode_smart_desc">Ce mode est basé sur vos habitudes d\'utilisation, limitant les applications non fréquemment utilisées en arrière-plan.</string>
+    <string name="power_mode_performance_desc">Ce mode n\'empêche aucune application de fonctionner en arrière-plan.</string>
+    <string name="battery_current_unit">" mAh"</string>
+    <string name="battery_capacity">Capacité de batterie</string>
+    <string name="custom_smart_mode">Mode intelligent personnalisé</string>
+    <string name="installed_apps">Déjà installé</string>
+    <string name="system_apps">Application système</string>
+    <string name="unknow">Inconnu</string>
+    <string name="not_limit">Aucune limite</string>
+    <string name="smart_power_saving">Économie d\'énergie intelligente</string>
+    <string name="smart_description">Déterminez si cette application est autorisée à fonctionner en arrière-plan selon vos habitudes.</string>
+    <string name="not_limit_description">Cette application sera autorisée à fonctionner en arrière-plan.</string>
+    <string name="hour">Heures</string>
+    <string name="minute">minutes</string>
+</resources>

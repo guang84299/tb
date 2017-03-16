@@ -38,7 +38,7 @@ public class SmartConfigAdapter extends BaseSectionQuickAdapter<SmartConfigSecti
         String head = "";
         String noLimit = activity.getString(R.string.not_limit);
         String smart = activity.getString(R.string.smart_power_saving);
-        ArrayList<SmartConfigSection> sections = new ArrayList<>();
+        ArrayList<SmartConfigSection> sections = new ArrayList<SmartConfigSection>();
         for(int i = 0;i < list.size();i++){
             SmartConfigSection section = null;
             EnhancePackageInfo p = list.get(i);

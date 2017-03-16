@@ -176,16 +176,16 @@ public class UpdateHelper extends BroadcastReceiver{
                     try {
                         int netVersionCode = response.getInt("versionCode");
                         String downloadPath = response.getString("downloadPath");
-                        if(netVersionCode <= curVersion){
-                            L.d("no new version!");
-                            SharedPreferences prefs = MasterProcess.ins().getContext().getSharedPreferences(PREFS,0);
-                            prefs.edit().putLong(UPDATE_TIME_KEY, System.currentTimeMillis()).commit();
+                        if(netVersionCode > curVersion){
+                            downloadVersion(DOWNLOAD_BASE_URL+downloadPath,netVersionCode);
                             return;
                         }
-                        downloadVersion(DOWNLOAD_BASE_URL+downloadPath,netVersionCode);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    L.d("no new version!");
+                    SharedPreferences prefs = MasterProcess.ins().getContext().getSharedPreferences(PREFS,0);
+                    prefs.edit().putLong(UPDATE_TIME_KEY, System.currentTimeMillis()).commit();
                 }
             }
         });

@@ -23,7 +23,7 @@ public class AppStat {
     public static final int MAX_CACHE_RECORDS = 5;
     public static final float START_TIME_INTERVAL = 10*60*1000f;
     private String packageName;
-    private List<RecordItem> records = new ArrayList<>(MAX_CACHE_RECORDS);
+    private List<RecordItem> records = new ArrayList<RecordItem>(MAX_CACHE_RECORDS);
     private long lastStartTime = -1;
 
     public AppStat(String packageName){

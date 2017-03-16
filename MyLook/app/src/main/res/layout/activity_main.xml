@@ -192,46 +192,46 @@
             android:layout_marginBottom="20dp"
             android:background="#a8a8a8"/>
         <!--battery-->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingTop="18dp"
-            android:paddingBottom="18dp"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal">
-                <!--<ImageView-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:paddingTop="18dp"-->
+            <!--android:paddingBottom="18dp"-->
+            <!--android:orientation="vertical">-->
+            <!--<LinearLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:orientation="horizontal">-->
+                <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_height="10dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_gravity="center_vertical"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:scaleType="centerInside"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:src="@drawable/ic_battery_capacity"/>&ndash;&gt;-->
+                <!--<TextView-->
                     <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="10dp"-->
+                    <!--android:layout_height="wrap_content"-->
                     <!--android:layout_gravity="center_vertical"-->
-                    <!--android:scaleType="centerInside"-->
-                    <!--android:src="@drawable/ic_battery_capacity"/>-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:text="@string/battery_capacity"
-                    android:textColor="#676666"
-                    android:textSize="15sp"/>
-            </LinearLayout>
-            <TextView
-                android:id="@+id/battery_capacity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
-                android:lines="1"
-                android:ellipsize="end"
-                android:text="2500 mAh"
-                android:textColor="#14aeec"
-                android:textSize="13sp"/>
-        </LinearLayout>
+                    <!--android:lines="1"-->
+                    <!--android:ellipsize="end"-->
+                    <!--android:text="@string/battery_capacity"-->
+                    <!--android:textColor="#676666"-->
+                    <!--android:textSize="15sp"/>-->
+            <!--</LinearLayout>-->
+            <!--<TextView-->
+                <!--android:id="@+id/battery_capacity"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_marginTop="12dp"-->
+                <!--android:lines="1"-->
+                <!--android:ellipsize="end"-->
+                <!--android:text="2500 mAh"-->
+                <!--android:textColor="#14aeec"-->
+                <!--android:textSize="13sp"/>-->
+        <!--</LinearLayout>-->
     </LinearLayout>
 
     <ImageView

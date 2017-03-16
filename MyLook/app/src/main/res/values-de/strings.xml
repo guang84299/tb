@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Turbobatterie</string>
+    <string name="window_service_label">Turbobatterie</string>
+    <string name="window_service_desc">Starten, um dein Handy stromsparender und schneller zu machen</string>
+    <string name="main_title">Turbobatterie</string>
+    <string name="battery_title">Verbleibender Akku</string>
+    <string name="usage_time">Nutzungszeit</string>
+    <string name="temperature">Temperatur</string>
+    <string name="power_saving_mode">Energiesparmodus</string>
+    <string name="degree_celsius">℃</string>
+    <string name="power_mode_game">Spielmodus</string>
+    <string name="power_mode_smart">Smartmodus</string>
+    <string name="power_mode_performance">Energiesparmodus beenden</string>
+    <string name="power_mode_smart_config">Angepasster Smartmodus</string>
+    <string name="power_mode_game_desc">In diesem Modus werden nur Standard-Kommunikationsapps im Hintergrund laufen</string>
+    <string name="power_mode_smart_desc">In diesem Modus werden entsprechend Ihrer Nutzgewohnheiten nur häufig verwendete Apps im Hintergrund laufen</string>
+    <string name="power_mode_performance_desc">In diesem Modus werden alle Apps ohne Einschränkung im Hintergrund laufen</string>
+    <string name="battery_current_unit">" mAh"</string>
+    <string name="battery_capacity">Akku-Kapazität</string>
+    <string name="custom_smart_mode">Angepasster Smartmodus</string>
+    <string name="installed_apps">Bereits installiert</string>
+    <string name="system_apps">System-Apps</string>
+    <string name="unknow">Unbekannt</string>
+    <string name="not_limit">Unbeschränkt</string>
+    <string name="smart_power_saving">Smartes Energiesparen</string>
+    <string name="smart_description">Entsprechend Ihrer Nutzgewohnheiten bestimmen, ob das App im Hintergrund laufen darf</string>
+    <string name="not_limit_description">Dieses App darf nicht auf den Hintergrund beschränkt werden</string>
+    <string name="hour">Stunde</string>
+    <string name="minute">Minute</string>
+</resources>

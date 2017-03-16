@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">省電大師</string>
+    <string name="window_service_label">省電大師</string>
+    <string name="window_service_desc">開啟後可為手機進行深度省電與加速</string>
+    <string name="main_title">省電大師</string>
+    <string name="battery_title">剩餘電量</string>
+    <string name="usage_time">可用時間</string>
+    <string name="temperature">當前溫度</string>
+    <string name="power_saving_mode">省電模式</string>
+    <string name="degree_celsius">℃</string>
+    <string name="power_mode_game">遊戲模式</string>
+    <string name="power_mode_smart">智慧模式</string>
+    <string name="power_mode_performance">關閉省電模式</string>
+    <string name="power_mode_smart_config">自定義智慧模式</string>
+    <string name="power_mode_game_desc">此模式下只保留常用通訊應用在後臺運行</string>
+    <string name="power_mode_smart_desc">此模式下將根據您的使用習慣，限制不常用的應用後臺運行</string>
+    <string name="power_mode_performance_desc">此模式不會限制任何應用在後臺運行</string>
+    <string name="battery_current_unit">" mAh"</string>
+    <string name="battery_capacity">電池容量</string>
+    <string name="custom_smart_mode">自定義智慧模式</string>
+    <string name="installed_apps">已安裝</string>
+    <string name="system_apps">系統應用</string>
+    <string name="unknow">未知</string>
+    <string name="not_limit">不限制</string>
+    <string name="smart_power_saving">智慧省電</string>
+    <string name="smart_description">根據您的使用習慣决定是否將此應用限制後臺運行</string>
+    <string name="not_limit_description">此應用將不會被限制後臺運行</string>
+    <string name="hour">小時</string>
+    <string name="minute">分鐘</string>
+</resources>

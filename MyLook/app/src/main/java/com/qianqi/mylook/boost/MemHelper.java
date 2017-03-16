@@ -248,7 +248,9 @@ public class MemHelper {
             long max = Math.max(freePage,filePage);
 //            L.d("free,file="+freePage*4*1024+","+filePage*4*1024);
             return max * 4 * 1024;
-        } catch (Exception|Error e){
+        } catch (Exception e){
+            L.d("readFree",e);
+        } catch (Error e){
             L.d("readFree",e);
         } finally {
             if(reader != null)

@@ -99,7 +99,7 @@ public class BoostHelper {
     }
 
     private void excludeByMode(List<EnhancePackageInfo> runningPackageList){
-        List<EnhancePackageInfo> firstList = new ArrayList<>();
+        List<EnhancePackageInfo> firstList = new ArrayList<EnhancePackageInfo>();
         Iterator<EnhancePackageInfo> ite = runningPackageList.iterator();
         while(ite.hasNext()){
             EnhancePackageInfo p = ite.next();

@@ -37,7 +37,8 @@ public class ServiceManager {
         try{
             ContentProviderCompat.call(ServiceProvider.buildUri(),
                     ServiceProvider.REPORT_BINDER, null, argsBundle);
-        }catch (Exception | Error e){
+        } catch (Exception e){
+        } catch (Error e){
         }
 
         ServiceManager.sApplication.registerReceiver(new BroadcastReceiver() {
@@ -74,7 +75,8 @@ public class ServiceManager {
             try{
                 bundle = ContentProviderCompat.call(ServiceProvider.buildUri(),
                         ServiceProvider.QUERY_INTERFACE, name, null);
-            }catch (Exception | Error e){
+            } catch (Exception e){
+            } catch (Error e){
             }
             if (bundle != null) {
                 String interfaceClassName = bundle.getString(ServiceProvider.QUERY_INTERFACE_RESULT);

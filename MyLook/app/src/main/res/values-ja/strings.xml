@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">バッテリーマネージャー</string>
+    <string name="window_service_label">バッテリーマネージャー</string>
+    <string name="window_service_desc">アプリの節電機能をonにすることにより電力の消費を大幅に削減し、動作を軽くする。</string>
+    <string name="main_title">バッテリーマネージャー</string>
+    <string name="battery_title">バッテリー残量</string>
+    <string name="usage_time">バッテリー残量の使用時間</string>
+    <string name="temperature">現在の温度</string>
+    <string name="power_saving_mode">節電モード</string>
+    <string name="degree_celsius">℃</string>
+    <string name="power_mode_game">ゲームモード</string>
+    <string name="power_mode_smart">スマートモード</string>
+    <string name="power_mode_performance">節電モードをoffにする</string>
+    <string name="power_mode_smart_config">カスタマイズモード</string>
+    <string name="power_mode_game_desc">必要な通信アプリ以外、バックグラウンドで動いているアプリを終了させる</string>
+    <string name="power_mode_smart_desc">必要のないアプリのバックグラウンドでの起動を制限することによって、個人習慣に適応させる</string>
+    <string name="power_mode_performance_desc">このモードはアプリの起動をすべて制限しない。</string>
+    <string name="battery_current_unit">" mAh"</string>
+    <string name="battery_capacity">バッテリーの容量</string>
+    <string name="custom_smart_mode">カスタマイズモード</string>
+    <string name="installed_apps">インストール済</string>
+    <string name="system_apps">システムアプリ</string>
+    <string name="unknow">不明</string>
+    <string name="not_limit">制限なし</string>
+    <string name="smart_power_saving">スマート節電</string>
+    <string name="smart_description">このアプリをバックグラウンドで起動するかはあなたの使用習慣によって決められる</string>
+    <string name="not_limit_description">このアプリはバックグラウンドでの起動が制限されないようになった</string>
+    <string name="hour">時</string>
+    <string name="minute">分</string>
+</resources>

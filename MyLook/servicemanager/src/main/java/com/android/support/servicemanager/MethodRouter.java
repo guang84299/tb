@@ -32,7 +32,9 @@ public class MethodRouter {
         Bundle bundle = null;
         try {
             bundle = ContentProviderCompat.call(ServiceProvider.buildUri(), ServiceProvider.CALL_SERVICE, name, argsBundle);
-        } catch (Exception | Error e){
+        } catch (Exception e){
+
+        } catch (Error e){
 
         }
         return ParamUtil.getResult(bundle);
