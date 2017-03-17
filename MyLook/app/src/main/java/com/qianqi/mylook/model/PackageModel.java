@@ -54,6 +54,7 @@ public class PackageModel extends BroadcastReceiver{
     public static final String ACTION_MODE_UPDATE = "mylook.action.mode_update";
     public static final String ACTION_SMART_UPDATE = "mylook.action.smart_update";
     public static final String ACTION_DEBUG = "mylook.action.dbm";
+    public static final String KEY_TOP_PACKAGE = "top_package_name";
 
     public static List<String> qianqiApps = null;
     public static List<String> smartSystemApps = null;
@@ -254,7 +255,7 @@ public class PackageModel extends BroadcastReceiver{
             if(event.data != null && event.data instanceof String){
                 String top = (String) event.data;
                 if(!top.equals(topPackageName)) {
-                    topPackageName = top;
+                    setTopPackageName(top);
                     EventBus.getDefault().post(new BusTag(BusTag.TAG_TOP_TASK_CHANGED));
                 }
             }
@@ -337,12 +338,18 @@ public class PackageModel extends BroadcastReceiver{
         return topPackageName;
     }
 
+    private void setTopPackageName(String packageName){
+        this.topPackageName = packageName;
+        PreferenceHelper.getInstance().common().edit().putString(KEY_TOP_PACKAGE,this.topPackageName).commit();
+    }
+
     private void handleMessage(Message msg){
         String packageName;
         switch (msg.what){
             case MSG_LOAD:
-                if(TextUtils.isEmpty(topPackageName))
-                    topPackageName = MasterClient.getInstance().getTopTask();
+                if(TextUtils.isEmpty(topPackageName)) {
+                    setTopPackageName(MasterClient.getInstance().getTopTask());
+                }
                 if(packageList != null) {
                     packageList.clear();
                     packageList = null;

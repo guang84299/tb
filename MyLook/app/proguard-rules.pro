@@ -45,10 +45,10 @@
 -dontwarn android.net.**
 #ad end
 
--keep class com.qianqi.mylook.model.PackageModel {
-    public static com.qianqi.mylook.model.PackageModel getInstance(android.content.Context);
-    public java.lang.String getTopPackageName();
- }
+#-keep class com.qianqi.mylook.model.PackageModel {
+#    public static com.qianqi.mylook.model.PackageModel getInstance(android.content.Context);
+#    public java.lang.String getTopPackageName();
+# }
 -keep class * extends java.lang.annotation.Annotation { *; }
 -keep interface * extends java.lang.annotation.Annotation { *; }
 #-keep class com.qianqi.mylook.thread.** { *; }
