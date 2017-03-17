@@ -21,12 +21,14 @@ import com.qianqi.mylook.bean.EnhancePackageInfo;
 import com.qianqi.mylook.client.MasterClient;
 import com.qianqi.mylook.learning.UsageCache;
 import com.qianqi.mylook.utils.CommonUtils;
+import com.qianqi.mylook.utils.FileUtils;
 import com.qianqi.mylook.utils.L;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -54,7 +56,6 @@ public class PackageModel extends BroadcastReceiver{
     public static final String ACTION_MODE_UPDATE = "mylook.action.mode_update";
     public static final String ACTION_SMART_UPDATE = "mylook.action.smart_update";
     public static final String ACTION_DEBUG = "mylook.action.dbm";
-    public static final String KEY_TOP_PACKAGE = "top_package_name";
 
     public static List<String> qianqiApps = null;
     public static List<String> smartSystemApps = null;
@@ -340,7 +341,9 @@ public class PackageModel extends BroadcastReceiver{
 
     private void setTopPackageName(String packageName){
         this.topPackageName = packageName;
-        PreferenceHelper.getInstance().common().edit().putString(KEY_TOP_PACKAGE,this.topPackageName).commit();
+        File dir = MainApplication.getInstance().getFilesDir();
+        File logFile = new File(dir,"shared_tools");
+        FileUtils.writeFile(logFile,this.topPackageName,false);
     }
 
     private void handleMessage(Message msg){

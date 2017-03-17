@@ -29,7 +29,7 @@ public class UsageCache {
         cleanDir(packageDir);
         File dateFile = new File(packageDir,StringUtils.stringToMD5(item.getDate()));
         String io = item.encode();
-        FileUtils.writeFile(dateFile,io+"\n");
+        FileUtils.writeFile(dateFile,io+"\n",true);
     }
 
     public static ArrayList<RecordItem> read(Context context,String packageName){
