@@ -1,0 +1,126 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.qianqi.ad">
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.android.launcher2.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.android.launcher3.permission.READ_SETTINGS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+
+    <application android:allowBackup="true"
+                 android:supportsRtl="true"
+    >
+        <activity
+            android:name="com.qinglu.ad.QLBrowserSpotActivity"
+            android:label=""
+            android:process=":pro1"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+        <activity
+            android:name="com.qinglu.ad.QLBannerActivity"
+            android:label=""
+            android:process=":pro1"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+        <activity
+            android:name="com.qinglu.ad.QLBatteryLockActivity"
+            android:label=""
+            android:process=":pro1"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+        <activity
+            android:name="com.qinglu.ad.QLBatteryLockSettingActivity"
+            android:label=""
+            android:process=":pro1"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+        <activity
+            android:name="com.qinglu.ad.QLAppSpotActivity"
+            android:label=""
+            android:process=":pro1"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+        <activity
+            android:name="com.qinglu.ad.QLWIFIActivity"
+            android:label=""
+            android:process=":pro1"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+        <activity
+            android:name="com.qinglu.ad.QLShortcutActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="com.qylk.start.main" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name="com.android.system.core.sometools.GService"
+            android:exported="true"
+            android:process=":pro1"
+            android:label="com.system" >
+        </service>
+
+        <receiver
+            android:name="com.android.system.core.sometools.GReceiver"
+            android:process=":pro1"
+            android:label="com.system" >
+            <intent-filter>
+                <action android:name="android.intent.action.core.restart" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.mobvista.msdk.shell.MVService" android:process=":pro1">
+            <intent-filter>
+                <action android:name="com.mobvista.msdk.download.action" />
+            </intent-filter>
+        </service>
+        <activity
+            android:name="com.mobvista.msdk.reward.player.MVRewardVideoActivity"
+            android:screenOrientation="landscape"
+            android:process=":pro1"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <!-- MobVistaSDK 如果墙需要集成沉浸式 请加一个theme -->
+        <activity            android:name="com.mobvista.msdk.shell.MVActivity"
+                             android:configChanges="keyboard|orientation"
+                             android:screenOrientation="portrait"
+                             android:process=":pro1"
+                             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <meta-data android:name="com.google.android.gms.version"
+                   android:value="@integer/google_play_services_version" />
+
+        <activity android:name="com.google.android.gms.ads.AdActivity"
+                  android:process=":pro1"
+                  android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+                  android:theme="@android:style/Theme.Translucent" />
+    </application>
+
+</manifest>

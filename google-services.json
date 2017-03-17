@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "843265281045",
+    "firebase_url": "https://my-look-2cafe.firebaseio.com",
+    "project_id": "my-look-2cafe",
+    "storage_bucket": "my-look-2cafe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843265281045:android:498b2a47f93b1808",
+        "android_client_info": {
+          "package_name": "com.qianqi.mylook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843265281045-o5dsmha4sav2j4b9bb3463g16fde139v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9gmihQRUpVtq1VMJzgfGNLhL_-1NynoI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
