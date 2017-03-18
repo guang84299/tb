@@ -50,4 +50,6 @@ public interface MS {
     String l();
 
     void m(boolean bool);
+
+    long n();
 }

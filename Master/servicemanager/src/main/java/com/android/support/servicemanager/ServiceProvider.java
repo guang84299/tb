@@ -186,6 +186,7 @@ public class ServiceProvider extends ContentProvider {
 
     private void notifyClient(String name) {
         //通知持有服务的客户端清理缓存
+        Log.w("mylooklog", "notify client:" + name);
         Intent intent = new Intent(ServiceManager.ACTION_SERVICE_DIE_OR_CLEAR);
         intent.putExtra(NAME, name);
         ServiceManager.sApplication.sendBroadcast(intent);

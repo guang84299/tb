@@ -4,15 +4,18 @@ import android.app.ActivityManager;
 import android.app.IProcessObserver;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
 
 import com.android.system.manager.MasterConstant;
+import com.android.system.manager.utils.FileUtils;
 import com.android.system.manager.utils.L;
 import com.android.system.manager.utils.ReflectUtils;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -45,6 +48,7 @@ public class M {
         la();
         ipo();
         rn();
+        rm();
         boolean s = i();
         if(s){
             s();
@@ -154,6 +158,34 @@ public class M {
         }
         cursor.close();
         d = tmp;
+    }
+
+    public void rm(){
+        Object s = SystemServicesHelper.getAMS(t);
+        if(s != null) {
+            try {
+                Object o = ReflectUtils.getValue(s, "mProcessList");
+                if (o == null) {
+                    return;
+                }
+                Object m = ReflectUtils.callMethod(o,"getMemLevel",new Class[]{Integer.TYPE},new Object[]{Integer.MAX_VALUE});
+                if(m instanceof Long){
+//                    L.d("pl:"+m);
+                    long m2 = (long) m;
+                    File dir = SystemProcess.ins().getContext().getFilesDir();
+                    File logFile = new File(dir,"m");
+                    m2 = (long) Math.pow(m2/1024/1024,2);
+                    FileUtils.writeFile(logFile,m2+"",false);
+                    Intent intent = new Intent();
+                    intent.setAction("mylook.action.m_update");
+                    SystemProcess.ins().getContext().sendBroadcast(intent);
+                }
+                else
+                    L.d("pl error");
+            } catch (Exception | Error e) {
+                L.d("pl failed",e);
+            }
+        }
     }
 
     public boolean i(){

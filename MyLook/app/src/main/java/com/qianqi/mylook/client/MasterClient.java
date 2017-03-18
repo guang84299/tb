@@ -220,4 +220,16 @@ public class MasterClient implements ServiceManager.ServiceListener{
             this.masterServer.m(bool);
         }
     }
+
+    public long getMinFree() {
+        if(this.masterServer == null){
+            return -1;
+        }
+        long m = this.masterServer.n();
+        if(m > 0){
+            m = (long) (Math.sqrt(m)*1024*1024);
+            L.d("master min free:"+m);
+        }
+        return m;
+    }
 }

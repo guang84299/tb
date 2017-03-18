@@ -28,10 +28,12 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        PreferenceHelper.getInstance().initContext(getApplicationContext());
-        CrashHandler.getInstance().init(getApplicationContext());
-        PackageModel.getInstance(getApplicationContext()).startLoad();
         String processName = CommonUtils.getProcessName(getApplicationContext());
+        if(processName.equals(getApplicationContext().getPackageName()) || processName.contains(":core")){
+            PreferenceHelper.getInstance().initContext(getApplicationContext());
+            CrashHandler.getInstance().init(getApplicationContext());
+            PackageModel.getInstance(getApplicationContext()).startLoad();
+        }
         if(processName.equals(getApplicationContext().getPackageName())){
             MobclickAgent.enableEncrypt(true);
             //        MobclickAgent.setDebugMode( true );

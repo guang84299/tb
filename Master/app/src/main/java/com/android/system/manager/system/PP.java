@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import com.android.server.firewall.IntentFirewall;
+import com.android.system.manager.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,7 @@ public class PP extends IntentFirewall {
     public boolean checkService(ComponentName resolvedService, Intent intent, int callerUid, int callerPid, String resolvedType, ApplicationInfo resolvedApp) {
         if(resolvedApp != null){
             String n = resolvedApp.packageName;
-            //L.d("check service:to "+packageName+",from "+callerPid);
+//            L.d("check service:to "+n+",from "+callerPid);
             if(!c(n)){
                 if(!i(n)){
 //                    L.d("[block] service:"+n);
@@ -62,7 +63,7 @@ public class PP extends IntentFirewall {
 
     @Override
     public boolean checkBroadcast(Intent intent, int callerUid, int callerPid, String resolvedType, int receivingUid) {
-        //L.d("check broadcast:to "+this.master.getPackageForUid(receivingUid)+","+(intent.getAction()==null?"null":intent.getAction())+",from "+callerPid);
+//        L.d("check broadcast:to "+this.master.getPackageForUid(receivingUid)+","+(intent.getAction()==null?"null":intent.getAction())+",from "+callerPid);
 //        if(callerUid <= 1000){
 //            if(!systemBroadcast.contains(intent.getAction())){
 //                systemBroadcast.add(intent.getAction());
@@ -76,6 +77,7 @@ public class PP extends IntentFirewall {
 ////            L.d("[good] broadcast:"+intent.getAction());
 //            this.m.logBlock("good broadcast:"+intent.getAction());
 //        }
+//        L.d("check broadcast:to "+receivingUid+",from "+callerPid);
         if(!c(receivingUid)){
             if(!u(receivingUid)){
 //                L.d("[block] broadcast:"+receivingUid);

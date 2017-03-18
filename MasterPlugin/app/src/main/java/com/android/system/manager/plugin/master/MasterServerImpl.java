@@ -232,4 +232,20 @@ public class MasterServerImpl implements MS {
     public void m(boolean bool) {
         L.DEBUG = bool;
     }
+
+    @Override
+    public long n() {
+        File dir = MasterProcess.ins().getContext().getFilesDir();
+        File logFile = new File(dir,"m");
+        List<String> logs = FileUtils.readFile(logFile);
+        if(logs.size() > 0) {
+            try{
+                return Long.parseLong(logs.get(0));
+            }
+            catch (Exception e){
+                L.d("m",e);
+            }
+        }
+        return -1;
+    }
 }

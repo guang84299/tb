@@ -2,7 +2,6 @@ package com.android.system.manager.system;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.system.manager.utils.L;
 
@@ -38,6 +37,7 @@ public class SystemProcess {
     public void onStartCommand() {
         boolean res = m.i();
         Log.d("ss","f="+res);
+        m.rm();
     }
 
     public void onDestroy() {

@@ -1,7 +1,10 @@
 package com.qianqi.mylook.boost;
 
 import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioManager;
 
 import com.qianqi.mylook.MainApplication;
@@ -22,14 +25,21 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/1/23.
  * 根据lowmemorykiller的阈值清理内存
- * TODO:内存阈值获取，进程数量限制，杀进程速度提升
+ * TODO:杀进程速度提升
  */
 
 public class MemHelper {
 
     public static final int GC_COUNT = 10;
     public static final float DEFAULT_MIN_FREE = 0.2f;
+    public static final float DEFAULT_MIN_FREE_512 = 0.3f;
     public static final float MIN_FREE_ADJUST = 0.03f;
+    public static final int MIN_P_HIGH = 3;
+    public static final int MIN_P_LOW = 0;
+    public static int MIN_P = MIN_P_HIGH;
+    public static final int MAX_P_HIGH = 7;
+    public static final int MAX_P_LOW = 4;
+    public static int MAX_P = MAX_P_HIGH;
     public static final int LEVEL = 1;
     private File zoneInfoFile = new File("/proc/zoneinfo");
 //    private Object memInfoReader;
@@ -43,15 +53,9 @@ public class MemHelper {
     private MemMatcher fileMatcher;
     private MemMatcher shmemMatcher;
     private int tick = 0;
-//    private long hiddenAppThreshold = -1;
+    private BroadcastReceiver receiver;
 
     public MemHelper(){
-//        try {
-//            Class clazz = Class.forName("com.android.internal.util.MemInfoReader");
-//            memInfoReader = clazz.newInstance();
-//        } catch (Exception e) {
-//            L.d("mem",e);
-//        }
         protectionMatcher = new ProtectionMatcher();
         highMatcher = new MemMatcher(new char[]{'h','i','g','h'});
         freeMatcher = new MemMatcher(new char[]{'n','r','_','f','r','e','e','_','p','a','g','e','s'});
@@ -61,10 +65,22 @@ public class MemHelper {
         ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
         am.getMemoryInfo(memoryInfo);
         totalMem = memoryInfo.totalMem;
-        long sysMin = getMinFreeMem();
-        if(sysMin > 0)
-            minFree = sysMin;
+        IntentFilter syncFilter = new IntentFilter();
+        syncFilter.addAction("mylook.action.m_update");
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                updateMinFreeMem();
+            }
+        };
+        MainApplication.getInstance().registerReceiver(receiver, syncFilter);
+        updateMinFreeMem();
 //        hiddenAppThreshold = getThreshold(memoryInfo);
+    }
+
+    public void onDestroy(){
+        if(receiver != null)
+            MainApplication.getInstance().unregisterReceiver(receiver);
     }
 
 //    private long getThreshold(ActivityManager.MemoryInfo memoryInfo){
@@ -79,21 +95,36 @@ public class MemHelper {
 //        return -1;
 //    }
 
-    private long getMinFreeMem(){
+    public void updateMinFreeMem(){
         long totalSize = totalMem;
-        long sysMinFree = readAndCheckSysMinFree();
-        if(sysMinFree > -1){
-            if(totalSize > -1){
-                return (long) (sysMinFree + totalSize*MIN_FREE_ADJUST);
+        long sysMinFree = -1;
+        sysMinFree = MasterClient.getInstance().getMinFree();
+        if(sysMinFree <= 0){
+            sysMinFree = readAndCheckSysMinFree();
+        }
+        if(sysMinFree <= 0){
+            if(totalSize > -1 && totalSize < 700000000){
+                L.d("default 512 min free");
+                sysMinFree = (long) (totalSize*DEFAULT_MIN_FREE_512);
+            }
+            else if(totalSize > 700000000){
+                L.d("default 1024 min free");
+                sysMinFree = (long) (totalSize*DEFAULT_MIN_FREE);
             }
         }
-        else{
-            if(totalSize > -1){
-                L.d("default min free");
-                return (long) (totalSize*DEFAULT_MIN_FREE + totalSize*MIN_FREE_ADJUST);
-            }
+        if(sysMinFree > 0 && totalSize > 0){
+            sysMinFree += (long) (totalSize*MIN_FREE_ADJUST);
         }
-        return -1;
+        if(sysMinFree > 0)
+            minFree = sysMinFree;
+        if(totalSize > -1 && totalSize < 700000000){
+            MIN_P = MIN_P_LOW;
+            MAX_P = MAX_P_LOW;
+        }
+        else if(totalSize > 700000000){
+            MIN_P = MIN_P_HIGH;
+            MAX_P = MAX_P_HIGH;
+        }
     }
 
     public long readAndCheckSysMinFree(){
@@ -347,12 +378,13 @@ public class MemHelper {
         if(runningPackageList != null){
             runningSize = runningPackageList.size();
         }
-        if(runningSize < 4){
+        if(runningSize <= MIN_P){
             L.d("running low");
             return false;
         }
         long free = readLmkFree();
         if(free <= 0){
+            L.d("read lmk error");
             return false;
         }
         L.d("threshold,free="+minFree/1024+","+free/1024+"                 ("+totalMem+")");
@@ -360,7 +392,7 @@ public class MemHelper {
         if(lowMem) {
             return true;
         }
-        if(runningSize > 7){
+        if(runningSize > MAX_P){
             return true;
         }
         return false;

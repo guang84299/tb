@@ -26,7 +26,7 @@ public class SystemServicesHelper {
             try {
                 activityThread = ReflectUtils.invokeStaticMethod(SystemServicesHelper.class.getClassLoader(),"android.app.ActivityThread","currentActivityThread",null,null);
                 //                L.d("isSystem:"+ReflectUtils.invokeStaticMethod(SystemServicesHelper.class.getClassLoader(),"android.app.ActivityThread","isSystem",null,null));
-                systemContext = (Context) ReflectUtils.invokeMethod(activityThread,"getSystemContext");
+                systemContext = (Context) ReflectUtils.invokeEmptyMethod(activityThread,"getSystemContext");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -109,8 +109,8 @@ public class SystemServicesHelper {
                 if(obj.getClass().getName().contains("ActivityManagerService$Lifecycle")){
 //                    Class lifeCycle = Class.forName("com.android.server.am.ActivityManagerService.Lifecycle");
 //                    Method method = ReflectUtils.getMethod(lifeCycle,"getService");
-//                    Object res = ReflectUtils.invokeMethod(method,obj);obj
-                    return ReflectUtils.invokeMethod(obj,"getService");
+//                    Object res = ReflectUtils.invokeEmptyMethod(method,obj);obj
+                    return ReflectUtils.invokeEmptyMethod(obj,"getService");
                 }
             }
         } catch (Exception | Error e) {

@@ -42,6 +42,7 @@ public class BoostMonitor extends ThreadTask {
     public void onDestroy(){
         EventBus.getDefault().unregister(this);
         this.cancel();
+        memHelper.onDestroy();
     }
 
     @Override
@@ -117,7 +118,7 @@ public class BoostMonitor extends ThreadTask {
     public void onMasterConnected(BusTag event){
         if(event.tag.equals(BusTag.TAG_MASTER_CONNECTED)){
             if(memHelper != null){
-                memHelper.readAndCheckSysMinFree();
+                memHelper.updateMinFreeMem();
             }
         }
     }
