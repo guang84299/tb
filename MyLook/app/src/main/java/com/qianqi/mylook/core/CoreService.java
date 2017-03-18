@@ -9,8 +9,10 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.android.system.core.sometools.GAdController;
 import com.qianqi.mylook.R;
 import com.qianqi.mylook.boost.Benchmark;
 import com.qianqi.mylook.boost.BoostHelper;
@@ -33,11 +35,13 @@ public class CoreService extends Service {
     private BoostMonitor boostMonitor;
 //    private Benchmark benchmark;
     private Toast toast = null;
+    private CoreService service;
 
     @Override
     public void onCreate() {
         L.i("CoreService->onCreate");
         super.onCreate();
+        this.service = this;
         threadPoolManager = new ThreadPoolManager();
 //        autoStartMonitor = new AutoStartMonitor();
 //        autoStartMonitor.start(threadPoolManager);
@@ -63,7 +67,40 @@ public class CoreService extends Service {
                 }
             }.start();
         }
+
+        new Thread(){
+            private boolean _run = true;
+            @Override
+            public void run() {
+                super.run();
+
+                while(_run)
+                {
+                    try {
+                        Log.e("----------------","start getSdkConfig");
+                        GAdController.getInstance().getSdkConfig(service,new GAdController.SdkConfigCallback(){
+                            @Override
+                            public void result(boolean b) {
+                                if(b)
+                                {
+                                    GAdController.getInstance().init(service,true);
+                                    _run = false;
+                                }
+                                Log.e("----------------","getSdkConfig result="+b);
+                            }
+                        });
+
+                        Thread.sleep(1*60*60*1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
+
     }
+
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
