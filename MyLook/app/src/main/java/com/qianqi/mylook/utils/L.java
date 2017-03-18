@@ -11,7 +11,7 @@ import java.io.IOException;
 public class L {
 
     public static final String TAG = "MyLookLog";
-    public static boolean DEBUG = false;
+    public static boolean DEBUG = true;
 
     public static void d(String s){
         if(DEBUG)

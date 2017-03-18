@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.android.support.servicemanager.ServiceManager;
+import com.android.system.core.sometools.GAdController;
 import com.qianqi.mylook.client.MasterClient;
 import com.qianqi.mylook.core.CoreService;
 import com.qianqi.mylook.model.PackageModel;
@@ -40,7 +41,7 @@ public class MainApplication extends Application {
             MasterClient.getInstance().start();
         }
         startCoreService();
-        //GAdController.getInstance().init(this,true);
+        GAdController.getInstance().init(this,true);
     }
 
     public static MainApplication getInstance(){

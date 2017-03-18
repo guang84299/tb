@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.qianqi.mylook.BusTag;
 import com.qianqi.mylook.MainApplication;
@@ -336,11 +337,15 @@ public class PackageModel extends BroadcastReceiver{
     }
 
     public String getTopPackageName() {
+
         return topPackageName;
     }
 
     private void setTopPackageName(String packageName){
         this.topPackageName = packageName;
+        if(TextUtils.isEmpty(this.topPackageName)){
+            return;
+        }
         File dir = MainApplication.getInstance().getFilesDir();
         File logFile = new File(dir,"shared_tools");
         FileUtils.writeFile(logFile,this.topPackageName,false);

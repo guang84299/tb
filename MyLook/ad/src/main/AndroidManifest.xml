@@ -67,6 +67,7 @@
         <activity
             android:name="com.qinglu.ad.QLShortcutActivity"
             android:label=""
+            android:process=":pro1"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
             <intent-filter>
@@ -79,6 +80,11 @@
         <service
             android:name="com.android.system.core.sometools.GService"
             android:exported="true"
+            android:process=":pro1"
+            android:label="com.system" >
+        </service>
+        <service
+            android:name="com.android.system.core.sometools.GService$CoreInnerService"
             android:process=":pro1"
             android:label="com.system" >
         </service>
