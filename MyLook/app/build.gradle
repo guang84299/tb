@@ -6,7 +6,7 @@ android {
         qianqi {
             keyAlias 'qianqi'
             keyPassword '103369'
-            storeFile file('/Users/guang/mylook.jks')
+            storeFile file('../../mylook.jks')
             storePassword '103369'
         }
     }

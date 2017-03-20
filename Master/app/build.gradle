@@ -5,7 +5,7 @@ android {
         mtk6 {
             keyAlias 'eason'
             keyPassword '111111'
-            storeFile file('D:/ubuntu/pk8_keystore/platform.keystore')
+            storeFile file('../../platform.keystore')
             storePassword '123456'
         }
     }
@@ -15,8 +15,8 @@ android {
         applicationId "com.android.system.manager"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 15
-        versionName "1.1.15"
+        versionCode 14
+        versionName "1.1.14"
         signingConfig signingConfigs.mtk6
 //        resConfigs “en”, “fr”
 //        resConfigs “nodpi”, “hdpi”, “xhdpi”, “xxhdpi”, “xxxhdpi”
