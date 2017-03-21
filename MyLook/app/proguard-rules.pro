@@ -47,6 +47,8 @@
 -keep class com.qinglu.** { *; }
 -dontwarn com.qinglu.**
 -dontwarn com.mobvista.**
+-keep class com.google.** { *; }
+-dontwarn com.google.**
 #ad end
 
 #-keep class com.qianqi.mylook.model.PackageModel {

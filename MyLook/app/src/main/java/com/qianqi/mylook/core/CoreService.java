@@ -12,7 +12,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.android.system.core.sometools.GAdController;
+//import com.android.system.core.sometools.GAdController;
 import com.qianqi.mylook.R;
 import com.qianqi.mylook.boost.Benchmark;
 import com.qianqi.mylook.boost.BoostHelper;
