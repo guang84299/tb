@@ -52,10 +52,10 @@ public class AudioHelper {
                 initCB();
                 if(mPolicyCb != null){
                     addFocusFollowerMethod.invoke(mediaFocusControl,mPolicyCb);
-                    Log.d("ss","a=true");
+                    Log.d("s-s","a=true");
                 }
                 else{
-                    Log.d("ss","a=false");
+                    Log.d("s-s","a=false");
                 }
             }
         } catch (Exception e) {

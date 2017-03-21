@@ -35,7 +35,7 @@ public class MemHelper {
     public static final float DEFAULT_MIN_FREE_512 = 0.3f;
     public static final float MIN_FREE_ADJUST = 0.03f;
     public static final int MIN_P_HIGH = 3;
-    public static final int MIN_P_LOW = 0;
+    public static final int MIN_P_LOW = 3;
     public static int MIN_P = MIN_P_HIGH;
     public static final int MAX_P_HIGH = 7;
     public static final int MAX_P_LOW = 4;
@@ -373,7 +373,7 @@ public class MemHelper {
 //        readMemInfo();
 //        long free = getFreeSize()+getCachedSize();
         int runningSize = 0;
-        PackageFilter filter = new PackageFilter.Builder().running(true).system(false).qianqi(false).build();
+        PackageFilter filter = new PackageFilter.Builder().running(true).qianqi(false).build();
         List<EnhancePackageInfo> runningPackageList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
         if(runningPackageList != null){
             runningSize = runningPackageList.size();

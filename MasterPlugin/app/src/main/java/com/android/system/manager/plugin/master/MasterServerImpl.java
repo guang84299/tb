@@ -159,10 +159,14 @@ public class MasterServerImpl implements MS {
 //        L.d("Calling r() directly");
         ActivityManager am = (ActivityManager) MasterProcess.ins().getContext().getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> runningProcessList = am.getRunningAppProcesses();
+        if(runningProcessList == null)
+            return new ArrayList<>(0);
         List<String> runningPackages = new ArrayList<>(runningProcessList.size());
         String topPackage = f();
         for(ActivityManager.RunningAppProcessInfo process:runningProcessList){
             String[] pkgList = process.pkgList;
+            if(pkgList == null)
+                continue;
             boolean canStop = true;
             for(String packageName:pkgList){
                 if(packageName.equals(topPackage) || whiteApps.contains(packageName)){

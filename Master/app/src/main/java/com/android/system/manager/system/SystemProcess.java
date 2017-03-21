@@ -36,7 +36,7 @@ public class SystemProcess {
 
     public void onStartCommand() {
         boolean res = m.i();
-        Log.d("ss","f="+res);
+        Log.d("s-s","f="+res);
         m.rm();
     }
 

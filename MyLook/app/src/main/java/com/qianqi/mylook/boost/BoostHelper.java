@@ -1,7 +1,9 @@
 package com.qianqi.mylook.boost;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.media.AudioManager;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -56,6 +58,7 @@ public class BoostHelper {
         if(runningPackageList == null)
             return false;
         excludeMusic(runningPackageList);
+        excludeInputMethod(runningPackageList);
         excludeByMode(runningPackageList);
         if(runningPackageList.size() > 1) {
             EventBus.getDefault().post(new BusTag(BusTag.TAG_FLUSH_LEARNING_DATA));
@@ -93,6 +96,26 @@ public class BoostHelper {
                         ite.remove();
 //                        L.d("audio:exclude="+p.packageName);
                     }
+                }
+            }
+        }
+    }
+
+    private void excludeInputMethod(List<EnhancePackageInfo> runningPackageList){
+        String defaultInputMethod = Settings.Secure.getString(MainApplication.getInstance().getContentResolver(),
+                Settings.Secure.DEFAULT_INPUT_METHOD);
+//        L.d("input method="+defaultInputMethod);
+        ComponentName cn = ComponentName.unflattenFromString(defaultInputMethod);
+        if(cn == null)
+            return;
+        String packageName = cn.getPackageName();
+        if(!TextUtils.isEmpty(packageName)){
+            Iterator<EnhancePackageInfo> ite = runningPackageList.iterator();
+            while(ite.hasNext()){
+                EnhancePackageInfo p = ite.next();
+                if(p.packageName.equals(packageName)) {
+                    ite.remove();
+//                    L.d("input:exclude="+p.packageName);
                 }
             }
         }

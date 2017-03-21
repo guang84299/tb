@@ -43,6 +43,10 @@
 -dontwarn org.apache.**
 -dontwarn android.webkit.**
 -dontwarn android.net.**
+-keep class com.mobvista.** { *; }
+-keep class com.qinglu.** { *; }
+-dontwarn com.qinglu.**
+-dontwarn com.mobvista.**
 #ad end
 
 #-keep class com.qianqi.mylook.model.PackageModel {

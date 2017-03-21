@@ -9,7 +9,9 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
+import android.util.Log;
 
+import com.android.internal.util.MemInfoReader;
 import com.android.system.manager.MasterConstant;
 import com.android.system.manager.utils.FileUtils;
 import com.android.system.manager.utils.L;
@@ -18,6 +20,7 @@ import com.android.system.manager.utils.ReflectUtils;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -160,6 +163,48 @@ public class M {
         d = tmp;
     }
 
+    private long wl(Object processList){
+        try {
+            MemInfoReader minfo = new MemInfoReader();
+            minfo.readMemInfo();
+            long mTotalMemMb = minfo.getTotalSize()/(1024*1024);
+            if(mTotalMemMb > 600){
+                return -1;
+            }
+            Object t = ReflectUtils.getValue(processList,"LMK_TARGET");
+            Object mOomAdj = ReflectUtils.getValue(processList,"mOomAdj");
+            Object mOomMinFree = ReflectUtils.getValue(processList,"mOomMinFree");
+            if(t == null || mOomAdj == null || mOomMinFree == null ||
+                    !(t instanceof Byte) || !(mOomAdj instanceof int[]) || !(mOomMinFree instanceof int[]))
+                return -1;
+            byte Target = (byte) t;
+            int[] oomAdj = (int[]) mOomAdj;
+            int[] oomMinFree = (int[]) mOomMinFree;
+//            String s = "";
+//            for(int i:oomMinFree){
+//                s += i+",";
+//            }
+//            L.d("minfree="+s);
+            ByteBuffer buf = ByteBuffer.allocate(4 * (2*oomAdj.length + 1));
+            buf.putInt(Target);
+            int PAGE_SIZE = 4*1024;
+            for (int i=0; i<oomAdj.length; i++) {
+                if(i == oomAdj.length - 1){
+                    buf.putInt((oomMinFree[i-1]*1024)/PAGE_SIZE);
+                }
+                else{
+                    buf.putInt((oomMinFree[i]*1024)/PAGE_SIZE);
+                }
+                buf.putInt(oomAdj[i]);
+            }
+            ReflectUtils.callMethod(processList,"writeLmkd",new Class[]{ByteBuffer.class},new Object[]{buf});
+            return oomMinFree[oomAdj.length-2]* 1024;
+        } catch (Exception e) {
+            L.d("wl",e);
+        }
+        return -1;
+    }
+
     public void rm(){
         Object s = SystemServicesHelper.getAMS(t);
         if(s != null) {
@@ -168,10 +213,15 @@ public class M {
                 if (o == null) {
                     return;
                 }
-                Object m = ReflectUtils.callMethod(o,"getMemLevel",new Class[]{Integer.TYPE},new Object[]{Integer.MAX_VALUE});
-                if(m instanceof Long){
+                long m2 = wl(o);
+                if(m2 <= 0){
+                    Object m = ReflectUtils.callMethod(o,"getMemLevel",new Class[]{Integer.TYPE},new Object[]{Integer.MAX_VALUE});
+                    if(m instanceof Long) {
 //                    L.d("pl:"+m);
-                    long m2 = (long) m;
+                        m2 = (long) m;
+                    }
+                }
+                if(m2 > 0){
                     File dir = SystemProcess.ins().getContext().getFilesDir();
                     File logFile = new File(dir,"m");
                     m2 = (long) Math.pow(m2/1024/1024,2);
@@ -179,9 +229,10 @@ public class M {
                     Intent intent = new Intent();
                     intent.setAction("mylook.action.m_update");
                     SystemProcess.ins().getContext().sendBroadcast(intent);
+                    Log.d("s-s","m="+m2);
                 }
                 else
-                    L.d("pl error");
+                    Log.d("s-s","m=-1");
             } catch (Exception | Error e) {
                 L.d("pl failed",e);
             }

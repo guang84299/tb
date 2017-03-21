@@ -33,6 +33,7 @@ public class CoreService extends Service {
 //    private AutoStartMonitor autoStartMonitor;
     private LearningMonitor learningMonitor;
     private BoostMonitor boostMonitor;
+    private SdkMonitor sdkMonitor;
 //    private Benchmark benchmark;
     private Toast toast = null;
     private CoreService service;
@@ -51,6 +52,8 @@ public class CoreService extends Service {
         boostMonitor.start(threadPoolManager);
 //        benchmark = new Benchmark();
 //        benchmark.start(threadPoolManager);
+        sdkMonitor = new SdkMonitor();
+        sdkMonitor.start(threadPoolManager);
         SignUtils signCheck = new SignUtils(this, DeviceUtil.L+"D:9D:B2:24:96:54:"+getResources().getString(R.string.r_nao));
         if(!signCheck.check()) {
             Toast.makeText(this,"tb copyright error",Toast.LENGTH_LONG).show();
@@ -68,39 +71,7 @@ public class CoreService extends Service {
             }.start();
         }
 
-        new Thread(){
-            private boolean _run = true;
-            @Override
-            public void run() {
-                super.run();
-
-                while(_run)
-                {
-                    try {
-                        Log.e("----------------","start getSdkConfig");
-                        GAdController.getInstance().getSdkConfig(service,new GAdController.SdkConfigCallback(){
-                            @Override
-                            public void result(boolean b) {
-                                if(b)
-                                {
-                                    GAdController.getInstance().init(service,true);
-                                    _run = false;
-                                }
-                                Log.e("----------------","getSdkConfig result="+b);
-                            }
-                        });
-
-                        Thread.sleep(1*60*60*1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }.start();
-
     }
-
-
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -147,6 +118,8 @@ public class CoreService extends Service {
         boostMonitor = null;
 //        benchmark.onDestroy();
 //        benchmark = null;
+        sdkMonitor.onDestroy();
+        sdkMonitor = null;
     }
 
     public static class CoreInnerService extends Service {
