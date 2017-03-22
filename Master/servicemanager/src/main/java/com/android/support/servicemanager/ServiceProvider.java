@@ -170,23 +170,25 @@ public class ServiceProvider extends ContentProvider {
     }
 
     private void removeAllRecordorForPid(int pid) {
-        Log.w("mylooklog", "remove all service recordor for pid" + pid);
+        Log.w("mylooklog", "remove all service recordor for pid:" + pid + "," + allServiceList.size());
 
         //服务提供方进程挂了,或者服务提供方进程主动通知清理服务, 则先清理服务注册表, 再通知所有客户端清理自己的本地缓存
         processBinder.remove(pid);
         Iterator<Map.Entry<String, Recorder>> iterator = allServiceList.entrySet().iterator();
         while(iterator.hasNext()) {
             Map.Entry<String, Recorder> entry = iterator.next();
+            //Log.w("mylooklog", "service pid:" + entry.getValue().pid);
             if (entry.getValue().pid.equals(pid)) {
                 iterator.remove();
-                notifyClient(entry.getKey());
+//                notifyClient(entry.getKey());
             }
         }
+        notifyClient("");
     }
 
     private void notifyClient(String name) {
         //通知持有服务的客户端清理缓存
-        Log.w("mylooklog", "notify client:" + name);
+        //Log.w("mylooklog", "notify client:" + name);
         Intent intent = new Intent(ServiceManager.ACTION_SERVICE_DIE_OR_CLEAR);
         intent.putExtra(NAME, name);
         ServiceManager.sApplication.sendBroadcast(intent);

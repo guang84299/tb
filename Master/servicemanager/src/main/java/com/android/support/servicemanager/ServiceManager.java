@@ -25,7 +25,11 @@ public class ServiceManager {
 
     public static Application sApplication;
 
-    public static void init(Application application) {
+    public interface ServiceListener{
+        void onServiceDied(String name);
+    }
+
+    public static void init(Application application, final ServiceListener listener) {
         sApplication = application;
 
         Bundle argsBundle = new Bundle();
@@ -40,7 +44,11 @@ public class ServiceManager {
             @Override
             public void onReceive(Context context, Intent intent) {
                 //服务进程挂掉以后 或者服务进程主动通知清理时,移除客户端的代理缓存
-                ServicePool.unRegister(intent.getStringExtra(ServiceProvider.NAME));
+                String name = intent.getStringExtra(ServiceProvider.NAME);
+                ServicePool.unRegister(name);
+                if(listener != null){
+                    listener.onServiceDied(name);
+                }
             }
         }, new IntentFilter(ACTION_SERVICE_DIE_OR_CLEAR));
     }

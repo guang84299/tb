@@ -11,7 +11,7 @@ import com.android.system.manager.utils.L;
  * Created by Administrator on 2017/1/3.
  */
 
-public class MainApplication extends Application {
+public class MainApplication extends Application implements ServiceManager.ServiceListener{
 
     private static MainApplication instance;
 
@@ -23,7 +23,7 @@ public class MainApplication extends Application {
         if(processName != null && processName.equals("system")){
             return;
         }
-        ServiceManager.init(this);
+        ServiceManager.init(this, this);
         ServiceManager.publishService("main", MasterLoader.class.getName());
         wakeClient();
     }
@@ -47,5 +47,10 @@ public class MainApplication extends Application {
     public void onTerminate() {
         super.onTerminate();
         MasterLoader.ins().onDestroy();
+    }
+
+    @Override
+    public void onServiceDied(String name) {
+        wakeClient();
     }
 }

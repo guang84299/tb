@@ -63,14 +63,14 @@ public class ServiceProvider extends ContentProvider {
     @Override
     public Bundle call(String method, String arg, Bundle extras) {
 
-        if (Build.VERSION.SDK_INT >= 19) {
-            Log.d("call", "callingPackage = " + getCallingPackage());
-        }
+//        if (Build.VERSION.SDK_INT >= 19) {
+//            Log.d("call", "callingPackage = " + getCallingPackage());
+//        }
 
-        Log.d("call", "Thead : id = " + Thread.currentThread().getId()
-                + ", name = " + Thread.currentThread().getName()
-                + ", method = " + method
-                + ", arg = " + arg);
+//        Log.d("call", "Thead : id = " + Thread.currentThread().getId()
+//                + ", name = " + Thread.currentThread().getName()
+//                + ", method = " + method
+//                + ", arg = " + arg);
 
         if (method.equals(REPORT_BINDER)) {
             final int pid = extras.getInt(PID);
@@ -157,7 +157,7 @@ public class ServiceProvider extends ContentProvider {
     }
 
     private void removeAllRecordorForPid(int pid) {
-        Log.w("mylooklog", "remove all service recordor for pid" + pid);
+        Log.w("mylooklog", "tb remove all service recordor for pid" + pid);
 
         //服务提供方进程挂了,或者服务提供方进程主动通知清理服务, 则先清理服务注册表, 再通知所有客户端清理自己的本地缓存
         processBinder.remove(pid);
