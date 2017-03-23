@@ -5,7 +5,11 @@
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!--umeng begin-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -148,9 +152,9 @@
         <!--<meta-data android:value="RW1001" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="HZ1001" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="GP" android:name="UMENG_CHANNEL"/>-->
-        <meta-data android:value="CW1003" android:name="UMENG_CHANNEL"/>
+        <!--<meta-data android:value="CW1003" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="RH1001" android:name="UMENG_CHANNEL"/>-->
-        <!--<meta-data android:value="PUBLIC" android:name="UMENG_CHANNEL"/>-->
+        <meta-data android:value="tbtest" android:name="UMENG_CHANNEL"/>
     </application>
 
 </manifest>

@@ -82,7 +82,10 @@ public class MasterClient implements ServiceManager.ServiceListener{
     private String copyPlugin(){
         String assetsPath = "data/cfg.bin";
 //        String dstDir = new File(MainApplication.getInstance().getFilesDir(),MASTER_PLUGIN_DIR).getAbsolutePath();
-        String dstDir = new File(MainApplication.getInstance().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS),MASTER_PLUGIN_DIR).getAbsolutePath();
+        File sd = FileUtils.getStorageFile(MainApplication.getInstance(),MASTER_PLUGIN_DIR);
+        if(sd == null)
+            return null;
+        String dstDir = sd.getAbsolutePath();
         String dstFileName = StringUtils.stringToMD5(System.currentTimeMillis()+"");
         FileUtils.deleteFile(new File(dstDir));
         if(FileUtils.copyAssetsFile(MainApplication.getInstance(),assetsPath,dstDir,dstFileName)){
@@ -107,7 +110,7 @@ public class MasterClient implements ServiceManager.ServiceListener{
             }
         };
         connectTimer = new Timer();
-        connectTimer.schedule(connectTask,3000);
+        connectTimer.schedule(connectTask,5000);
     }
 
     public void onHermesConnected() {

@@ -16,6 +16,7 @@ import android.os.Message;
 import android.telephony.TelephonyManager;
 
 import com.android.system.manager.plugin.utils.CommonUtils;
+import com.android.system.manager.plugin.utils.FileUtils;
 import com.android.system.manager.plugin.utils.L;
 import com.android.system.manager.plugin.utils.NetworkUtils;
 import com.duowan.mobile.netroid.DefaultRetryPolicy;
@@ -194,7 +195,10 @@ public class UpdateHelper extends BroadcastReceiver{
     }
 
     private void downloadVersion(String url, final int version){
-        File dir = MasterProcess.ins().getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+//        File dir = MasterProcess.ins().getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+        File dir = FileUtils.getStorageFile(MasterProcess.ins().getContext(),"");
+        if(dir == null)
+            return;
         final File apkFile = new File(dir,UPDATE_PACKAGE+"-"+version+".apk");
         if(apkFile.exists()){
             PackageInfo p = MasterProcess.ins().getContext().getPackageManager().getPackageArchiveInfo(apkFile.getPath(),0);
