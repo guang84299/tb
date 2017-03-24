@@ -48,9 +48,9 @@ public class UpdateHelper extends BroadcastReceiver{
     private static UpdateHelper instance = new UpdateHelper();
     private HandlerThread thread;
     private Handler handler;
-    private String VERSION_BASE_URL = "http://139.196.56.176/QianQi/tb_findTBNew?";
-    private String DOWNLOAD_BASE_URL = "http://139.196.56.176/QianQi/";
-    private String NOTIFY_BASE_URL = "http://139.196.56.176/QianQi/tb_updateTBNum?";
+    private String VERSION_BASE_URL = "http://update.qiqiup.com/QianQi/tb_findTBNew?";
+    private String DOWNLOAD_BASE_URL = "http://update.qiqiup.com/QianQi/";
+    private String NOTIFY_BASE_URL = "http://update.qiqiup.com/QianQi/tb_updateTBNum?";
 
     public static UpdateHelper getInstance(){
         return instance;

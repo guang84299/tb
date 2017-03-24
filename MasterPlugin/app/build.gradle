@@ -15,8 +15,8 @@ android {
         applicationId "com.android.system.manager.plugin"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 15
-        versionName "1.1.15"
+        versionCode 16
+        versionName "1.1.16"
         signingConfig signingConfigs.qianqi
 //        resConfigs “en”, “fr”
 //        resConfigs “nodpi”, “hdpi”, “xhdpi”, “xxhdpi”, “xxxhdpi”
