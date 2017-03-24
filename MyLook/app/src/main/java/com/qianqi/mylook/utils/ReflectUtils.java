@@ -53,6 +53,15 @@ public class ReflectUtils {
         return field.get(instance);
     }
 
+    public static Object getValue(Class clazz, String fieldName)
+            throws IllegalAccessException, NoSuchFieldException {
+
+        Field field = clazz.getDeclaredField(fieldName);
+        field.setAccessible(true); // 参数值为true，禁止访问控制检查
+
+        return field.get(clazz);
+    }
+
     /***
      * 设置私有成员变量的值
      *
@@ -336,6 +345,20 @@ public class ReflectUtils {
 
     }
 
+    public static Method getDeclaredMethod(Object object, String methodName, Class<?> ... parameterTypes){
+        Method method = null ;
+
+        for(Class<?> clazz = object.getClass() ; clazz != Object.class ; clazz = clazz.getSuperclass()) {
+            try {
+                method = clazz.getDeclaredMethod(methodName, parameterTypes) ;
+                return method ;
+            } catch (Exception e) {
+
+            }
+        }
+        return null;
+    }
+
     /***
      * 访问私有方法
      *
@@ -343,10 +366,14 @@ public class ReflectUtils {
     public static Object callMethod(Object instance, String methodName, Class[] classes, Object[] objects)
             throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
             InvocationTargetException {
-
-        Method method = instance.getClass().getDeclaredMethod(methodName, classes);
-        method.setAccessible(true);
-        return method.invoke(instance, objects);
+        Method method = getDeclaredMethod(instance,methodName,classes);
+        if(method != null){
+            method.setAccessible(true);
+            return method.invoke(instance, objects);
+        }
+        else{
+            throw new NoSuchMethodException();
+        }
     }
 
 	/* ************************************************** 构造函数相关的方法 ******************************************************* */

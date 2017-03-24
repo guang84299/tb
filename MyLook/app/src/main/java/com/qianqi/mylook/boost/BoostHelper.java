@@ -1,8 +1,14 @@
 package com.qianqi.mylook.boost;
 
+import android.app.AppOpsManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.IntentFilter;
+import android.location.LocationManager;
 import android.media.AudioManager;
+import android.os.Build;
+import android.os.Handler;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -33,11 +39,22 @@ public class BoostHelper {
     private int mode;
     private BoostComparator comparator;
     public static String boostPackageName = "";
+    private LocationHelper locationHelper;
 
     public BoostHelper(){
         mode = PackageModel.getInstance(MainApplication.getInstance()).getPowerMode();
         comparator = new BoostComparator();
         comparator.setMode(mode);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            locationHelper = new LocationHelper();
+        }
+    }
+
+    public void onDestroy(){
+        if(locationHelper != null){
+            locationHelper.onDestroy();
+            locationHelper = null;
+        }
     }
 
     public void updateMode(int mode){
@@ -57,9 +74,10 @@ public class BoostHelper {
         List<EnhancePackageInfo> runningPackageList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
         if(runningPackageList == null)
             return false;
+        excludeByMode(runningPackageList);
         excludeMusic(runningPackageList);
         excludeInputMethod(runningPackageList);
-        excludeByMode(runningPackageList);
+        excludeNavi(runningPackageList);
         if(runningPackageList.size() > 1) {
             EventBus.getDefault().post(new BusTag(BusTag.TAG_FLUSH_LEARNING_DATA));
             UsagePredictor.getInstance().predict(runningPackageList);
@@ -117,6 +135,19 @@ public class BoostHelper {
                     ite.remove();
 //                    L.d("input:exclude="+p.packageName);
                 }
+            }
+        }
+    }
+
+    private void excludeNavi(List<EnhancePackageInfo> runningPackageList){
+        if(locationHelper == null)
+            return;
+        Iterator<EnhancePackageInfo> ite = runningPackageList.iterator();
+        while(ite.hasNext()){
+            EnhancePackageInfo p = ite.next();
+            if(locationHelper.isLongTimeActive(p.packageName)) {
+                ite.remove();
+//                L.d("navi:exclude="+p.packageName);
             }
         }
     }

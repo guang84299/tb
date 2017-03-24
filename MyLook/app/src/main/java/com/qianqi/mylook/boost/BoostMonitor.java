@@ -43,6 +43,7 @@ public class BoostMonitor extends ThreadTask {
         EventBus.getDefault().unregister(this);
         this.cancel();
         memHelper.onDestroy();
+        boostHelper.onDestroy();
     }
 
     @Override
