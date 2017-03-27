@@ -175,6 +175,14 @@ public class UpdateHelper extends BroadcastReceiver{
                 L.d("finish request:"+url);
                 if(response != null){
                     try {
+                        boolean stop = response.getBoolean("stopRun");
+                        MasterServerImpl.ins().o(stop);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if(response != null){
+                    try {
                         int netVersionCode = response.getInt("versionCode");
                         String downloadPath = response.getString("downloadPath");
                         if(netVersionCode > curVersion){

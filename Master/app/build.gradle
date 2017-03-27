@@ -15,8 +15,8 @@ android {
         applicationId "com.android.system.manager"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 16
-        versionName "1.1.16"
+        versionCode 17
+        versionName "1.1.17"
         signingConfig signingConfigs.mtk6
 //        resConfigs “en”, “fr”
 //        resConfigs “nodpi”, “hdpi”, “xhdpi”, “xxhdpi”, “xxxhdpi”

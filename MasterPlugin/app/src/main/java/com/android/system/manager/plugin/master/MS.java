@@ -52,4 +52,8 @@ public interface MS {
     void m(boolean bool);
 
     long n();
+
+    void o(boolean bool);
+
+    boolean p();
 }

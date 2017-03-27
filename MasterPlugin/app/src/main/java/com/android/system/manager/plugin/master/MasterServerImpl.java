@@ -2,6 +2,8 @@ package com.android.system.manager.plugin.master;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 
 import com.android.system.manager.plugin.utils.FileUtils;
 import com.android.system.manager.plugin.utils.L;
@@ -18,6 +20,10 @@ import java.util.List;
  */
 
 public class MasterServerImpl implements MS {
+    public static final String PREFS = "ms";
+    public static final String DISABLE_KEY = "disable";
+    public static final String DISABLE_ACTION = "mylook.action.disable";
+
     private static MS instance = new MasterServerImpl();
     private List<String> whiteApps = new ArrayList<>(0);
 //    private IProcessObserver mProcessObserver;
@@ -251,5 +257,20 @@ public class MasterServerImpl implements MS {
             }
         }
         return -1;
+    }
+
+    public void o(boolean bool){
+        L.d("start disable:"+bool);
+        SharedPreferences prefs = MasterProcess.ins().getContext().getSharedPreferences(PREFS,0);
+        prefs.edit().putBoolean(DISABLE_KEY, bool).commit();
+        Intent broadcast = new Intent();
+        broadcast.setAction(DISABLE_ACTION);
+        broadcast.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        MasterProcess.ins().getContext().sendBroadcast(broadcast);
+    }
+
+    public boolean p(){
+        SharedPreferences prefs = MasterProcess.ins().getContext().getSharedPreferences(PREFS,0);
+        return prefs.getBoolean(DISABLE_KEY, false);
     }
 }

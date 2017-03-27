@@ -41,7 +41,11 @@ public class MasterLoader implements ILoader{
     public void o(String path,String entry,String serviceEntry){
         String newPath = copyPlugin(path);
         if(!TextUtils.isEmpty(newPath)){
-            masterPlugin = loadPlugin(newPath,entry);
+            Object newPlugin = loadPlugin(newPath,entry);
+            if(newPlugin != null){
+                disposePlugin();
+                masterPlugin = newPlugin;
+            }
         }
         else{
             L.d("load failed");
@@ -82,6 +86,10 @@ public class MasterLoader implements ILoader{
     }
 
     public void onDestroy(){
+        disposePlugin();
+    }
+
+    private void disposePlugin(){
         if(masterPlugin != null){
             try {
                 Method m = masterPlugin.getClass().getMethod("d");

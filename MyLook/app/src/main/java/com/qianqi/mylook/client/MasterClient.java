@@ -1,6 +1,7 @@
 package com.qianqi.mylook.client;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.text.TextUtils;
 
@@ -115,6 +116,7 @@ public class MasterClient implements ServiceManager.ServiceListener{
 
     public void onHermesConnected() {
         L.d("onHermesConnected");
+        PackageModel.getInstance(MainApplication.getInstance()).checkDisable();
         componentHelper.setMasterServer(masterServer);
         processHelper.setMasterServer(masterServer);
         settingHelper.setMasterServer(masterServer);
@@ -234,5 +236,12 @@ public class MasterClient implements ServiceManager.ServiceListener{
             L.d("master min free:"+m);
         }
         return m;
+    }
+
+    public boolean disabled() {
+        if(this.masterServer == null){
+            return false;
+        }
+        return this.masterServer.p();
     }
 }

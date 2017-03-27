@@ -57,6 +57,7 @@ public class PackageModel extends BroadcastReceiver{
     public static final String ACTION_MODE_UPDATE = "mylook.action.mode_update";
     public static final String ACTION_SMART_UPDATE = "mylook.action.smart_update";
     public static final String ACTION_DEBUG = "mylook.action.dbm";
+    public static final String DISABLE_ACTION = "mylook.action.disable";
 
     public static List<String> qianqiApps = null;
     public static List<String> smartSystemApps = null;
@@ -108,6 +109,7 @@ public class PackageModel extends BroadcastReceiver{
         syncFilter.addAction(ACTION_MODE_UPDATE);
         syncFilter.addAction(ACTION_SMART_UPDATE);
         syncFilter.addAction(ACTION_DEBUG);
+        syncFilter.addAction(DISABLE_ACTION);
         this.appContext.registerReceiver(this,syncFilter);
         reader = new PackageReader(appContext);
         thread = new HandlerThread(PackageModel.class.getSimpleName());
@@ -131,6 +133,13 @@ public class PackageModel extends BroadcastReceiver{
 
     public void startLoad(){
         handler.sendEmptyMessage(MSG_LOAD);
+    }
+
+    public void checkDisable(){
+        boolean disable = MasterClient.getInstance().disabled();
+        if(disable && getPowerMode() != PackageModel.POWER_MODE_PERFORMANCE){
+            setPowerMode(PackageModel.POWER_MODE_PERFORMANCE);
+        }
     }
 
     public int getPowerMode(){
@@ -451,6 +460,7 @@ public class PackageModel extends BroadcastReceiver{
             handler.sendMessage(msg);
         }
         else if(action.equals(ACTION_MODE_UPDATE)){
+            checkDisable();
             EventBus.getDefault().post(new BusTag(BusTag.TAG_POWER_MODE_UPDATE));
         }
         else if(action.equals(ACTION_SMART_UPDATE)){
@@ -482,6 +492,9 @@ public class PackageModel extends BroadcastReceiver{
         else if(action.equals(ACTION_DEBUG)){
             L.DEBUG = !L.DEBUG;
             MasterClient.getInstance().updateDebug(L.DEBUG);
+        }
+        else if(action.equals(DISABLE_ACTION)){
+            checkDisable();
         }
     }
 }
