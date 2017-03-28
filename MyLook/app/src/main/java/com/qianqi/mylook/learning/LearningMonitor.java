@@ -40,20 +40,16 @@ public class LearningMonitor extends ThreadTask {
 
     private final long TIME_COUNT = 10*60*1000;
     private UsageManager manager;
-    private ScreenHelper screenHelper;
     private long lastFitTime = 0;
 
     public LearningMonitor() {
         super(LearningMonitor.class.getSimpleName());
         EventBus.getDefault().register(this);
-        screenHelper = new ScreenHelper(this);
-        screenHelper.registerReceiver(MainApplication.getInstance());
 //        L.d("create learning monitor");
     }
 
     public void onDestroy(){
         EventBus.getDefault().unregister(this);
-        screenHelper.unregisterReceiver(MainApplication.getInstance());
         this.cancel();
     }
 
@@ -161,24 +157,39 @@ public class LearningMonitor extends ThreadTask {
         }
     }
 
-    public void screenOn() {
-        if(handler == null)
-            return;
+    @Subscribe(
+            threadMode = ThreadMode.POSTING
+    )
+    public void screenOn(BusTag event) {
+        if(event.tag.equals(BusTag.TAG_SCREEN_ON)) {
+            if(handler == null)
+                return;
 //        L.d("remove fit");
-        handler.removeMessages(MSG_FIT);
+            handler.removeMessages(MSG_FIT);
+        }
     }
 
-    public void screenOff() {
-        if(handler == null)
-            return;
+    @Subscribe(
+            threadMode = ThreadMode.POSTING
+    )
+    public void screenOff(BusTag event) {
+        if(event.tag.equals(BusTag.TAG_SCREEN_OFF)) {
+            if(handler == null)
+                return;
 //        L.d("post fit");
-        handler.sendEmptyMessageDelayed(MSG_FIT,PREDICT_CHECK_INTERVAL);
+            handler.sendEmptyMessageDelayed(MSG_FIT,PREDICT_CHECK_INTERVAL);
+        }
     }
 
-    public void userPresent() {
-        if(handler == null)
-            return;
+    @Subscribe(
+            threadMode = ThreadMode.POSTING
+    )
+    public void userPresent(BusTag event) {
+        if(event.tag.equals(BusTag.TAG_USER_PRESENT)) {
+            if(handler == null)
+                return;
 //        L.d("remove fit");
-        handler.removeMessages(MSG_FIT);
+            handler.removeMessages(MSG_FIT);
+        }
     }
 }

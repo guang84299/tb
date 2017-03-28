@@ -6,13 +6,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.qianqi.mylook.BusTag;
 import com.qianqi.mylook.MainApplication;
@@ -58,6 +58,10 @@ public class PackageModel extends BroadcastReceiver{
     public static final String ACTION_SMART_UPDATE = "mylook.action.smart_update";
     public static final String ACTION_DEBUG = "mylook.action.dbm";
     public static final String DISABLE_ACTION = "mylook.action.disable";
+    public static final String ACTION_GP_CHECKED = "mylook.action.gp_checked";
+    public static final int GP_UNKNOW = 1;
+    public static final int GP_EXIST = 2;
+    public static final int GP_NOT_EXIST = 3;
 
     public static List<String> qianqiApps = null;
     public static List<String> smartSystemApps = null;
@@ -69,6 +73,8 @@ public class PackageModel extends BroadcastReceiver{
     private ArrayList<String> smartModeList = null;
     private ArrayList<EnhancePackageInfo> packageList;
     private List<String> whiteApps;
+    //需要和gp进行比对来确定是否可以禁止后台运行的系统应用
+    private List<String> grayApps;
     private String topPackageName = "";
     private PackageReader reader;
     private HandlerThread thread;
@@ -110,6 +116,7 @@ public class PackageModel extends BroadcastReceiver{
         syncFilter.addAction(ACTION_SMART_UPDATE);
         syncFilter.addAction(ACTION_DEBUG);
         syncFilter.addAction(DISABLE_ACTION);
+        syncFilter.addAction(ACTION_GP_CHECKED);
         this.appContext.registerReceiver(this,syncFilter);
         reader = new PackageReader(appContext);
         thread = new HandlerThread(PackageModel.class.getSimpleName());
@@ -346,7 +353,6 @@ public class PackageModel extends BroadcastReceiver{
     }
 
     public String getTopPackageName() {
-
         return topPackageName;
     }
 
@@ -360,6 +366,63 @@ public class PackageModel extends BroadcastReceiver{
         FileUtils.writeFile(logFile,this.topPackageName,false);
     }
 
+    private boolean inService(){
+        boolean inService = false;
+        String processName = CommonUtils.getProcessName(MainApplication.getInstance());
+        if(processName.contains(":core"))
+            inService = true;
+        return inService;
+    }
+
+    private synchronized void initGrayApps(List<String> graySystemApps){
+        for(String s:graySystemApps){
+            if(getGPState(s) == PackageModel.GP_UNKNOW){
+                if(grayApps == null){
+                    grayApps = new ArrayList<>();
+                }
+                grayApps.add(s);
+            }
+        }
+        if(grayApps != null){
+            EventBus.getDefault().post(new BusTag(BusTag.TAG_GRAY_APPS_UPDATE));
+        }
+    }
+
+    public List<String> getGrayApps(){
+        return grayApps;
+    }
+
+    public static int getGPState(String packageName){
+        SharedPreferences prefs = PreferenceHelper.getInstance().power();
+        return prefs.getInt(packageName,GP_UNKNOW);
+    }
+
+    @Subscribe(
+            threadMode = ThreadMode.POSTING
+    )
+    public void onGPChecked(BusTag event){
+        if(event.tag.equals(BusTag.TAG_GRAY_APPS_EXIST) || event.tag.equals(BusTag.TAG_GRAY_APPS_NOT_EXIST)){
+            if(event.data != null && event.data instanceof String){
+                String packageName = (String) event.data;
+                SharedPreferences prefs = PreferenceHelper.getInstance().power();
+                prefs.edit().putInt(packageName,event.tag.equals(BusTag.TAG_GRAY_APPS_EXIST)?GP_EXIST:GP_NOT_EXIST).commit();
+                if(grayApps != null){
+                    grayApps.remove(packageName);
+                }
+                if(event.tag.equals(BusTag.TAG_GRAY_APPS_EXIST)){
+                    if(whiteApps != null) {
+                        whiteApps.remove(packageName);
+                        MasterClient.getInstance().setWriteApps();
+                    }
+                    Intent intent = new Intent(ACTION_GP_CHECKED);
+                    intent.putExtra("packageName",packageName);
+                    intent.setPackage(MainApplication.getInstance().getPackageName());
+                    MainApplication.getInstance().sendBroadcast(intent);
+                }
+            }
+        }
+    }
+
     private void handleMessage(Message msg){
         String packageName;
         switch (msg.what){
@@ -371,19 +434,18 @@ public class PackageModel extends BroadcastReceiver{
                     packageList.clear();
                     packageList = null;
                 }
-                boolean ignoreIcon = false;
-                String processName = CommonUtils.getProcessName(MainApplication.getInstance());
-                if(processName.contains(":core"))
-                    ignoreIcon = true;
-                reader.loadAllPackages(false, ignoreIcon, new PackageReader.OnLoadListener() {
+                reader.loadAllPackages(inService(), new PackageReader.OnLoadListener() {
                     @Override
-                    public void onLoadPackageInfo(ArrayList<EnhancePackageInfo> list,List<String> whiteList) {
+                    public void onLoadPackageInfo(ArrayList<EnhancePackageInfo> list,List<String> whiteApps, List<String> graySystemApps) {
                         packageList = list;
-                        whiteApps = whiteList;
                         initState();
                         updateState();
                         postPackageList(BusTag.TAG_PACKAGE_UPDATE);
-                        MasterClient.getInstance().setWriteApps();
+                        if(inService()) {
+                            PackageModel.this.whiteApps = whiteApps;
+                            MasterClient.getInstance().setWriteApps();
+                            initGrayApps(graySystemApps);
+                        }
                     }
 
                     @Override
@@ -399,7 +461,7 @@ public class PackageModel extends BroadcastReceiver{
                 }
                 packageName = (String) msg.obj;
                 if(!isPackageExist(packageName)){
-                    EnhancePackageInfo p = reader.loadPackage(true,packageName);
+                    EnhancePackageInfo p = reader.loadPackage(inService(), packageName);
                     if(p != null){
                         p.allowAutoStart = false;
                         p.setInSmartList(inSmartMode(p.packageName));
@@ -495,6 +557,18 @@ public class PackageModel extends BroadcastReceiver{
         }
         else if(action.equals(DISABLE_ACTION)){
             checkDisable();
+        }
+        else if(action.equals(ACTION_GP_CHECKED)){
+            if(handler == null){
+                return;
+            }
+            String packageName = intent.getStringExtra("packageName");
+            if(TextUtils.isEmpty(packageName))
+                return;
+            Message msg = new Message();
+            msg.what = MSG_PACKAGE_ADD;
+            msg.obj = packageName;
+            handler.sendMessage(msg);
         }
     }
 }

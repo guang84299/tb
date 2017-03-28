@@ -42,7 +42,6 @@ public class MainApplication extends Application {
             MasterClient.getInstance().start();
         }
         startCoreService();
-
     }
 
     public static MainApplication getInstance(){

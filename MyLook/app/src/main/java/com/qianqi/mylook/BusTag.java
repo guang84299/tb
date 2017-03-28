@@ -22,6 +22,12 @@ public class BusTag {
     public static final String TAG_CURRENT = "current";
     public static final String TAG_MASTER_CONNECTED = "master_connected";
     public static final String TAG_MASTER_DISCONNECTED = "master_disconnected";
+    public static final String TAG_GRAY_APPS_UPDATE = "gray_apps_update";
+    public static final String TAG_GRAY_APPS_EXIST = "gray_apps_exist";
+    public static final String TAG_GRAY_APPS_NOT_EXIST = "gray_apps_not_exist";
+    public static final String TAG_SCREEN_OFF = "screen_off";
+    public static final String TAG_SCREEN_ON = "screen_on";
+    public static final String TAG_USER_PRESENT = "user_present";
 
     public String tag = "";
     public Object data = null;

@@ -1,4 +1,4 @@
-package com.qianqi.mylook.learning;
+package com.qianqi.mylook.core;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,16 +7,15 @@ import android.content.IntentFilter;
 
 import com.qianqi.mylook.BusTag;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * Created by Administrator on 2017/2/10.
  */
 
 public class ScreenHelper extends BroadcastReceiver {
 
-    private LearningMonitor monitor;
-
-    public ScreenHelper(LearningMonitor monitor){
-        this.monitor = monitor;
+    public ScreenHelper(){
     }
 
     public void registerReceiver(Context context){
@@ -34,13 +33,13 @@ public class ScreenHelper extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if(intent.getAction().equals(Intent.ACTION_SCREEN_ON)){
-            monitor.screenOn();
+            EventBus.getDefault().post(new BusTag(BusTag.TAG_SCREEN_ON));
         }
         else if(intent.getAction().equals(Intent.ACTION_SCREEN_OFF)){
-            monitor.screenOff();
+            EventBus.getDefault().post(new BusTag(BusTag.TAG_SCREEN_OFF));
         }
         else if(intent.getAction().equals(Intent.ACTION_USER_PRESENT)){
-            monitor.userPresent();
+            EventBus.getDefault().post(new BusTag(BusTag.TAG_USER_PRESENT));
         }
     }
 }
