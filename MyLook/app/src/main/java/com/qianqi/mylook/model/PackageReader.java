@@ -121,7 +121,7 @@ public class PackageReader {
             } else {
                 whiteApps.add(p.packageName);
                 if (PackageReader.isSystemApp(p) && !PackageReader.isPersistentApp(p) && !isQianqiApp(p.packageName) && hasLauncher(p)) {
-                    L.d("gray app:"+p.packageName);
+//                    L.d("gray app:"+p.packageName);
                     graySystemApps.add(p.packageName);
                 }
             }

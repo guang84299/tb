@@ -8,6 +8,7 @@ import com.qianqi.mylook.client.MasterClient;
 import com.qianqi.mylook.core.CoreService;
 import com.qianqi.mylook.model.PackageModel;
 import com.qianqi.mylook.utils.CommonUtils;
+import com.qianqi.mylook.utils.L;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -26,18 +27,17 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        L.d("MainApplication:onCreate");
         instance = this;
         CrashHandler.getInstance().init(getApplicationContext());
         String processName = CommonUtils.getProcessName(getApplicationContext());
         if(processName.equals(getApplicationContext().getPackageName()) || processName.contains(":core")){
             PreferenceHelper.getInstance().initContext(getApplicationContext());
             PackageModel.getInstance(getApplicationContext()).startLoad();
-        }
-        if(processName.equals(getApplicationContext().getPackageName())){
             MobclickAgent.enableEncrypt(true);
-            //        MobclickAgent.setDebugMode( true );
+//            MobclickAgent.setDebugMode( true );
         }
-        else if(processName.contains(":core")){
+        if(processName.contains(":core")){
             ServiceManager.init(this,MasterClient.getInstance());
             MasterClient.getInstance().start();
         }

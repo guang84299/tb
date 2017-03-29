@@ -91,6 +91,20 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".stat.StatActivity"
+            android:process=":core"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action."/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
 
         <receiver
             android:name=".core.CoreReceiver"
@@ -158,6 +172,7 @@
         <!--<meta-data android:value="YS1001" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="YS1002" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="LY1001" android:name="UMENG_CHANNEL"/>-->
+        <!--<meta-data android:value="LY1002" android:name="UMENG_CHANNEL"/>-->
         <meta-data android:value="tbtest" android:name="UMENG_CHANNEL"/>
     </application>
 

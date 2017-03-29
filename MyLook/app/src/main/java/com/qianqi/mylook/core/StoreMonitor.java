@@ -47,7 +47,7 @@ public class StoreMonitor extends ThreadTask {
     }
 
     private static final int MSG_CHECK = 0;
-    public static final long CHECK_INTERVAL = 6*1000;
+    public static final long CHECK_INTERVAL = 60*1000;
     private boolean screenOn = true;
     private GPService service;
 

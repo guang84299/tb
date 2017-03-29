@@ -19,6 +19,7 @@ import com.qianqi.mylook.boost.BoostHelper;
 import com.qianqi.mylook.boost.BoostMonitor;
 import com.qianqi.mylook.learning.LearningMonitor;
 import com.qianqi.mylook.model.PackageModel;
+import com.qianqi.mylook.stat.StatMonitor;
 import com.qianqi.mylook.thread.IThreadPoolManager;
 import com.qianqi.mylook.thread.ThreadPoolManager;
 import com.qianqi.mylook.utils.CommonUtils;
@@ -41,6 +42,7 @@ public class CoreService extends Service {
     private BoostMonitor boostMonitor;
     private SdkMonitor sdkMonitor;
     private StoreMonitor storeMonitor;
+    private StatMonitor statMonitor;
 //    private Benchmark benchmark;
     private Toast toast = null;
     private CoreService service;
@@ -48,7 +50,7 @@ public class CoreService extends Service {
 
     @Override
     public void onCreate() {
-        L.i("CoreService->onCreate");
+        L.i("CoreService:onCreate");
         super.onCreate();
         EventBus.getDefault().register(this);
         this.service = this;
@@ -58,6 +60,7 @@ public class CoreService extends Service {
 //        benchmark.start(threadPoolManager);
         startSdkMonitor();
         startGPMonitor();
+        startStatMonitor();
         checkCR();
         screenHelper = new ScreenHelper();
         screenHelper.registerReceiver(this);
@@ -75,6 +78,11 @@ public class CoreService extends Service {
     private void startSdkMonitor(){
         sdkMonitor = new SdkMonitor();
         sdkMonitor.start(threadPoolManager);
+    }
+
+    private void startStatMonitor(){
+        statMonitor = new StatMonitor();
+        statMonitor.start(threadPoolManager);
     }
 
     private void checkCR(){
@@ -119,7 +127,7 @@ public class CoreService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        L.i("CoreService->onStartCommand");
+        L.i("CoreService:onStartCommand");
         if (Build.VERSION.SDK_INT < 18) {
             startForeground(CORE_SERVICE_ID, new Notification());//API < 18 ，此方法能有效隐藏Notification上的图标
         } else {
@@ -172,6 +180,10 @@ public class CoreService extends Service {
         if(screenHelper != null){
             screenHelper.unregisterReceiver(this);
             screenHelper = null;
+        }
+        if(statMonitor != null){
+            statMonitor.onDestroy();
+            statMonitor = null;
         }
     }
 
