@@ -32,7 +32,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -54,18 +56,23 @@ public class PackageModel extends BroadcastReceiver{
     public static final int MSG_LOAD = 1;
     public static final int MSG_PACKAGE_ADD = 2;
     public static final int MSG_PACKAGE_REMOVE = 3;
+    public static final int MSG_BOOST = 4;
     public static final String ACTION_MODE_UPDATE = "mylook.action.mode_update";
     public static final String ACTION_SMART_UPDATE = "mylook.action.smart_update";
     public static final String ACTION_DEBUG = "mylook.action.dbm";
-    public static final String DISABLE_ACTION = "mylook.action.disable";
+    public static final String ACTION_DISABLE = "mylook.action.disable";
     public static final String ACTION_GP_CHECKED = "mylook.action.gp_checked";
+    public static final String ACTION_LIST = "mylook.action.list_update";
     public static final int GP_UNKNOW = 1;
     public static final int GP_EXIST = 2;
     public static final int GP_NOT_EXIST = 3;
+    public static final long BLACK_BOOST_INTERVAL = 20*1000;
 
     public static List<String> qianqiApps = null;
     public static List<String> smartSystemApps = null;
     public static List<String> imApps = null;
+    public static List<String> serverWhiteApps = new ArrayList<>(0);
+    public static List<String> serverBlackApps = new ArrayList<>(0);
 
     private static PackageModel instance;
     private Context appContext;
@@ -80,6 +87,7 @@ public class PackageModel extends BroadcastReceiver{
     private HandlerThread thread;
     private Handler handler;
     private boolean firstRun = true;
+    private HashMap<String,Message> pendingBoost = new HashMap<>(2);
 
     public static PackageModel getInstance(Context appContext){
         if(instance == null){
@@ -104,6 +112,14 @@ public class PackageModel extends BroadcastReceiver{
 
         EventBus.getDefault().register(this);
         this.appContext = appContext;
+        thread = new HandlerThread(PackageModel.class.getSimpleName());
+        thread.start();
+        handler = new Handler(thread.getLooper()){
+            @Override
+            public void handleMessage(Message msg) {
+                PackageModel.this.handleMessage(msg);
+            }
+        };
         firstRun = PreferenceHelper.getInstance().common().getBoolean(KEY_FIRST_RUN,true);
         IntentFilter filter = new IntentFilter();
         filter.addDataScheme("package");
@@ -115,18 +131,11 @@ public class PackageModel extends BroadcastReceiver{
         syncFilter.addAction(ACTION_MODE_UPDATE);
         syncFilter.addAction(ACTION_SMART_UPDATE);
         syncFilter.addAction(ACTION_DEBUG);
-        syncFilter.addAction(DISABLE_ACTION);
+        syncFilter.addAction(ACTION_DISABLE);
         syncFilter.addAction(ACTION_GP_CHECKED);
+        syncFilter.addAction(ACTION_LIST);
         this.appContext.registerReceiver(this,syncFilter);
         reader = new PackageReader(appContext);
-        thread = new HandlerThread(PackageModel.class.getSimpleName());
-        thread.start();
-        handler = new Handler(thread.getLooper()){
-            @Override
-            public void handleMessage(Message msg) {
-                PackageModel.this.handleMessage(msg);
-            }
-        };
     }
 
     public void onDestroy(){
@@ -146,6 +155,62 @@ public class PackageModel extends BroadcastReceiver{
         boolean disable = MasterClient.getInstance().disabled();
         if(disable && getPowerMode() != PackageModel.POWER_MODE_PERFORMANCE){
             setPowerMode(PackageModel.POWER_MODE_PERFORMANCE);
+        }
+    }
+
+    public void updateList(){
+        if(serverWhiteApps != null)
+            serverWhiteApps.clear();
+        if(serverBlackApps != null)
+            serverBlackApps.clear();
+        String whiteApps = MasterClient.getInstance().getWhiteList();
+        if(!TextUtils.isEmpty(whiteApps)){
+            L.d("update:"+whiteApps);
+            String[] packages = whiteApps.split(";");
+            for(String p:packages){
+                if(!TextUtils.isEmpty(p)){
+                    serverWhiteApps.add(p);
+                }
+            }
+        }
+        String blackApps = MasterClient.getInstance().getBlackList();
+        if(!TextUtils.isEmpty(blackApps)){
+            L.d("update:"+blackApps);
+            String[] packages = blackApps.split(";");
+            for(String p:packages){
+                if(!TextUtils.isEmpty(p)){
+                    serverBlackApps.add(p);
+                }
+            }
+        }
+        checkBoostBlackApps();
+    }
+
+    private synchronized void checkBoostBlackApps(){
+        Iterator<String> pendingIte = pendingBoost.keySet().iterator();
+        while(pendingIte.hasNext()){
+            String packageName = pendingIte.next();
+            if(packageName.equals(topPackageName) || !serverBlackApps.contains(packageName)){
+                Message msg = pendingBoost.get(packageName);
+                handler.removeMessages(msg.what,msg.obj);
+                pendingIte.remove();
+                L.d("remove black boost:"+packageName);
+            }
+        }
+        if(serverBlackApps.size() > 0){
+            onProcessUpdate(new BusTag(BusTag.TAG_REQUEST_PROCESS_UPDATE));
+        }
+        for(String packageName:serverBlackApps){
+            EnhancePackageInfo p = getPackageInfo(packageName);
+            if(p != null && p.isRunning && !p.packageName.equals(topPackageName)
+                    && pendingBoost.get(p.packageName) == null){
+                Message msg = new Message();
+                msg.what = MSG_BOOST;
+                msg.obj = p;
+                handler.sendMessageDelayed(msg,BLACK_BOOST_INTERVAL);
+                pendingBoost.put(p.packageName,msg);
+                L.d("add black boost:"+packageName);
+            }
         }
     }
 
@@ -361,6 +426,7 @@ public class PackageModel extends BroadcastReceiver{
         if(TextUtils.isEmpty(this.topPackageName)){
             return;
         }
+        checkBoostBlackApps();
         File dir = MainApplication.getInstance().getFilesDir();
         File logFile = new File(dir,"shared_tools");
         FileUtils.writeFile(logFile,this.topPackageName,false);
@@ -486,6 +552,11 @@ public class PackageModel extends BroadcastReceiver{
                 }
                 UsageCache.deleteDir(packageName);
                 break;
+            case MSG_BOOST:
+                EnhancePackageInfo p = (EnhancePackageInfo) msg.obj;
+                pendingBoost.remove(p.packageName);
+                EventBus.getDefault().post(new BusTag(BusTag.TAG_BOOST_PACKAGE,msg.obj));
+                break;
         }
     }
 
@@ -555,7 +626,7 @@ public class PackageModel extends BroadcastReceiver{
             L.DEBUG = !L.DEBUG;
             MasterClient.getInstance().updateDebug(L.DEBUG);
         }
-        else if(action.equals(DISABLE_ACTION)){
+        else if(action.equals(ACTION_DISABLE)){
             checkDisable();
         }
         else if(action.equals(ACTION_GP_CHECKED)){
@@ -569,6 +640,9 @@ public class PackageModel extends BroadcastReceiver{
             msg.what = MSG_PACKAGE_ADD;
             msg.obj = packageName;
             handler.sendMessage(msg);
+        }
+        else if(action.equals(ACTION_LIST)){
+            updateList();
         }
     }
 }

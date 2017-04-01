@@ -56,4 +56,13 @@ public interface MS {
     void o(boolean bool);
 
     boolean p();
+
+    /*update white&black list*/
+    void q(String white,String black);
+
+    /*getWhiteList*/
+    String r();
+
+    /*getBlackList*/
+    String s();
 }

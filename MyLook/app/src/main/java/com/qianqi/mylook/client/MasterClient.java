@@ -117,6 +117,7 @@ public class MasterClient implements ServiceManager.ServiceListener{
     public void onHermesConnected() {
         L.d("onHermesConnected");
         PackageModel.getInstance(MainApplication.getInstance()).checkDisable();
+        PackageModel.getInstance(MainApplication.getInstance()).updateList();
         componentHelper.setMasterServer(masterServer);
         processHelper.setMasterServer(masterServer);
         settingHelper.setMasterServer(masterServer);
@@ -243,5 +244,19 @@ public class MasterClient implements ServiceManager.ServiceListener{
             return false;
         }
         return this.masterServer.p();
+    }
+
+    public String getWhiteList(){
+        if(this.masterServer == null){
+            return "";
+        }
+        return this.masterServer.r();
+    }
+
+    public String getBlackList(){
+        if(this.masterServer == null){
+            return "";
+        }
+        return this.masterServer.s();
     }
 }

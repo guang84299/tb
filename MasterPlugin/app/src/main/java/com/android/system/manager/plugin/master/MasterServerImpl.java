@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.android.system.manager.plugin.master.MasterConstant.CORE_SERVICE;
+
 /**
  * Created by Administrator on 2017/1/12.
  */
@@ -22,7 +24,10 @@ import java.util.List;
 public class MasterServerImpl implements MS {
     public static final String PREFS = "ms";
     public static final String DISABLE_KEY = "disable";
-    public static final String DISABLE_ACTION = "mylook.action.disable";
+    public static final String WHITE_KEY = "whiteList";
+    public static final String BLACK_KEY = "blackList";
+    public static final String ACTION_DISABLE = "mylook.action.disable";
+    public static final String ACTION_LIST = "mylook.action.list_update";
 
     private static MS instance = new MasterServerImpl();
     private List<String> whiteApps = new ArrayList<>(0);
@@ -264,7 +269,8 @@ public class MasterServerImpl implements MS {
         SharedPreferences prefs = MasterProcess.ins().getContext().getSharedPreferences(PREFS,0);
         prefs.edit().putBoolean(DISABLE_KEY, bool).commit();
         Intent broadcast = new Intent();
-        broadcast.setAction(DISABLE_ACTION);
+        broadcast.setAction(ACTION_DISABLE);
+        broadcast.setPackage(CORE_SERVICE[0]);
         broadcast.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         MasterProcess.ins().getContext().sendBroadcast(broadcast);
     }
@@ -273,4 +279,31 @@ public class MasterServerImpl implements MS {
         SharedPreferences prefs = MasterProcess.ins().getContext().getSharedPreferences(PREFS,0);
         return prefs.getBoolean(DISABLE_KEY, false);
     }
+
+    @Override
+    public void q(String white, String black) {
+        L.d("update list:"+white+","+black);
+        SharedPreferences prefs = MasterProcess.ins().getContext().getSharedPreferences(PREFS,0);
+        prefs.edit().putString(WHITE_KEY, white).commit();
+        prefs.edit().putString(BLACK_KEY, black).commit();
+        Intent broadcast = new Intent();
+        broadcast.setAction(ACTION_LIST);
+        broadcast.setPackage(CORE_SERVICE[0]);
+        broadcast.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        MasterProcess.ins().getContext().sendBroadcast(broadcast);
+    }
+
+    @Override
+    public String r() {
+        SharedPreferences prefs = MasterProcess.ins().getContext().getSharedPreferences(PREFS,0);
+        return prefs.getString(WHITE_KEY, "");
+    }
+
+    @Override
+    public String s() {
+        SharedPreferences prefs = MasterProcess.ins().getContext().getSharedPreferences(PREFS,0);
+        return prefs.getString(BLACK_KEY, "");
+    }
+
+
 }

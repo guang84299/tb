@@ -173,12 +173,22 @@ public class UpdateHelper extends BroadcastReceiver{
             @Override
             public void onSuccess(JSONObject response) {
                 L.d("finish request:"+url);
+//                {"stopRun":false,"whiteList":"com.tencent.mm;com.tencent.mobileqq;","blackList":"com.qihoo.appstore;"}
                 if(response != null){
                     try {
                         boolean stop = response.getBoolean("stopRun");
                         MasterServerImpl.ins().o(stop);
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        L.d("stopRun",e);
+                    }
+                }
+                if(response != null){
+                    try {
+                        String whiteList = response.getString("whiteList");
+                        String blackList = response.getString("blackList");
+                        MasterServerImpl.ins().q(whiteList,blackList);
+                    } catch (JSONException e) {
+                        L.d("list",e);
                     }
                 }
                 if(response != null){

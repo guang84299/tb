@@ -20,6 +20,14 @@ public class BoostComparator implements Comparator<EnhancePackageInfo> {
 
     @Override
     public int compare(EnhancePackageInfo a, EnhancePackageInfo b) {
+        boolean aInBlack = PackageModel.serverBlackApps.contains(a.packageName);
+        boolean bInBlack = PackageModel.serverBlackApps.contains(b.packageName);
+        if(aInBlack && !bInBlack){
+            return 1;
+        }
+        else if(!aInBlack && bInBlack){
+            return -1;
+        }
         if(mode == PackageModel.POWER_MODE_GAME){
             boolean aInGame = PackageModel.getInstance(MainApplication.getInstance()).inGameMode(a.packageName);
             boolean bInGame = PackageModel.getInstance(MainApplication.getInstance()).inGameMode(b.packageName);

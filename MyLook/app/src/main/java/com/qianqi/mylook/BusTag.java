@@ -28,6 +28,7 @@ public class BusTag {
     public static final String TAG_SCREEN_OFF = "screen_off";
     public static final String TAG_SCREEN_ON = "screen_on";
     public static final String TAG_USER_PRESENT = "user_present";
+    public static final String TAG_BOOST_PACKAGE = "boost_package";
 
     public String tag = "";
     public Object data = null;

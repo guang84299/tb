@@ -24,6 +24,8 @@ import com.qianqi.mylook.model.PackageModel;
 import com.qianqi.mylook.utils.L;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,6 +44,7 @@ public class BoostHelper {
     private LocationHelper locationHelper;
 
     public BoostHelper(){
+        EventBus.getDefault().register(this);
         mode = PackageModel.getInstance(MainApplication.getInstance()).getPowerMode();
         comparator = new BoostComparator();
         comparator.setMode(mode);
@@ -51,6 +54,7 @@ public class BoostHelper {
     }
 
     public void onDestroy(){
+        EventBus.getDefault().unregister(this);
         if(locationHelper != null){
             locationHelper.onDestroy();
             locationHelper = null;
@@ -74,6 +78,7 @@ public class BoostHelper {
         List<EnhancePackageInfo> runningPackageList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
         if(runningPackageList == null)
             return false;
+        excludeWhite(runningPackageList);
         excludeByMode(runningPackageList);
         excludeMusic(runningPackageList);
         excludeInputMethod(runningPackageList);
@@ -88,16 +93,33 @@ public class BoostHelper {
         }
         if(runningPackageList.size() > 0){
             EnhancePackageInfo lastApp = runningPackageList.get(runningPackageList.size()-1);
-            lastApp.setStopping(true);
-            PackageModel.getInstance(MainApplication.getInstance()).setAutoStart(lastApp.packageName,false);
-            boolean res = MasterClient.getInstance().forceStop(lastApp.packageName);
-            L.d("boost:"+lastApp.packageName+","+res);
-            if(L.DEBUG){
-                boostPackageName = lastApp.packageName;
-            }
+            doBoost(lastApp);
             return true;
         }
         return false;
+    }
+
+    @Subscribe(
+            threadMode = ThreadMode.POSTING
+    )
+    public void onBoost(BusTag event) {
+//        L.d("on process update");
+        if (event.tag.equals(BusTag.TAG_BOOST_PACKAGE)) {
+            if(event.data != null && event.data instanceof EnhancePackageInfo) {
+                EnhancePackageInfo p = (EnhancePackageInfo) event.data;
+                doBoost(p);
+            }
+        }
+    }
+
+    public void doBoost(EnhancePackageInfo p){
+        p.setStopping(true);
+        PackageModel.getInstance(MainApplication.getInstance()).setAutoStart(p.packageName,false);
+        boolean res = MasterClient.getInstance().forceStop(p.packageName);
+        L.d("boost:"+p.packageName+","+res);
+        if(L.DEBUG){
+            boostPackageName = p.packageName;
+        }
     }
 
     private void excludeMusic(List<EnhancePackageInfo> runningPackageList){
@@ -148,6 +170,19 @@ public class BoostHelper {
             if(locationHelper.isLongTimeActive(p.packageName)) {
                 ite.remove();
 //                L.d("navi:exclude="+p.packageName);
+            }
+        }
+    }
+
+    private void excludeWhite(List<EnhancePackageInfo> runningPackageList){
+        if(locationHelper == null)
+            return;
+        Iterator<EnhancePackageInfo> ite = runningPackageList.iterator();
+        while(ite.hasNext()){
+            EnhancePackageInfo p = ite.next();
+            if(PackageModel.serverWhiteApps.contains(p.packageName)) {
+                ite.remove();
+                //L.d("white:exclude="+p.packageName);
             }
         }
     }

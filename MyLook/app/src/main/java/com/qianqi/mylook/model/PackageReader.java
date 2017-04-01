@@ -168,7 +168,8 @@ public class PackageReader {
         if (isQianqiApp(p.packageName))
             return null;
         boolean isSystem = isSystemApp(p);
-        if (isSystem && !PackageModel.smartSystemApps.contains(p.packageName)) {
+        if (isSystem && !PackageModel.smartSystemApps.contains(p.packageName)
+                && !PackageModel.serverBlackApps.contains(p.packageName)) {
             int gpState = PackageModel.getGPState(p.packageName);
             if(gpState != PackageModel.GP_EXIST)
                 return null;
