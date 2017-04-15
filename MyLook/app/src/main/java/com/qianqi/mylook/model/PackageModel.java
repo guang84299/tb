@@ -202,7 +202,19 @@ public class PackageModel extends BroadcastReceiver{
         }
         for(String packageName:serverBlackApps){
             EnhancePackageInfo p = getPackageInfo(packageName);
-            if(p != null && p.isRunning && !p.packageName.equals(topPackageName)
+            if(p == null){
+                p = reader.loadPackage(inService(), packageName);
+                p.allowAutoStart = false;
+                p.setInSmartList(inSmartMode(p.packageName));
+                packageList.add(p);
+                setAutoStart(p.packageName,p.allowAutoStart);
+                postPackageList(BusTag.TAG_PACKAGE_UPDATE);
+                if(whiteApps != null) {
+                    whiteApps.remove(packageName);
+                    MasterClient.getInstance().setWriteApps();
+                }
+            }
+            if(p.isRunning && !p.packageName.equals(topPackageName)
                     && pendingBoost.get(p.packageName) == null){
                 Message msg = new Message();
                 msg.what = MSG_BOOST;
