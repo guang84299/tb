@@ -33,10 +33,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-                <!--<action android:name="android.intent.action.VIEW"/>-->
-                <!--<category android:name="android.intent.category.DEFAULT"/>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity
@@ -183,6 +183,7 @@
         <!--<meta-data android:value="DQ1001" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="tbtest2" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="LXT1001" android:name="UMENG_CHANNEL"/>-->
+        <!--<meta-data android:value="HX1001" android:name="UMENG_CHANNEL"/>-->
         <meta-data android:value="tbtest" android:name="UMENG_CHANNEL"/>
     </application>
 
