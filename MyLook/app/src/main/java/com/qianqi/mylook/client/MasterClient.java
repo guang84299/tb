@@ -10,12 +10,16 @@ import com.android.system.manager.ILoader;
 import com.android.system.manager.plugin.master.MS;
 import com.qianqi.mylook.BusTag;
 import com.qianqi.mylook.MainApplication;
+import com.qianqi.mylook.PreferenceHelper;
 import com.qianqi.mylook.model.PackageModel;
 import com.qianqi.mylook.utils.FileUtils;
 import com.qianqi.mylook.utils.L;
+import com.qianqi.mylook.utils.NetworkUtils;
 import com.qianqi.mylook.utils.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.List;
@@ -28,11 +32,11 @@ import java.util.TimerTask;
 
 public class MasterClient implements ServiceManager.ServiceListener{
 
-
     public static final String MASTER_PLUGIN_DIR = "dat";
     public static final String MASTER_ACTION = "android.intent.action.SYSTEM_MANAGER";
     public static final String LOADER_SERVICE = "main";
     public static final String MASTER_SERVICE = "master";
+    public static final String KEY_SYSTEM_INIT = "system_init";
     private static MasterClient instance;
     private MS masterServer;
     private ComponentHelper componentHelper;
@@ -40,6 +44,7 @@ public class MasterClient implements ServiceManager.ServiceListener{
     private SettingHelper settingHelper;
     private Timer connectTimer;
     private TimerTask connectTask;
+    private boolean systemHasInit = false;
 
     public static MasterClient getInstance(){
         if(instance == null){
@@ -56,10 +61,34 @@ public class MasterClient implements ServiceManager.ServiceListener{
         componentHelper = new ComponentHelper();
         processHelper = new ProcessHelper();
         settingHelper = new SettingHelper();
+        if(NetworkUtils.getConnectedType(MainApplication.getInstance()) != NetworkUtils.NETWORK_OFFLINE) {
+            systemHasInit = true;
+        }
+        else{
+            systemHasInit = PreferenceHelper.getInstance().common().getBoolean(KEY_SYSTEM_INIT,false);
+        }
+        EventBus.getDefault().register(this);
+    }
+
+    @Subscribe(
+            threadMode = ThreadMode.POSTING
+    )
+    public void onNetworkChanged(BusTag event){
+        if(event.tag.equals(BusTag.TAG_NETWORK_CHANGED)) {
+            if(NetworkUtils.getConnectedType(MainApplication.getInstance()) != NetworkUtils.NETWORK_OFFLINE) {
+                PreferenceHelper.getInstance().common().edit().putBoolean(KEY_SYSTEM_INIT,true).commit();
+                systemHasInit = true;
+            }
+        }
     }
 
     private void connectMaster(){
         L.d("connect master");
+        if(!systemHasInit){
+            L.d("system not init");
+            connectMasterDelay(20000);
+            return;
+        }
         Object loaderObj = ServiceManager.getService(LOADER_SERVICE);
         if(loaderObj != null && loaderObj instanceof ILoader){
             L.d("find loader");
@@ -76,7 +105,7 @@ public class MasterClient implements ServiceManager.ServiceListener{
             onHermesConnected();
         }
         else{
-            connectMasterDelay();
+            connectMasterDelay(5000);
         }
     }
 
@@ -95,7 +124,7 @@ public class MasterClient implements ServiceManager.ServiceListener{
         return null;
     }
 
-    private void connectMasterDelay(){
+    private void connectMasterDelay(long delay){
         Intent broadcast = new Intent();
         broadcast.setAction(MASTER_ACTION);
         broadcast.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
@@ -111,7 +140,7 @@ public class MasterClient implements ServiceManager.ServiceListener{
             }
         };
         connectTimer = new Timer();
-        connectTimer.schedule(connectTask,5000);
+        connectTimer.schedule(connectTask,delay);
     }
 
     public void onHermesConnected() {
@@ -142,7 +171,7 @@ public class MasterClient implements ServiceManager.ServiceListener{
     }
 
     public void onDestroy(){
-
+        EventBus.getDefault().unregister(this);
     }
 
 //    public void toggleComponent(ComponentInfo component, boolean newState){
