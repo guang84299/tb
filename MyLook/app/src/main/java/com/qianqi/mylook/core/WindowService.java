@@ -7,6 +7,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.qianqi.mylook.BusTag;
+import com.qianqi.mylook.event.WindowEvent;
 import com.qianqi.mylook.utils.L;
 
 import org.greenrobot.eventbus.EventBus;
@@ -61,8 +62,8 @@ public class WindowService extends AccessibilityService {
 //                    //开始打开红包
 //                    openPacket();
 //                }
-//                L.d("window changed");
-                EventBus.getDefault().post(new BusTag(BusTag.TAG_WINDOW_CHANGED,event.getPackageName()));
+//                L.d("post window changed:"+android.os.Process.myTid());
+                EventBus.getDefault().post(new WindowEvent(WindowEvent.TAG_WINDOW_CHANGED,event.getPackageName()));
 //                L.d("TYPE_WINDOW_STATE_CHANGED");
                 break;
         }

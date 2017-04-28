@@ -20,6 +20,7 @@ import com.qianqi.mylook.PreferenceHelper;
 import com.qianqi.mylook.R;
 import com.qianqi.mylook.bean.EnhancePackageInfo;
 import com.qianqi.mylook.client.MasterClient;
+import com.qianqi.mylook.event.WindowEvent;
 import com.qianqi.mylook.learning.UsageCache;
 import com.qianqi.mylook.utils.CommonUtils;
 import com.qianqi.mylook.utils.FileUtils;
@@ -345,16 +346,15 @@ public class PackageModel extends BroadcastReceiver{
     }
 
     @Subscribe(
-            threadMode = ThreadMode.POSTING
+            threadMode = ThreadMode.BACKGROUND
     )
-    public void onWindowChanged(BusTag event){
-        if(event.tag.equals(BusTag.TAG_WINDOW_CHANGED)){
-            if(event.data != null && event.data instanceof String){
-                String top = (String) event.data;
-                if(!top.equals(topPackageName)) {
-                    setTopPackageName(top);
-                    EventBus.getDefault().post(new BusTag(BusTag.TAG_TOP_TASK_CHANGED));
-                }
+    public void onWindowChanged(WindowEvent event){
+//        L.d("window changed:"+android.os.Process.myTid());
+        if(event.data != null && event.data instanceof String){
+            String top = (String) event.data;
+            if(!top.equals(topPackageName)) {
+                setTopPackageName(top);
+                EventBus.getDefault().post(new BusTag(BusTag.TAG_TOP_TASK_CHANGED));
             }
         }
     }
