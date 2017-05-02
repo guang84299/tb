@@ -130,7 +130,7 @@ public class CoreService extends Service {
         L.i("CoreService:onStartCommand");
         if (Build.VERSION.SDK_INT < 18) {
             startForeground(CORE_SERVICE_ID, new Notification());//API < 18 ，此方法能有效隐藏Notification上的图标
-        } else {
+        } else if(Build.VERSION.SDK_INT < 25){
             Intent innerIntent = new Intent(this, CoreInnerService.class);
             startService(innerIntent);
             startForeground(CORE_SERVICE_ID, new Notification());

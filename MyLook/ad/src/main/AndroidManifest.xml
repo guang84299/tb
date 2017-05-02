@@ -115,7 +115,7 @@
                              android:process=":pro1"
                              android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
-                <action android:name="android.intent.action.CREATE_SHORTCUT" />
+                <!--<action android:name="android.intent.action.CREATE_SHORTCUT" />-->
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
