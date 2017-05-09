@@ -51,28 +51,32 @@
                 android:src="@drawable/ic_setting"/>
         </LinearLayout>
 
-        <com.qianqi.mylook.view.WaveLoadingView
-            android:id="@+id/waveLoadingView"
-            android:layout_width="224dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginTop="60dp"
-            android:layout_marginBottom="60dp"
-            app:wlv_borderColor="#ffffff"
-            app:wlv_borderWidth="2dp"
-            app:wlv_progressValue="70"
-            app:wlv_round_rectangle="true"
-            app:wlv_shapeType="circle"
-            app:wlv_titleBottom="@string/battery_title"
-            app:wlv_titleBottomColor="#ffffff"
-            app:wlv_titleBottomSize="18sp"
-            app:wlv_titleCenter="70%"
-            app:wlv_titleCenterColor="#ffffff"
-            app:wlv_titleCenterSize="36sp"
-            app:wlv_triangle_direction="north"
-            app:wlv_waveAmplitude="40"
-            app:wlv_waveColor="#99a4d6ff"
-            app:wlv_wave_background_Color="#3352f1ff"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <com.qianqi.mylook.view.WaveLoadingView
+                android:id="@+id/waveLoadingView"
+                android:layout_width="224dp"
+                android:layout_height="224dp"
+                android:layout_centerInParent="true"
+                app:wlv_borderColor="#ffffff"
+                app:wlv_borderWidth="2dp"
+                app:wlv_progressValue="70"
+                app:wlv_round_rectangle="true"
+                app:wlv_shapeType="circle"
+                app:wlv_titleBottom="@string/battery_title"
+                app:wlv_titleBottomColor="#ffffff"
+                app:wlv_titleBottomSize="18sp"
+                app:wlv_titleCenter="70%"
+                app:wlv_titleCenterColor="#ffffff"
+                app:wlv_titleCenterSize="36sp"
+                app:wlv_triangle_direction="north"
+                app:wlv_waveAmplitude="40"
+                app:wlv_waveColor="#99a4d6ff"
+                app:wlv_wave_background_Color="#3352f1ff"/>
+        </RelativeLayout>
+
     </LinearLayout>
 
     <!--<TextView-->
