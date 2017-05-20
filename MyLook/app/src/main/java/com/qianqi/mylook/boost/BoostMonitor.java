@@ -34,21 +34,23 @@ public class BoostMonitor extends ThreadTask {
     public BoostMonitor() {
         super(BoostMonitor.class.getSimpleName());
         EventBus.getDefault().register(this);
-        memHelper = new MemHelper();
-        boostHelper = new BoostHelper();
 //        L.d("create boost monitor");
     }
 
     public void onDestroy(){
         EventBus.getDefault().unregister(this);
         this.cancel();
-        memHelper.onDestroy();
-        boostHelper.onDestroy();
+        if(memHelper != null)
+            memHelper.onDestroy();
+        if(boostHelper != null)
+            boostHelper.onDestroy();
     }
 
     @Override
     protected void onLooperPrepared() {
         super.onLooperPrepared();
+        memHelper = new MemHelper();
+        boostHelper = new BoostHelper();
         if(boostHelper.getMode() != PackageModel.POWER_MODE_PERFORMANCE)
             handler.sendEmptyMessage(MSG_CHECK_MEM);
     }
@@ -98,7 +100,8 @@ public class BoostMonitor extends ThreadTask {
                 handler.removeMessages(MSG_CHECK_MEM);
                 handler.sendEmptyMessage(MSG_CHECK_MEM);
             }
-            boostHelper.updateMode(mode);
+            if(boostHelper != null)
+                boostHelper.updateMode(mode);
         }
     }
 
@@ -107,7 +110,7 @@ public class BoostMonitor extends ThreadTask {
     )
     public void onProcessUpdate(BusTag event){
         if(event.tag.equals(BusTag.TAG_PACKAGE_PROCESS_UPDATE)){
-            if(boostHelper.getMode() == PackageModel.POWER_MODE_PERFORMANCE)
+            if(boostHelper == null || boostHelper.getMode() == PackageModel.POWER_MODE_PERFORMANCE)
                 return;
             handler.sendEmptyMessage(MSG_CHECK_AUTOSTART);
         }
