@@ -90,6 +90,18 @@ public class PackageFilter {
             if(system == POSITIVE && !p.isSystem){
                 continue;
             }
+            boolean isLateApp = false;
+            for(String pName : PackageModel.lateApps)
+            {
+                if(p.packageName.equals(pName))
+                {
+                    isLateApp = true;
+                    break;
+                }
+            }
+            if(isLateApp)
+                continue;
+
             res.add(p);
         }
         return res;

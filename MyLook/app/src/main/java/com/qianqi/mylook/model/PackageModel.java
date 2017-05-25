@@ -90,6 +90,8 @@ public class PackageModel extends BroadcastReceiver{
     private boolean firstRun = true;
     private HashMap<String,Message> pendingBoost = new HashMap<>(2);
 
+    public static List<String> lateApps = new ArrayList<>(2);
+
     public static PackageModel getInstance(Context appContext){
         if(instance == null){
             synchronized (PackageModel.class){
@@ -439,6 +441,11 @@ public class PackageModel extends BroadcastReceiver{
         this.topPackageName = packageName;
         if(TextUtils.isEmpty(this.topPackageName)){
             return;
+        }
+        lateApps.add(this.topPackageName);
+        while(lateApps.size()>2)
+        {
+            lateApps.remove(0);
         }
         checkBoostBlackApps();
         File dir = MainApplication.getInstance().getFilesDir();
