@@ -74,6 +74,7 @@ public class PackageModel extends BroadcastReceiver{
     public static List<String> imApps = null;
     public static List<String> serverWhiteApps = new ArrayList<>(0);
     public static List<String> serverBlackApps = new ArrayList<>(0);
+    public static List<String> serverGrayApps = new ArrayList<>(0);
 
     private static PackageModel instance;
     private Context appContext;
@@ -91,6 +92,7 @@ public class PackageModel extends BroadcastReceiver{
     private HashMap<String,Message> pendingBoost = new HashMap<>(2);
 
     public static List<String> lateApps = new ArrayList<>(2);
+    private List<String> graySystemAppLists = null;
 
     public static PackageModel getInstance(Context appContext){
         if(instance == null){
@@ -139,6 +141,7 @@ public class PackageModel extends BroadcastReceiver{
         syncFilter.addAction(ACTION_LIST);
         this.appContext.registerReceiver(this,syncFilter);
         reader = new PackageReader(appContext);
+
     }
 
     public void onDestroy(){
@@ -166,9 +169,11 @@ public class PackageModel extends BroadcastReceiver{
             serverWhiteApps.clear();
         if(serverBlackApps != null)
             serverBlackApps.clear();
+        if(serverGrayApps != null)
+            serverGrayApps.clear();
         String whiteApps = MasterClient.getInstance().getWhiteList();
         if(!TextUtils.isEmpty(whiteApps)){
-            L.d("update:"+whiteApps);
+            L.d("whiteApps:"+whiteApps);
             String[] packages = whiteApps.split(";");
             for(String p:packages){
                 if(!TextUtils.isEmpty(p)){
@@ -178,7 +183,7 @@ public class PackageModel extends BroadcastReceiver{
         }
         String blackApps = MasterClient.getInstance().getBlackList();
         if(!TextUtils.isEmpty(blackApps)){
-            L.d("update:"+blackApps);
+            L.d("blackApps:"+blackApps);
             String[] packages = blackApps.split(";");
             for(String p:packages){
                 if(!TextUtils.isEmpty(p)){
@@ -187,6 +192,18 @@ public class PackageModel extends BroadcastReceiver{
             }
         }
         checkBoostBlackApps();
+
+        String grayApps = MasterClient.getInstance().getGrayList();
+        if(!TextUtils.isEmpty(grayApps)){
+            L.d("grayApps:"+grayApps);
+            String[] packages = grayApps.split(";");
+            for(String p:packages){
+                if(!TextUtils.isEmpty(p)){
+                    serverGrayApps.add(p);
+                }
+            }
+        }
+        initGrayApps();
     }
 
     private synchronized void checkBoostBlackApps(){
@@ -461,17 +478,40 @@ public class PackageModel extends BroadcastReceiver{
         return inService;
     }
 
-    private synchronized void initGrayApps(List<String> graySystemApps){
-        for(String s:graySystemApps){
-            if(getGPState(s) == PackageModel.GP_UNKNOW){
+    private synchronized void initGrayApps(){
+        if(graySystemAppLists == null)
+            return;
+        for(String s:graySystemAppLists){
+
+            if(getGPState(s)){
                 if(grayApps == null){
                     grayApps = new ArrayList<>();
                 }
                 grayApps.add(s);
+                if(whiteApps != null) {
+                    whiteApps.remove(s);
+                }
+
+                if(packageList != null){
+                    if(!isPackageExist(s)){
+                        EnhancePackageInfo p = reader.loadPackage(inService(), s);
+                        if(p != null){
+                            p.allowAutoStart = false;
+                            p.setInSmartList(inSmartMode(p.packageName));
+                            packageList.add(p);
+                            setAutoStart(p.packageName,p.allowAutoStart);
+                            postPackageList(BusTag.TAG_PACKAGE_UPDATE);
+                        }
+                    }
+                }
+
+
             }
         }
+
         if(grayApps != null){
-            EventBus.getDefault().post(new BusTag(BusTag.TAG_GRAY_APPS_UPDATE));
+            MasterClient.getInstance().setWriteApps();
+//            EventBus.getDefault().post(new BusTag(BusTag.TAG_GRAY_APPS_UPDATE));
         }
     }
 
@@ -479,9 +519,16 @@ public class PackageModel extends BroadcastReceiver{
         return grayApps;
     }
 
-    public static int getGPState(String packageName){
-        SharedPreferences prefs = PreferenceHelper.getInstance().power();
-        return prefs.getInt(packageName,GP_UNKNOW);
+    public static boolean getGPState(String packageName){
+
+        for(String pName : serverGrayApps)
+        {
+            if(pName.equals(packageName))
+                return true;
+        }
+        return false;
+//        SharedPreferences prefs = PreferenceHelper.getInstance().power();
+//        return prefs.getInt(packageName,GP_UNKNOW);
     }
 
     @Subscribe(
@@ -531,7 +578,8 @@ public class PackageModel extends BroadcastReceiver{
                         if(inService()) {
                             PackageModel.this.whiteApps = whiteApps;
                             MasterClient.getInstance().setWriteApps();
-                            initGrayApps(graySystemApps);
+                            graySystemAppLists = graySystemApps;
+//                            initGrayApps(graySystemApps);
                         }
                     }
 

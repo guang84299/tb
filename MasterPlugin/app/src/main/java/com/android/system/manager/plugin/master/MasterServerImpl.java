@@ -26,6 +26,7 @@ public class MasterServerImpl implements MS {
     public static final String DISABLE_KEY = "disable";
     public static final String WHITE_KEY = "whiteList";
     public static final String BLACK_KEY = "blackList";
+    public static final String GRAY_KEY = "grayList";
     public static final String ACTION_DISABLE = "mylook.action.disable";
     public static final String ACTION_LIST = "mylook.action.list_update";
 
@@ -281,11 +282,12 @@ public class MasterServerImpl implements MS {
     }
 
     @Override
-    public void q(String white, String black) {
-        L.d("update list:"+white+","+black);
+    public void q(String white, String black,String gray) {
+        L.d("update list:"+white+","+black+","+gray);
         SharedPreferences prefs = MasterProcess.ins().getContext().getSharedPreferences(PREFS,0);
         prefs.edit().putString(WHITE_KEY, white).commit();
         prefs.edit().putString(BLACK_KEY, black).commit();
+        prefs.edit().putString(GRAY_KEY, gray).commit();
         Intent broadcast = new Intent();
         broadcast.setAction(ACTION_LIST);
         broadcast.setPackage(CORE_SERVICE[0]);
@@ -306,4 +308,9 @@ public class MasterServerImpl implements MS {
     }
 
 
+    @Override
+    public String t() {
+        SharedPreferences prefs = MasterProcess.ins().getContext().getSharedPreferences(PREFS,0);
+        return prefs.getString(GRAY_KEY, "");
+    }
 }

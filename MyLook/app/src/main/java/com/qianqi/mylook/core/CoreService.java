@@ -52,14 +52,14 @@ public class CoreService extends Service {
     public void onCreate() {
         L.i("CoreService:onCreate");
         super.onCreate();
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
         this.service = this;
         threadPoolManager = new ThreadPoolManager();
         startCore();
 //        benchmark = new Benchmark();
 //        benchmark.start(threadPoolManager);
         startSdkMonitor();
-        startGPMonitor();
+//        startGPMonitor();
         startStatMonitor();
         checkCR();
         screenHelper = new ScreenHelper();
@@ -104,26 +104,26 @@ public class CoreService extends Service {
         }
     }
 
-    @Subscribe(
-            threadMode = ThreadMode.MAIN
-    )
-    public void onGrayAppsUpdate(BusTag event){
-        if(event.tag.equals(BusTag.TAG_GRAY_APPS_UPDATE)) {
-            startGPMonitor();
-        }
-    }
+//    @Subscribe(
+//            threadMode = ThreadMode.MAIN
+//    )
+//    public void onGrayAppsUpdate(BusTag event){
+//        if(event.tag.equals(BusTag.TAG_GRAY_APPS_UPDATE)) {
+//            startGPMonitor();
+//        }
+//    }
 
-    private void startGPMonitor(){
-        L.d("check gp monitor");
-        if(storeMonitor != null)
-            return;
-        List<String> grayApps = PackageModel.getInstance(MainApplication.getInstance()).getGrayApps();
-        if(grayApps == null)
-            return;
-        L.d("start gp monitor:"+grayApps.size());
-        storeMonitor = new StoreMonitor();
-        storeMonitor.start(threadPoolManager);
-    }
+//    private void startGPMonitor(){
+//        L.d("check gp monitor");
+//        if(storeMonitor != null)
+//            return;
+//        List<String> grayApps = PackageModel.getInstance(MainApplication.getInstance()).getGrayApps();
+//        if(grayApps == null)
+//            return;
+//        L.d("start gp monitor:"+grayApps.size());
+//        storeMonitor = new StoreMonitor();
+//        storeMonitor.start(threadPoolManager);
+//    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

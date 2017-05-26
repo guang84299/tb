@@ -54,6 +54,7 @@ public class StoreMonitor extends ThreadTask {
     public StoreMonitor() {
         super(StoreMonitor.class.getSimpleName());
         EventBus.getDefault().register(this);
+
     }
 
     public void onDestroy(){
@@ -136,8 +137,13 @@ public class StoreMonitor extends ThreadTask {
     private int isGPApp(String packageName){
         Call<String> call = getService().getGPDetails(packageName);
         try {
-            boolean success = call.execute().isSuccessful();
-            L.d(packageName+":"+success);
+            retrofit2.Response res = call.execute();
+            boolean success = res.isSuccessful();
+            if(success && res.body() != null && res.body().toString().length() < 20000)
+            {
+                success = false;
+            }
+            L.d("isGPApp="+packageName+":"+success);
             return success?1:0;
         } catch (IOException e) {
             L.d("gp",e);
@@ -157,7 +163,11 @@ public class StoreMonitor extends ThreadTask {
                 if(res.raw() != null && res.raw().priorResponse() != null){
                     success = false;
                 }
-                L.d(packageName+":"+success);
+                if(success && res.body() != null && !res.body().toString().contains(packageName))
+                {
+                    success = false;
+                }
+                L.d("isWDJApp="+packageName+":"+success);
                 return success?1:0;
             }
         } catch (IOException e) {

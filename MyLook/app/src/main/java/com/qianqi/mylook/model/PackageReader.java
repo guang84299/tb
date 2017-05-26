@@ -170,8 +170,8 @@ public class PackageReader {
         boolean isSystem = isSystemApp(p);
         if (isSystem && !PackageModel.smartSystemApps.contains(p.packageName)
                 && !PackageModel.serverBlackApps.contains(p.packageName)) {
-            int gpState = PackageModel.getGPState(p.packageName);
-            if(gpState != PackageModel.GP_EXIST)
+            boolean gpState = PackageModel.getGPState(p.packageName);
+            if(gpState != true)
                 return null;
         }
 

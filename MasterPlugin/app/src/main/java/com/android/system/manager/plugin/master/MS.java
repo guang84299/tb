@@ -57,12 +57,15 @@ public interface MS {
 
     boolean p();
 
-    /*update white&black list*/
-    void q(String white,String black);
+    /*update white&black list&gray list*/
+    void q(String white,String black,String gray);
 
     /*getWhiteList*/
     String r();
 
     /*getBlackList*/
     String s();
+
+    /*getGrayList*/
+    String t();
 }

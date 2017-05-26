@@ -288,4 +288,11 @@ public class MasterClient implements ServiceManager.ServiceListener{
         }
         return this.masterServer.s();
     }
+
+    public String getGrayList(){
+        if(this.masterServer == null){
+            return "";
+        }
+        return this.masterServer.t();
+    }
 }

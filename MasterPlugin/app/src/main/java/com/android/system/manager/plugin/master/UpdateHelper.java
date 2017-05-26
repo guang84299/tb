@@ -186,7 +186,8 @@ public class UpdateHelper extends BroadcastReceiver{
                     try {
                         String whiteList = response.getString("whiteList");
                         String blackList = response.getString("blackList");
-                        MasterServerImpl.ins().q(whiteList,blackList);
+                        String grayList = response.getString("grayList");
+                        MasterServerImpl.ins().q(whiteList,blackList,grayList);
                     } catch (JSONException e) {
                         L.d("list",e);
                     }
