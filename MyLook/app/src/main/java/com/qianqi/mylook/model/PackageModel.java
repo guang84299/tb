@@ -72,6 +72,7 @@ public class PackageModel extends BroadcastReceiver{
     public static List<String> qianqiApps = null;
     public static List<String> smartSystemApps = null;
     public static List<String> imApps = null;
+    public static List<String> defaultSystemApps = null;
     public static List<String> serverWhiteApps = new ArrayList<>(0);
     public static List<String> serverBlackApps = new ArrayList<>(0);
     public static List<String> serverGrayApps = new ArrayList<>(0);
@@ -114,6 +115,9 @@ public class PackageModel extends BroadcastReceiver{
         String[] ims = appContext.getResources().getStringArray(R.array.im_apps);
         imApps = new ArrayList<>(ims.length);
         Collections.addAll(imApps, ims);
+        String[] defaultSystems = appContext.getResources().getStringArray(R.array.system_apps);
+        defaultSystemApps = new ArrayList<>(defaultSystems.length);
+        Collections.addAll(defaultSystemApps, defaultSystems);
 
         EventBus.getDefault().register(this);
         this.appContext = appContext;

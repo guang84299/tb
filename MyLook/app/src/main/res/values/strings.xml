@@ -15,7 +15,7 @@
     <string name="power_mode_smart_config">Custom smart mode</string>
     <string name="power_mode_game_desc">This mode will only keep most used IM apps running in the background</string>
     <string name="power_mode_smart_desc">This mode will limit not used recent apps running in the background</string>
-    <string name="power_mode_performance_desc">This mode will not limit any apps running int the background</string>
+    <string name="power_mode_performance_desc">This mode will not limit any apps running in the background</string>
     <string name="battery_current_unit">" mAh"</string>
     <string name="battery_capacity">Battery capacity</string>
     <string name="custom_smart_mode">Custom Smart Mode</string>

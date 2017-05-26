@@ -120,7 +120,8 @@ public class PackageReader {
                 }
             } else {
                 whiteApps.add(p.packageName);
-                if (PackageReader.isSystemApp(p) && !PackageReader.isPersistentApp(p) && !isQianqiApp(p.packageName) && hasLauncher(p)) {
+                if (PackageReader.isSystemApp(p) && !PackageReader.isPersistentApp(p)
+                        && !isQianqiApp(p.packageName) && !isDefaultSystemApp(p.packageName) && hasLauncher(p)) {
 //                    L.d("gray app:"+p.packageName);
                     graySystemApps.add(p.packageName);
                 }
@@ -167,6 +168,8 @@ public class PackageReader {
     private EnhancePackageInfo loadPackage(boolean loadIcon, PackageInfo p) {
         if (isQianqiApp(p.packageName))
             return null;
+        if (isDefaultSystemApp(p.packageName))
+            return null;
         boolean isSystem = isSystemApp(p);
         if (isSystem && !PackageModel.smartSystemApps.contains(p.packageName)
                 && !PackageModel.serverBlackApps.contains(p.packageName)) {
@@ -191,6 +194,10 @@ public class PackageReader {
 
     static boolean isQianqiApp(String packageName){
         return PackageModel.qianqiApps.contains(packageName);
+    }
+
+    static boolean isDefaultSystemApp(String packageName){
+        return PackageModel.defaultSystemApps.contains(packageName);
     }
 
     /**

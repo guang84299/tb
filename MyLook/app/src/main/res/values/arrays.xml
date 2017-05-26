@@ -57,4 +57,9 @@
         <item>kik.android</item>
         <item>ru.mail</item>
     </string-array>
+    <string-array name="system_apps" translatable="false">
+        <item>com.android.deskclock</item>
+        <item>com.android.dialer</item>
+        <item>com.android.mms</item>
+    </string-array>
 </resources>
