@@ -17,6 +17,8 @@
 #}
 -keep class android.app.** { *; }
 -dontwarn android.app.**
+-keep class com.android.internal.** { *; }
+-dontwarn com.android.internal.**
 -keep class android.media.** { *; }
 -dontwarn android.media.**
 -keep class com.android.system.manager.system.PP { *; }

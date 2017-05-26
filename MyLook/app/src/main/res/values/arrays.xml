@@ -30,6 +30,11 @@
         <item>com.android.chrome</item>
     </string-array>
     <string-array name="im_apps" translatable="false">
+        <item>com.tencent.mobileqq</item>
+        <item>com.tencent.minihd.qq</item>
+        <item>com.tencent.mobileqqi</item>
+        <item>com.tencent.qqlite</item>
+        <item>com.tencent.qq.kddi</item>
         <item>com.facebook.orca</item>
         <item>com.tencent.mm</item>
         <item>com.whatsapp</item>

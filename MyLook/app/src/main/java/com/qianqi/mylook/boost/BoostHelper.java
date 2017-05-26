@@ -42,6 +42,7 @@ public class BoostHelper {
     private BoostComparator comparator;
     public static String boostPackageName = "";
     private LocationHelper locationHelper;
+    private VpnHelper vpnHelper;
 
     public BoostHelper(){
         EventBus.getDefault().register(this);
@@ -51,6 +52,7 @@ public class BoostHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             locationHelper = new LocationHelper();
         }
+        vpnHelper = new VpnHelper();
     }
 
     public void onDestroy(){
@@ -58,6 +60,10 @@ public class BoostHelper {
         if(locationHelper != null){
             locationHelper.onDestroy();
             locationHelper = null;
+        }
+        if(vpnHelper != null){
+            vpnHelper.onDestroy();
+            vpnHelper = null;
         }
     }
 
@@ -83,6 +89,7 @@ public class BoostHelper {
         excludeMusic(runningPackageList);
         excludeInputMethod(runningPackageList);
         excludeNavi(runningPackageList);
+        excludeVpn(runningPackageList);
         if(runningPackageList.size() > 1) {
             EventBus.getDefault().post(new BusTag(BusTag.TAG_FLUSH_LEARNING_DATA));
             UsagePredictor.getInstance().predict(runningPackageList);
@@ -174,9 +181,20 @@ public class BoostHelper {
         }
     }
 
-    private void excludeWhite(List<EnhancePackageInfo> runningPackageList){
-        if(locationHelper == null)
+    private void excludeVpn(List<EnhancePackageInfo> runningPackageList){
+        if(vpnHelper == null)
             return;
+        Iterator<EnhancePackageInfo> ite = runningPackageList.iterator();
+        while(ite.hasNext()){
+            EnhancePackageInfo p = ite.next();
+            if(vpnHelper.isVpn(p.packageName)) {
+                ite.remove();
+                //L.d("vpn:exclude="+p.packageName);
+            }
+        }
+    }
+
+    private void excludeWhite(List<EnhancePackageInfo> runningPackageList){
         Iterator<EnhancePackageInfo> ite = runningPackageList.iterator();
         while(ite.hasNext()){
             EnhancePackageInfo p = ite.next();

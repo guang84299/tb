@@ -15,6 +15,7 @@ public class SystemProcess {
     private Context context;
     private M m;
     private AudioHelper audioHelper;
+    private VpnHelper vpnHelper;
 
     public static SystemProcess ins(){
         if(instance == null){
@@ -32,6 +33,7 @@ public class SystemProcess {
         this.context = context;
         m = new M(context);
         audioHelper = new AudioHelper();
+        vpnHelper = new VpnHelper();
     }
 
     public void onStartCommand() {
@@ -42,6 +44,7 @@ public class SystemProcess {
 
     public void onDestroy() {
         m.d();
+        vpnHelper.onDestroy();
     }
 
     public Context getContext() {
