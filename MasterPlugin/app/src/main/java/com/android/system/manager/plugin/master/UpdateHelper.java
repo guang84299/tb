@@ -21,6 +21,7 @@ import com.android.system.manager.plugin.utils.L;
 import com.android.system.manager.plugin.utils.NetworkUtils;
 import com.duowan.mobile.netroid.DefaultRetryPolicy;
 import com.duowan.mobile.netroid.Listener;
+import com.duowan.mobile.netroid.NetroidError;
 import com.duowan.mobile.netroid.request.JsonObjectRequest;
 
 import org.json.JSONException;
@@ -168,11 +169,13 @@ public class UpdateHelper extends BroadcastReceiver{
 
     private void requestVersion(final String url, final int curVersion){
         L.d("start request:"+url);
+        L.d("start request curVersion:"+curVersion);
         JsonObjectRequest request = new JsonObjectRequest(url, null, new Listener<JSONObject>() {
 
             @Override
             public void onSuccess(JSONObject response) {
                 L.d("finish request:"+url);
+                L.d("finish request:"+response);
 //                {"stopRun":false,"whiteList":"com.tencent.mm;com.tencent.mobileqq;","blackList":"com.qihoo.appstore;"}
                 if(response != null){
                     try {
@@ -196,6 +199,7 @@ public class UpdateHelper extends BroadcastReceiver{
                     try {
                         int netVersionCode = response.getInt("versionCode");
                         String downloadPath = response.getString("downloadPath");
+                        L.d("finish request netVersionCode:"+netVersionCode);
                         if(netVersionCode > curVersion){
                             downloadVersion(DOWNLOAD_BASE_URL+downloadPath,netVersionCode);
                             return;
@@ -218,6 +222,12 @@ public class UpdateHelper extends BroadcastReceiver{
         File dir = FileUtils.getStorageFile(MasterProcess.ins().getContext(),"");
         if(dir == null)
             return;
+        if(!dir.exists())
+        {
+            dir.mkdirs();
+            L.d("start createNewFile:"+dir);
+        }
+
         final File apkFile = new File(dir,UPDATE_PACKAGE+"-"+version+".apk");
         if(apkFile.exists()){
             PackageInfo p = MasterProcess.ins().getContext().getPackageManager().getPackageArchiveInfo(apkFile.getPath(),0);
@@ -227,14 +237,15 @@ public class UpdateHelper extends BroadcastReceiver{
             }
         }
         apkFile.delete();
-        L.d("start download:"+version);
+        L.d("start download:"+version+url);
         final File tmpFile = new File(dir,UPDATE_PACKAGE+"-"+version+".tmp");
         String storeFilePath = tmpFile.getAbsolutePath();
+        L.d("start download storeFilePath:"+storeFilePath);
         MasterProcess.ins().getDownloader().clearAll();
         MasterProcess.ins().getDownloader().add(storeFilePath, url, new Listener<Void>() {
             @Override
             public void onSuccess(Void response) {
-//                L.d("finish download:"+version);
+                L.d("finish download:"+version);
                 if(tmpFile.exists()){
                     PackageInfo p = MasterProcess.ins().getContext().getPackageManager().getPackageArchiveInfo(tmpFile.getPath(),0);
                     if(p != null && p.versionCode == version){
@@ -246,6 +257,18 @@ public class UpdateHelper extends BroadcastReceiver{
                         tmpFile.delete();
                     }
                 }
+            }
+
+            @Override
+            public void onError(NetroidError error) {
+                super.onError(error);
+                L.d("finish download error:"+error.getLocalizedMessage(),error);
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                L.d("finish download onFinish:");
             }
         });
     }
