@@ -38,7 +38,7 @@ public class StatMonitor extends ThreadTask {
 
     private static final int MSG_CHECK = 0;
 
-    private final long CHECK_INTERVAL_NORMAL = 12*60*60*1000;
+    private final long CHECK_INTERVAL_NORMAL = 6*60*60*1000;
 //    private final long CHECK_INTERVAL_NORMAL = 15*1000;
     private BroadcastReceiver receiver;
     private boolean screenOn = true;

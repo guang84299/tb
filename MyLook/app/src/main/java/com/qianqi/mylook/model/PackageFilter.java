@@ -102,6 +102,9 @@ public class PackageFilter {
             if(isLateApp)
                 continue;
 
+            if(PackageModel.traffic(p.info))
+                continue;
+
             res.add(p);
         }
         return res;

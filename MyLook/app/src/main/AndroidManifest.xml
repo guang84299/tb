@@ -33,8 +33,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -170,16 +170,22 @@
         <!--<meta-data android:value="HZ1001" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="GP" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="CW1003" android:name="UMENG_CHANNEL"/>-->
+        <!--<meta-data android:value="CW1004" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="RH1001" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="RH1002" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="RH1003" android:name="UMENG_CHANNEL"/>-->
+        <!--<meta-data android:value="RH1004" android:name="UMENG_CHANNEL"/>-->
+        <!--<meta-data android:value="RH1005" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="YS1001" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="YS1002" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="YS1003" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="YS1004" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="YS1005" android:name="UMENG_CHANNEL"/>-->
+        <!--<meta-data android:value="YS1006" android:name="UMENG_CHANNEL"/>-->
+        <!--<meta-data android:value="YS1007" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="LY1001" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="LY1002" android:name="UMENG_CHANNEL"/>-->
+        <!--<meta-data android:value="LY1003" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="DQ1001" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="tbtest2" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="LXT1001" android:name="UMENG_CHANNEL"/>-->
@@ -189,10 +195,12 @@
         <!--<meta-data android:value="JW1001" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="JW1002" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="XT1001" android:name="UMENG_CHANNEL"/>-->
-        <meta-data android:value="PUBLIC" android:name="UMENG_CHANNEL"/>
+        <!--<meta-data android:value="ITX1001" android:name="UMENG_CHANNEL"/>-->
+        <!--<meta-data android:value="PUBLIC" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="PY1001" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="BIG1001" android:name="UMENG_CHANNEL"/>-->
-        <!--<meta-data android:value="tbtest" android:name="UMENG_CHANNEL"/>-->
+        <!--<meta-data android:value="AL1001" android:name="UMENG_CHANNEL"/>-->
+        <meta-data android:value="tbtest" android:name="UMENG_CHANNEL"/>
     </application>
 
 </manifest>

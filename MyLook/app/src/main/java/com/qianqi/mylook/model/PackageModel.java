@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.database.Cursor;
+import android.net.TrafficStats;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -94,6 +96,7 @@ public class PackageModel extends BroadcastReceiver{
 
     public static List<String> lateApps = new ArrayList<>(2);
     private List<String> graySystemAppLists = null;
+    public static HashMap<String,Long> trafficApps = new HashMap<>();
 
     public static PackageModel getInstance(Context appContext){
         if(instance == null){
@@ -115,7 +118,7 @@ public class PackageModel extends BroadcastReceiver{
         String[] ims = appContext.getResources().getStringArray(R.array.im_apps);
         imApps = new ArrayList<>(ims.length);
         Collections.addAll(imApps, ims);
-        String[] defaultSystems = appContext.getResources().getStringArray(R.array.system_apps);
+        String[] defaultSystems = appContext.getResources().getStringArray(R.array.default_system_apps);
         defaultSystemApps = new ArrayList<>(defaultSystems.length);
         Collections.addAll(defaultSystemApps, defaultSystems);
 
@@ -717,5 +720,19 @@ public class PackageModel extends BroadcastReceiver{
         else if(action.equals(ACTION_LIST)){
             updateList();
         }
+    }
+    //获取流量变化
+    public static boolean traffic(PackageInfo info)
+    {
+        long rx = TrafficStats.getUidRxBytes(info.applicationInfo.uid);
+        Long l = trafficApps.get(info.packageName);
+        trafficApps.put(info.packageName,rx);
+        if(l != null && rx - l > 1024*1024*1)
+        {
+            L.d("boost traffic:"+info.packageName+":"+rx + ":"+(rx - l));
+            return true;
+//            return rx - l > 1024;
+        }
+        return false;
     }
 }

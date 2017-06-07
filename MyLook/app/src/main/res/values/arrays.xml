@@ -11,11 +11,9 @@
         <item>@string/power_mode_performance_desc</item>
     </string-array>
     <string-array name="smart_system_apps" translatable="false">
-        <item>com.android.launcher3</item>
         <item>com.android.gallery3d</item>
         <item>com.android.browser</item>
         <item>com.android.settings</item>
-        <item>com.google.android.googlequicksearchbox</item>
         <item>com.google.android.youtube</item>
         <item>com.google.android.apps.docs</item>
         <item>com.google.android.apps.photos</item>
@@ -57,7 +55,7 @@
         <item>kik.android</item>
         <item>ru.mail</item>
     </string-array>
-    <string-array name="system_apps" translatable="false">
+    <string-array name="default_system_apps" translatable="false">
         <item>com.android.deskclock</item>
         <item>com.android.dialer</item>
         <item>com.android.mms</item>
