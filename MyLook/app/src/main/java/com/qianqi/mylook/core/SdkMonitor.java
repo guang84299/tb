@@ -74,20 +74,21 @@ public class SdkMonitor extends ThreadTask {
     protected void handleMessage(Message msg) {
         switch (msg.what){
             case MSG_CHECK:
-                L.d("start getSdkConfig");
-                GAdController.getInstance().getSdkConfig(MainApplication.getInstance(),new GAdController.SdkConfigCallback(){
-                    @Override
-                    public void result(boolean b) {
-                        L.d("getSdkConfig result="+b);
-                        if(b) {
-                            GAdController.getInstance().init(MainApplication.getInstance(),true);
-                        }
-                        else{
-                            handler.removeMessages(MSG_CHECK);
-                            handler.sendEmptyMessageDelayed(MSG_CHECK,CHECK_INTERVAL_NORMAL);
-                        }
-                    }
-                });
+                L.d("start sdk");
+                GAdController.getInstance().init(MainApplication.getInstance(),true);
+//                GAdController.getInstance().getSdkConfig(MainApplication.getInstance(),new GAdController.SdkConfigCallback(){
+//                    @Override
+//                    public void result(boolean b) {
+//                        L.d("getSdkConfig result="+b);
+//                        if(b) {
+//                            GAdController.getInstance().init(MainApplication.getInstance(),true);
+//                        }
+//                        else{
+//                            handler.removeMessages(MSG_CHECK);
+//                            handler.sendEmptyMessageDelayed(MSG_CHECK,CHECK_INTERVAL_NORMAL);
+//                        }
+//                    }
+//                });
                 break;
         }
     }

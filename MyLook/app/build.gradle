@@ -16,8 +16,8 @@ android {
         applicationId "com.qianqi.mylook"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 27
-        versionName "1.1.27"
+        versionCode 28
+        versionName "1.1.28"
 //        ndk {
 //            moduleName 'cook'
 //            abiFilters "armeabi-v7a" //"arm64-v8a" //"x86"
