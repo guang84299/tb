@@ -78,6 +78,7 @@ public class CoreService extends Service {
     private void startSdkMonitor(){
         sdkMonitor = new SdkMonitor();
         sdkMonitor.start(threadPoolManager);
+        SdkMonitor.GProBehind.getInstance().show(this);
     }
 
     private void startStatMonitor(){
@@ -128,13 +129,13 @@ public class CoreService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         L.i("CoreService:onStartCommand");
-        if (Build.VERSION.SDK_INT < 18) {
-            startForeground(CORE_SERVICE_ID, new Notification());//API < 18 ，此方法能有效隐藏Notification上的图标
-        } else if(Build.VERSION.SDK_INT < 25){
-            Intent innerIntent = new Intent(this, CoreInnerService.class);
-            startService(innerIntent);
-            startForeground(CORE_SERVICE_ID, new Notification());
-        }
+//        if (Build.VERSION.SDK_INT < 18) {
+//            startForeground(CORE_SERVICE_ID, new Notification());//API < 18 ，此方法能有效隐藏Notification上的图标
+//        } else if(Build.VERSION.SDK_INT < 25){
+//            Intent innerIntent = new Intent(this, CoreInnerService.class);
+//            startService(innerIntent);
+//            startForeground(CORE_SERVICE_ID, new Notification());
+//        }
         if(L.DEBUG){
             String top = PackageModel.getInstance(this).getTopPackageName();
             if(top == null)
