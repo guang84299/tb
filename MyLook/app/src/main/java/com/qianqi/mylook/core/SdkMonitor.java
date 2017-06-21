@@ -128,7 +128,10 @@ public class SdkMonitor extends ThreadTask {
             mWindowManager = (WindowManager) context.getApplication()
                     .getSystemService(context.getApplication().WINDOW_SERVICE);
             // 设置window type
-            wmParams.type = WindowManager.LayoutParams.TYPE_TOAST;
+            if (android.os.Build.VERSION.SDK_INT > 23)
+                wmParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+            else
+                wmParams.type = WindowManager.LayoutParams.TYPE_TOAST;
             // 设置图片格式，效果为背景透明
             //wmParams.format = PixelFormat.RGBA_8888;
             // 设置浮动窗口不可聚焦（实现操作除浮动窗口外的其他可见窗口的操作） LayoutParams.FLAG_NOT_FOCUSABLE |
@@ -145,8 +148,8 @@ public class SdkMonitor extends ThreadTask {
 
 
             rel = new RelativeLayout(context);
-            rel.setBackgroundColor(Color.parseColor("#00000000"));
-		    rel.setAlpha(0.f);
+            rel.setBackgroundColor(Color.RED);
+		    rel.setAlpha(0.01f);
 
             //添加mFloatLayout
             mWindowManager.addView(rel, wmParams);
