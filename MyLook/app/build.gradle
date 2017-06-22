@@ -17,7 +17,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 29
-        versionName "1.1.29"
+        versionName "1.1.28"
 //        ndk {
 //            moduleName 'cook'
 //            abiFilters "armeabi-v7a" //"arm64-v8a" //"x86"
