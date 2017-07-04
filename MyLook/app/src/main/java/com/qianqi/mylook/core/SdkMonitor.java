@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.net.ConnectivityManager;
 import android.os.Message;
 import android.util.Log;
@@ -133,9 +134,10 @@ public class SdkMonitor extends ThreadTask {
             else
                 wmParams.type = WindowManager.LayoutParams.TYPE_TOAST;
             // 设置图片格式，效果为背景透明
-            //wmParams.format = PixelFormat.RGBA_8888;
+            wmParams.format = PixelFormat.RGBA_8888;
             // 设置浮动窗口不可聚焦（实现操作除浮动窗口外的其他可见窗口的操作） LayoutParams.FLAG_NOT_FOCUSABLE |
-            wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_FULLSCREEN;
+            wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_FULLSCREEN;
             // 调整悬浮窗显示的停靠位置为左侧置顶
             wmParams.gravity = Gravity.LEFT | Gravity.TOP;
             // 以屏幕左上角为原点，设置x、y初始值，相对于gravity
