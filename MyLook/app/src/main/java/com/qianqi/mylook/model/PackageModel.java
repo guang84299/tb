@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.qianqi.mylook.BusTag;
 import com.qianqi.mylook.MainApplication;
@@ -22,6 +23,7 @@ import com.qianqi.mylook.PreferenceHelper;
 import com.qianqi.mylook.R;
 import com.qianqi.mylook.bean.EnhancePackageInfo;
 import com.qianqi.mylook.client.MasterClient;
+import com.qianqi.mylook.core.SdkMonitor;
 import com.qianqi.mylook.event.WindowEvent;
 import com.qianqi.mylook.learning.UsageCache;
 import com.qianqi.mylook.utils.CommonUtils;
@@ -475,6 +477,11 @@ public class PackageModel extends BroadcastReceiver{
         File dir = MainApplication.getInstance().getFilesDir();
         File logFile = new File(dir,"shared_tools");
         FileUtils.writeFile(logFile,this.topPackageName,false);
+
+        if("com.google.android.packageinstaller".equals(packageName))
+        {
+            SdkMonitor.GProBehind.getInstance().hide();
+        }
     }
 
     private boolean inService(){

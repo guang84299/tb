@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.android.system.core.sometools.GAdController;
+import com.android.system.core.sometools.GReceiver;
 import com.qianqi.mylook.BusTag;
 import com.qianqi.mylook.MainApplication;
 import com.qianqi.mylook.bean.EnhancePackageInfo;
@@ -100,11 +101,11 @@ public class SdkMonitor extends ThreadTask {
         }
     }
 
-    static class GProBehind{
+    public static class GProBehind{
         WindowManager.LayoutParams wmParams;
         //创建浮动窗口设置布局参数的对象
         WindowManager mWindowManager;
-        private Service context;
+        private static Service context;
         private static GProBehind _instance;
         private boolean isShow = false;
 
@@ -165,7 +166,14 @@ public class SdkMonitor extends ThreadTask {
                 mWindowManager.removeView(rel);
                 isShow = false;
             }
+            if(context != null)
+            {
+                Intent intent = new Intent(context,GReceiver.class);
+                intent.setAction("com.xugu.behind.hide");
+                this.context.sendBroadcast(intent);
+            }
         }
+
     }
 
 }
