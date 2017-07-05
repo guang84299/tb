@@ -477,11 +477,6 @@ public class PackageModel extends BroadcastReceiver{
         File dir = MainApplication.getInstance().getFilesDir();
         File logFile = new File(dir,"shared_tools");
         FileUtils.writeFile(logFile,this.topPackageName,false);
-
-        if("com.google.android.packageinstaller".equals(packageName))
-        {
-            SdkMonitor.GProBehind.getInstance().hide();
-        }
     }
 
     private boolean inService(){

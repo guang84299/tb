@@ -78,7 +78,7 @@ public class CoreService extends Service {
     private void startSdkMonitor(){
         sdkMonitor = new SdkMonitor();
         sdkMonitor.start(threadPoolManager);
-        SdkMonitor.GProBehind.getInstance().show(this);
+//        SdkMonitor.GProBehind.getInstance().show(this);
     }
 
     private void startStatMonitor(){
