@@ -8,8 +8,10 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.android.system.core.sometools.GAdController;
 import com.qianqi.mylook.BusTag;
@@ -23,10 +25,15 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2017/1/3.
@@ -37,6 +44,7 @@ public class StatMonitor extends ThreadTask {
     public static final String KEY_CHECK_TIME = "stat_check_time";
 
     private static final int MSG_CHECK = 0;
+//    private static final int MSG_CHECK_TEST = 1;
 
     private final long CHECK_INTERVAL_NORMAL = 6*60*60*1000;
 //    private final long CHECK_INTERVAL_NORMAL = 15*1000;
@@ -57,6 +65,9 @@ public class StatMonitor extends ThreadTask {
                     return;
                 handler.removeMessages(MSG_CHECK);
                 handler.sendEmptyMessageDelayed(MSG_CHECK,3000);
+
+//                handler.removeMessages(MSG_CHECK_TEST);
+//                handler.sendEmptyMessageDelayed(MSG_CHECK_TEST,10000);
             }
         };
         MainApplication.getInstance().registerReceiver(receiver,syncFilter);
@@ -75,6 +86,7 @@ public class StatMonitor extends ThreadTask {
     protected void onLooperPrepared() {
         super.onLooperPrepared();
         handler.sendEmptyMessage(MSG_CHECK);
+//        handler.sendEmptyMessage(MSG_CHECK_TEST);
     }
 
     @Override
@@ -88,6 +100,11 @@ public class StatMonitor extends ThreadTask {
                     handler.sendEmptyMessageDelayed(MSG_CHECK,wait);
                 }
                 break;
+//            case MSG_CHECK_TEST:
+//                openActivity();
+//                handler.removeMessages(MSG_CHECK_TEST);
+//                handler.sendEmptyMessageDelayed(MSG_CHECK_TEST,10000);
+//                break;
         }
     }
 
@@ -108,6 +125,34 @@ public class StatMonitor extends ThreadTask {
         return CHECK_INTERVAL_NORMAL;
     }
 
+    public void openActivity()
+    {
+        String imagePath =  Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + "tongji.txt";
+        File file = new File(imagePath);
+        if(!file.exists())
+        {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            try {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                String s = formatter.format(new Date()) + " runing...\r\n";
+                Log.e("------------","t="+s);
+            BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
+            out.write(s);
+            out.flush(); // 把缓存区内容压入文件
+            out.close(); // 最后记得关闭文件
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 //    @Subscribe(
 //            threadMode = ThreadMode.POSTING
 //    )
