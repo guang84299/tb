@@ -46,6 +46,7 @@ android {
 //            jni.srcDirs = []
         }
     }
+
     lintOptions{
         abortOnError false
     }

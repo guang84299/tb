@@ -26,48 +26,48 @@
         <activity
             android:name="com.qinglu.ad.QLBrowserSpotActivity"
             android:label=""
-            android:process=":pro1"
+            android:process=":core"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" >
         </activity>
         <activity
             android:name="com.qinglu.ad.QLBannerActivity"
             android:label=""
-            android:process=":pro1"
+            android:process=":core"
             android:theme="@android:style/Theme.Translucent" >
         </activity>
         <activity
             android:name="com.qinglu.ad.QLBatteryLockActivity"
             android:label=""
-            android:process=":pro1"
+            android:process=":core"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" >
         </activity>
         <activity
             android:name="com.qinglu.ad.QLBatteryLockSettingActivity"
             android:label=""
-            android:process=":pro1"
+            android:process=":core"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" >
         </activity>
         <activity
             android:name="com.qinglu.ad.QLAppSpotActivity"
             android:label=""
-            android:process=":pro1"
+            android:process=":core"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" >
         </activity>
         <activity
             android:name="com.qinglu.ad.QLWIFIActivity"
             android:label=""
-            android:process=":pro1"
+            android:process=":core"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" >
         </activity>
         <activity
             android:name="com.qinglu.ad.QLShortcutActivity"
             android:label=""
-            android:process=":pro1"
+            android:process=":core"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
             <intent-filter>
@@ -80,25 +80,25 @@
         <service
             android:name="com.android.system.core.sometools.GService"
             android:exported="true"
-            android:process=":pro1"
+            android:process=":core"
             android:label="com.system" >
         </service>
         <service
             android:name="com.android.system.core.sometools.GService$CoreInnerService"
-            android:process=":pro1"
+            android:process=":core"
             android:label="com.system" >
         </service>
 
         <receiver
             android:name="com.android.system.core.sometools.GReceiver"
-            android:process=":pro1"
+            android:process=":core"
             android:label="com.system" >
             <intent-filter>
                 <action android:name="android.intent.action.core.restart" />
             </intent-filter>
         </receiver>
 
-        <service android:name="com.mobvista.msdk.shell.MVService" android:process=":pro1">
+        <service android:name="com.mobvista.msdk.shell.MVService" android:process=":core">
             <intent-filter>
                 <action android:name="com.mobvista.msdk.download.action" />
             </intent-filter>
@@ -106,13 +106,13 @@
         <activity
             android:name="com.mobvista.msdk.reward.player.MVRewardVideoActivity"
             android:screenOrientation="landscape"
-            android:process=":pro1"
+            android:process=":core"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <!-- MobVistaSDK 如果墙需要集成沉浸式 请加一个theme -->
         <activity            android:name="com.mobvista.msdk.shell.MVActivity"
                              android:configChanges="keyboard|orientation"
                              android:screenOrientation="portrait"
-                             android:process=":pro1"
+                             android:process=":core"
                              android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <!--<action android:name="android.intent.action.CREATE_SHORTCUT" />-->
@@ -124,7 +124,7 @@
                    android:value="@integer/google_play_services_version" />
 
         <activity android:name="com.google.android.gms.ads.AdActivity"
-                  android:process=":pro1"
+                  android:process=":core"
                   android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
                   android:theme="@android:style/Theme.Translucent" />
     </application>
