@@ -54,7 +54,102 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
-}
+
+    productFlavors {
+        tbtest {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "tbtest"]
+        }
+        LY1002 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "LY1002"]
+        }
+        LY1003 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "LY1003"]
+        }
+        RH1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "RH1001"]
+        }
+        RH1002 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "RH1002"]
+        }
+        RH1003 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "RH1003"]
+        }
+        RH1004 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "RH1004"]
+        }
+        RH1005 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "RH1005"]
+        }
+        YS1004 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "YS1004"]
+        }
+        YS1005 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "YS1005"]
+        }
+        YS1006 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "YS1006"]
+        }
+        YS1007 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "YS1007"]
+        }
+        AL1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "AL1001"]
+        }
+        LAVA1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "LAVA1001"]
+        }
+        XC1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "XC1001"]
+        }
+        BD1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "BD1001"]
+        }
+        HX1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "HX1001"]
+        }
+        ITX1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ITX1001"]
+        }
+        XT1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "XT1001"]
+        }
+        CW1003 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "CW1003"]
+        }
+        CW1004 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "CW1004"]
+        }
+        DQ1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "DQ1001"]
+        }
+        HAST1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "HAST1001"]
+        }
+        PL1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "PL1001"]
+        }
+        FLY1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "FLY1001"]
+        }
+        SYP1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "SYP1001"]
+        }
+        STK1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "STK1001"]
+        }
+        FS1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "FS1001"]
+        }
+        VTL1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "VTL1001"]
+        }
+        MS1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "MS1001"]
+        }
+
+    }
+
+    }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
