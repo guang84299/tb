@@ -1,5 +1,6 @@
 package com.qianqi.mylook.boost;
 
+import android.annotation.TargetApi;
 import android.app.AppOpsManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,7 +10,6 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.UserHandle;
-import android.support.annotation.RequiresApi;
 
 import com.qianqi.mylook.MainApplication;
 import com.qianqi.mylook.utils.L;
@@ -32,7 +32,8 @@ public class LocationHelper extends BroadcastReceiver{
     private HashMap<String,Long> activeRequests = new HashMap<>();
     private boolean init = false;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     public LocationHelper(){
         try {
             Object op = ReflectUtils.getValue(AppOpsManager.class,"OP_MONITOR_HIGH_POWER_LOCATION");

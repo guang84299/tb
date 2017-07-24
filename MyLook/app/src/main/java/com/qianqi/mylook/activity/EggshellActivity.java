@@ -32,38 +32,38 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 import qiu.niorgai.StatusBarCompat;
 
 public class EggshellActivity extends BaseActivity {
 
-    @BindView(R.id.status)
+    @InjectView(R.id.status)
     TextView statusView;
-    @BindView(R.id.app_1)
+    @InjectView(R.id.app_1)
     TextView app1View;
-    @BindView(R.id.app_1_p)
+    @InjectView(R.id.app_1_p)
     TextView app1PView;
-    @BindView(R.id.app_2)
+    @InjectView(R.id.app_2)
     TextView app2View;
-    @BindView(R.id.app_2_p)
+    @InjectView(R.id.app_2_p)
     TextView app2PView;
-    @BindView(R.id.app_3)
+    @InjectView(R.id.app_3)
     TextView app3View;
-    @BindView(R.id.app_3_p)
+    @InjectView(R.id.app_3_p)
     TextView app3PView;
-    @BindView(R.id.app_4)
+    @InjectView(R.id.app_4)
     TextView app4View;
-    @BindView(R.id.app_4_p)
+    @InjectView(R.id.app_4_p)
     TextView app4PView;
-    @BindView(R.id.app_5)
+    @InjectView(R.id.app_5)
     TextView app5View;
-    @BindView(R.id.app_5_p)
+    @InjectView(R.id.app_5_p)
     TextView app5PView;
-    @BindView(R.id.kill_app)
+    @InjectView(R.id.kill_app)
     TextView killAppView;
-    @BindView(R.id.titleBar)
+    @InjectView(R.id.titleBar)
     TopTitleBar titleBar;
     private boolean running = false;
 
@@ -73,7 +73,7 @@ public class EggshellActivity extends BaseActivity {
         setContentView(R.layout.activity_eggshell);
 //        StatusBarCompat.setStatusBarColor(this, Color.parseColor("#0eb3ca"));
         StatusBarCompat.translucentStatusBar(this);
-        ButterKnife.bind(this);
+        ButterKnife.inject(this);
         titleBar.setLeftVisible(true);
         titleBar.setImmersive(true, true, R.color.bar_bg);
         titleBar.setTitle("预测");

@@ -10,18 +10,18 @@ import com.qianqi.mylook.bean.EnhancePackageInfo;
 import com.qianqi.mylook.presenter.AppConfigPresenter;
 import com.qianqi.mylook.view.TopTitleBar;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 import qiu.niorgai.StatusBarCompat;
 
 public class SettingActivity extends BaseActivity{
 
-    @BindView(R.id.not_limit_selected)
+    @InjectView(R.id.not_limit_selected)
     ImageView notLimitSelectedView;
-    @BindView(R.id.smart_selected)
+    @InjectView(R.id.smart_selected)
     ImageView smartSelectedView;
-    @BindView(R.id.titleBar)
+    @InjectView(R.id.titleBar)
     TopTitleBar titleBar;
 
     @Override
@@ -30,7 +30,7 @@ public class SettingActivity extends BaseActivity{
         setContentView(R.layout.activity_app_config);
 //        StatusBarCompat.setStatusBarColor(this, Color.parseColor("#0eb3ca"));
         StatusBarCompat.translucentStatusBar(this);
-        ButterKnife.bind(this);
+        ButterKnife.inject(this);
         titleBar.setLeftVisible(true);
         titleBar.setImmersive(true,true,R.color.bar_bg);
     }

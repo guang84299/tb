@@ -74,3 +74,17 @@
 -keep class com.android.system.manager.ILoader { *; }
 #-keep class com.wang.avi.** { *; }
 #-keep class com.wang.avi.indicators.** { *; }
+
+#butterknife begin
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewInjector { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+#butterknife end

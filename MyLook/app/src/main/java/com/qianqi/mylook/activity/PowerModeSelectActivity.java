@@ -16,20 +16,20 @@ import com.qianqi.mylook.presenter.ModeSelectPresenter;
 import com.qianqi.mylook.view.TopTitleBar;
 import com.qianqi.mylook.view.WaveLoadingView;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 import qiu.niorgai.StatusBarCompat;
 
 public class PowerModeSelectActivity extends BaseActivity{
 
-    @BindView(R.id.game_selected)
+    @InjectView(R.id.game_selected)
     ImageView gameSelectedView;
-    @BindView(R.id.smart_selected)
+    @InjectView(R.id.smart_selected)
     ImageView smartSelectedView;
-    @BindView(R.id.performance_selected)
+    @InjectView(R.id.performance_selected)
     ImageView performanceSelectedView;
-    @BindView(R.id.titleBar)
+    @InjectView(R.id.titleBar)
     TopTitleBar titleBar;
     private ModeSelectPresenter presenter;
 
@@ -39,7 +39,7 @@ public class PowerModeSelectActivity extends BaseActivity{
         setContentView(R.layout.activity_power_mode_select);
 //        StatusBarCompat.setStatusBarColor(this, Color.parseColor("#0eb3ca"));
         StatusBarCompat.translucentStatusBar(this);
-        ButterKnife.bind(this);
+        ButterKnife.inject(this);
 //        titleBar.setLeftText("");
         titleBar.setLeftVisible(true);
         titleBar.setTitle(R.string.power_saving_mode);

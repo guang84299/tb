@@ -21,24 +21,24 @@ import com.qianqi.mylook.view.TopTitleBar;
 
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 import qiu.niorgai.StatusBarCompat;
 
 public class SmartModeConfigActivity extends BaseActivity{
 
-    @BindView(R.id.install_tab)
+    @InjectView(R.id.install_tab)
     TextView installTabView;
-    @BindView(R.id.install_indicator)
+    @InjectView(R.id.install_indicator)
     ImageView installIndicatorView;
-    @BindView(R.id.system_tab)
+    @InjectView(R.id.system_tab)
     TextView systemTabView;
-    @BindView(R.id.system_indicator)
+    @InjectView(R.id.system_indicator)
     ImageView systemIndicatorView;
-    @BindView(R.id.list)
+    @InjectView(R.id.list)
     RecyclerView recyclerView;
-    @BindView(R.id.titleBar)
+    @InjectView(R.id.titleBar)
     TopTitleBar titleBar;
     private SmartConfigAdapter adapter = null;
     private LinearLayoutManager linearLayoutManager;
@@ -50,7 +50,7 @@ public class SmartModeConfigActivity extends BaseActivity{
         setContentView(R.layout.activity_smart_mode_config);
 //        StatusBarCompat.setStatusBarColor(this, Color.parseColor("#0eb3ca"));
         StatusBarCompat.translucentStatusBar(this);
-        ButterKnife.bind(this);
+        ButterKnife.inject(this);
         titleBar.setLeftVisible(true);
         titleBar.setTitle(R.string.custom_smart_mode);
         titleBar.setImmersive(true,true,R.color.bar_bg);

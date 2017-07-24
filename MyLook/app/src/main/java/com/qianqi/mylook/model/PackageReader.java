@@ -99,8 +99,8 @@ public class PackageReader {
         List<String> whiteApps = new ArrayList<>(0);
         List<String> graySystemApps = new ArrayList<>(0);
         List<PackageInfo> packages = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            packages = mPackageManager.getInstalledPackages(PackageManager.MATCH_DISABLED_COMPONENTS);
+        if (android.os.Build.VERSION.SDK_INT >= 24) {//android.os.Build.VERSION_CODES.N
+            packages = mPackageManager.getInstalledPackages(0);//PackageManager.MATCH_DISABLED_COMPONENTS
         } else {
 //			packages = mPackageManager.getInstalledPackages(PackageManager.GET_ACTIVITIES);
 //			L.d("all packages 1:"+packages.size());
@@ -153,8 +153,8 @@ public class PackageReader {
         EnhancePackageInfo mCurrentPackage = null;
         try {
             PackageInfo p = null;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                p = mPackageManager.getPackageInfo(packageName, PackageManager.MATCH_DISABLED_COMPONENTS);
+            if (android.os.Build.VERSION.SDK_INT >= 24) {//android.os.Build.VERSION_CODES.N
+                p = mPackageManager.getPackageInfo(packageName, 0);//PackageManager.MATCH_DISABLED_COMPONENTS
             } else {
                 p = mPackageManager.getPackageInfo(packageName, 0);
             }

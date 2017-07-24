@@ -64,7 +64,7 @@ public class SnackbarUtils {
      * @return
      */
     public static Snackbar IndefiniteSnackbar(View view, String message,int duration,int messageColor, int backgroundColor){
-        Snackbar snackbar = Snackbar.make(view,message, Snackbar.LENGTH_INDEFINITE).setDuration(duration);
+        Snackbar snackbar = Snackbar.make(view,message, Snackbar.LENGTH_SHORT).setDuration(duration);
         setSnackbarColor(snackbar,messageColor,backgroundColor);
         return snackbar;
     }
@@ -103,7 +103,7 @@ public class SnackbarUtils {
      * @return
      */
     public static Snackbar IndefiniteSnackbar(View view, String message,int duration,int type){
-        Snackbar snackbar = Snackbar.make(view,message, Snackbar.LENGTH_INDEFINITE).setDuration(duration);
+        Snackbar snackbar = Snackbar.make(view,message, Snackbar.LENGTH_SHORT).setDuration(duration);
         switchType(snackbar,type);
         return snackbar;
     }

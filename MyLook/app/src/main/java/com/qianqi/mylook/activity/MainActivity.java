@@ -23,32 +23,32 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 import qiu.niorgai.StatusBarCompat;
 
 public class MainActivity extends BaseActivity{
 
-    @BindView(R.id.title)
+    @InjectView(R.id.title)
     TextView titleView;
-    @BindView(R.id.waveLoadingView)
+    @InjectView(R.id.waveLoadingView)
     WaveLoadingView waveView;
-    @BindView(R.id.usage_time)
+    @InjectView(R.id.usage_time)
     TextView usageView;
-    @BindView(R.id.temperature)
+    @InjectView(R.id.temperature)
     TextView temperatureView;
 //    @BindView(R.id.battery_capacity)
 //    TextView capacityView;
-    @BindView(R.id.cur_power_mode)
+    @InjectView(R.id.cur_power_mode)
     TextView curModeView;
-    @BindView(R.id.config)
+    @InjectView(R.id.config)
     LinearLayout configLayout;
-    @BindView(R.id.mode_name)
+    @InjectView(R.id.mode_name)
     TextView modeNameView;
 //    @BindView(R.id.mode_description)
 //    TextView modeDescriptionView;
-    @BindView(R.id.config_action)
+    @InjectView(R.id.config_action)
     ImageView configActionView;
     private MainPresenter presenter;
     private int capacity = 0;
@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity{
         setContentView(com.qianqi.mylook.R.layout.activity_main);
         StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.bar_bg));
 //        StatusBarCompat.translucentStatusBar(this);
-        ButterKnife.bind(this);
+        ButterKnife.inject(this);
         presenter = new MainPresenter(this);
         presenter.load();
 //        waveView.setShapeType(WaveLoadingView.ShapeType.CIRCLE);

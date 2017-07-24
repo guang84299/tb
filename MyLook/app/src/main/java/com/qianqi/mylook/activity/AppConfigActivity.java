@@ -14,8 +14,8 @@ import com.qianqi.mylook.presenter.AppConfigPresenter;
 import com.qianqi.mylook.presenter.ModeSelectPresenter;
 import com.qianqi.mylook.view.TopTitleBar;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 import qiu.niorgai.StatusBarCompat;
 
@@ -23,11 +23,11 @@ public class AppConfigActivity extends BaseActivity{
 
     public static final String EXTRA_PACKAGE_INFO = "package_info";
 
-    @BindView(R.id.not_limit_selected)
+    @InjectView(R.id.not_limit_selected)
     ImageView notLimitSelectedView;
-    @BindView(R.id.smart_selected)
+    @InjectView(R.id.smart_selected)
     ImageView smartSelectedView;
-    @BindView(R.id.titleBar)
+    @InjectView(R.id.titleBar)
     TopTitleBar titleBar;
     private AppConfigPresenter presenter;
 
@@ -37,7 +37,7 @@ public class AppConfigActivity extends BaseActivity{
         setContentView(R.layout.activity_app_config);
 //        StatusBarCompat.setStatusBarColor(this, Color.parseColor("#0eb3ca"));
         StatusBarCompat.translucentStatusBar(this);
-        ButterKnife.bind(this);
+        ButterKnife.inject(this);
         titleBar.setLeftVisible(true);
         titleBar.setImmersive(true,true,R.color.bar_bg);
         presenter = new AppConfigPresenter(this);

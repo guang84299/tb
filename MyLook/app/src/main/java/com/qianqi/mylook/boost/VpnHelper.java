@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.RemoteException;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.util.SparseArray;
 
