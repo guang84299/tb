@@ -17,7 +17,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 24
         versionCode 32
-        versionName "1.1.28"
+        versionName "1.2"
 //        ndk {
 //            moduleName 'cook'
 //            abiFilters "armeabi-v7a" //"arm64-v8a" //"x86"
@@ -109,6 +109,9 @@ android {
         }
         ITX1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ITX1001"]
+        }
+        ITX1002 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ITX1002"]
         }
         XT1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "XT1001"]

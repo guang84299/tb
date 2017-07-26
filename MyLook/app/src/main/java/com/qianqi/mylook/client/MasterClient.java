@@ -74,7 +74,9 @@ public class MasterClient implements ServiceManager.ServiceListener{
             threadMode = ThreadMode.POSTING
     )
     public void onNetworkChanged(BusTag event){
-        if(event.tag.equals(BusTag.TAG_NETWORK_CHANGED)) {
+//        L.d("onNetworkChanged  init "+event.tag);
+        if(event.tag.equals(BusTag.TAG_NETWORK_CHANGED) || event.tag.equals(BusTag.TAG_USER_PRESENT) ) {
+//            L.d("onNetworkChanged"+NetworkUtils.getConnectedType(MainApplication.getInstance()));
             if(NetworkUtils.getConnectedType(MainApplication.getInstance()) != NetworkUtils.NETWORK_OFFLINE) {
                 PreferenceHelper.getInstance().common().edit().putBoolean(KEY_SYSTEM_INIT,true).commit();
                 systemHasInit = true;
