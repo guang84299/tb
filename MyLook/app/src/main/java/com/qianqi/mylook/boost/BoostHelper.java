@@ -106,12 +106,7 @@ public class BoostHelper {
                 if(PackageModel.isBlack(lastApp.packageName))
                 {
                     doBoost(lastApp);
-                    Toast.makeText(MainApplication.getInstance(),"cts:"+lastApp.packageName+" 杀",Toast.LENGTH_SHORT).show();
                     return true;
-                }
-                else
-                {
-                    Toast.makeText(MainApplication.getInstance(),"cts:"+lastApp.packageName+" 不杀",Toast.LENGTH_SHORT).show();
                 }
             }
             else

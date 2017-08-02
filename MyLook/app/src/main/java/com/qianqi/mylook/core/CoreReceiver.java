@@ -37,18 +37,18 @@ public class CoreReceiver extends BroadcastReceiver {
                 if(enableAdb)
                 {
                     isCts = true;
-                    Toast.makeText(MainApplication.getInstance(),"cts 模式打开",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainApplication.getInstance(),"cts 模式打开",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
                     isCts = false;
-                    Toast.makeText(MainApplication.getInstance(),"cts 模式关闭",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainApplication.getInstance(),"cts 模式关闭",Toast.LENGTH_SHORT).show();
                 }
             }
             else
             {
                 isCts = false;
-                Toast.makeText(MainApplication.getInstance(),"cts 模式关闭",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainApplication.getInstance(),"cts 模式关闭",Toast.LENGTH_SHORT).show();
             }
         }
         else
