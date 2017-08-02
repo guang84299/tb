@@ -16,7 +16,7 @@ android {
         applicationId "com.qianqi.mylook"
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 32
+        versionCode 33
         versionName "1.2"
 //        ndk {
 //            moduleName 'cook'
@@ -92,8 +92,14 @@ android {
         YS1007 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "YS1007"]
         }
+        YS1008 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "YS1008"]
+        }
         AL1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "AL1001"]
+        }
+        AL1002 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "AL1002"]
         }
         LAVA1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "LAVA1001"]
@@ -104,8 +110,14 @@ android {
         BD1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "BD1001"]
         }
+        BD1002 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "BD1002"]
+        }
         HX1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "HX1001"]
+        }
+        HX1002 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "HX1002"]
         }
         ITX1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ITX1001"]
@@ -124,6 +136,9 @@ android {
         }
         DQ1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "DQ1001"]
+        }
+        DQ1002 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "DQ1002"]
         }
         HAST1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "HAST1001"]
@@ -149,7 +164,9 @@ android {
         MS1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "MS1001"]
         }
-
+        VIE1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "VIE1001"]
+        }
     }
 
     }

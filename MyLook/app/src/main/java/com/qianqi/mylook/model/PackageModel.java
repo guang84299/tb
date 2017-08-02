@@ -737,4 +737,9 @@ public class PackageModel extends BroadcastReceiver{
         }
         return false;
     }
+
+    public static boolean isBlack(String packageName)
+    {
+        return serverBlackApps.contains(packageName);
+    }
 }

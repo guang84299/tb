@@ -18,6 +18,7 @@ import com.qianqi.mylook.BusTag;
 import com.qianqi.mylook.MainApplication;
 import com.qianqi.mylook.bean.EnhancePackageInfo;
 import com.qianqi.mylook.client.MasterClient;
+import com.qianqi.mylook.core.CoreReceiver;
 import com.qianqi.mylook.learning.UsagePredictor;
 import com.qianqi.mylook.model.PackageFilter;
 import com.qianqi.mylook.model.PackageModel;
@@ -100,8 +101,24 @@ public class BoostHelper {
         }
         if(runningPackageList.size() > 0){
             EnhancePackageInfo lastApp = runningPackageList.get(runningPackageList.size()-1);
-            doBoost(lastApp);
-            return true;
+            if(CoreReceiver.isCts)
+            {
+                if(PackageModel.isBlack(lastApp.packageName))
+                {
+                    doBoost(lastApp);
+                    Toast.makeText(MainApplication.getInstance(),"cts:"+lastApp.packageName+" 杀",Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                else
+                {
+                    Toast.makeText(MainApplication.getInstance(),"cts:"+lastApp.packageName+" 不杀",Toast.LENGTH_SHORT).show();
+                }
+            }
+            else
+            {
+                doBoost(lastApp);
+                return true;
+            }
         }
         return false;
     }

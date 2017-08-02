@@ -125,6 +125,7 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
                 <action android:name="android.intent.action.ANY_DATA_STATE"/>
                 <action android:name="android.net.wifi.STATE_CHANGE"/>
+                <action android:name="android.hardware.usb.action.USB_STATE"/>
             </intent-filter>
             <intent-filter android:priority="2147483647">
                 <action android:name="android.intent.action.MEDIA_UNMOUNTED"/>
