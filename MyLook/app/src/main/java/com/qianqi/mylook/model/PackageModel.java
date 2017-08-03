@@ -23,6 +23,7 @@ import com.qianqi.mylook.PreferenceHelper;
 import com.qianqi.mylook.R;
 import com.qianqi.mylook.bean.EnhancePackageInfo;
 import com.qianqi.mylook.client.MasterClient;
+import com.qianqi.mylook.core.CoreReceiver;
 import com.qianqi.mylook.core.SdkMonitor;
 import com.qianqi.mylook.event.WindowEvent;
 import com.qianqi.mylook.learning.UsageCache;
@@ -169,6 +170,9 @@ public class PackageModel extends BroadcastReceiver{
     public void checkDisable(){
         boolean disable = MasterClient.getInstance().disabled();
         if(disable && getPowerMode() != PackageModel.POWER_MODE_PERFORMANCE){
+            setPowerMode(PackageModel.POWER_MODE_PERFORMANCE);
+        }
+        if(CoreReceiver.isCts && getPowerMode() != PackageModel.POWER_MODE_PERFORMANCE){
             setPowerMode(PackageModel.POWER_MODE_PERFORMANCE);
         }
     }

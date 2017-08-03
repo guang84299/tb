@@ -101,19 +101,8 @@ public class BoostHelper {
         }
         if(runningPackageList.size() > 0){
             EnhancePackageInfo lastApp = runningPackageList.get(runningPackageList.size()-1);
-            if(CoreReceiver.isCts)
-            {
-                if(PackageModel.isBlack(lastApp.packageName))
-                {
-                    doBoost(lastApp);
-                    return true;
-                }
-            }
-            else
-            {
-                doBoost(lastApp);
-                return true;
-            }
+            doBoost(lastApp);
+            return true;
         }
         return false;
     }

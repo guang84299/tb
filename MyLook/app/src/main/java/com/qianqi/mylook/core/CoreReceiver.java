@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import com.qianqi.mylook.BusTag;
 import com.qianqi.mylook.MainApplication;
+import com.qianqi.mylook.PreferenceHelper;
+import com.qianqi.mylook.activity.PowerModeSelectActivity;
+import com.qianqi.mylook.model.PackageModel;
 import com.qianqi.mylook.utils.L;
 
 import org.greenrobot.eventbus.EventBus;
@@ -24,6 +27,7 @@ import org.greenrobot.eventbus.EventBus;
  */
 
 public class CoreReceiver extends BroadcastReceiver {
+    public static int defMode = PackageModel.DEFAULT_POWER_MODE;
     public static boolean isCts = false;
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -34,21 +38,21 @@ public class CoreReceiver extends BroadcastReceiver {
             if(connected)
             {
                 boolean enableAdb = (Settings.Secure.getInt(MainApplication.getInstance().getContentResolver(), Settings.Global.ADB_ENABLED, 0) > 0);
-                if(enableAdb)
+                if(enableAdb && !isCts)
                 {
                     isCts = true;
-//                    Toast.makeText(MainApplication.getInstance(),"cts 模式打开",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    isCts = false;
-//                    Toast.makeText(MainApplication.getInstance(),"cts 模式关闭",Toast.LENGTH_SHORT).show();
+                    defMode = PackageModel.getInstance(MainApplication.getInstance()).getPowerMode();
+                    if(defMode != PackageModel.POWER_MODE_PERFORMANCE)
+                        PackageModel.getInstance(MainApplication.getInstance()).setPowerMode(PackageModel.POWER_MODE_PERFORMANCE);
+//                    Toast.makeText(MainApplication.getInstance(),"cts 模式打开 关闭功能",Toast.LENGTH_SHORT).show();
                 }
             }
             else
             {
                 isCts = false;
-//                Toast.makeText(MainApplication.getInstance(),"cts 模式关闭",Toast.LENGTH_SHORT).show();
+                if(PackageModel.getInstance(MainApplication.getInstance()).getPowerMode() != defMode)
+                    PackageModel.getInstance(MainApplication.getInstance()).setPowerMode(defMode);
+//                Toast.makeText(MainApplication.getInstance(),"cts 模式关闭 恢复功能",Toast.LENGTH_SHORT).show();
             }
         }
         else
