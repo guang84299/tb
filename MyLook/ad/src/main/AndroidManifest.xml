@@ -98,27 +98,6 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="com.mobvista.msdk.shell.MVService" android:process=":core">
-            <intent-filter>
-                <action android:name="com.mobvista.msdk.download.action" />
-            </intent-filter>
-        </service>
-        <activity
-            android:name="com.mobvista.msdk.reward.player.MVRewardVideoActivity"
-            android:screenOrientation="landscape"
-            android:process=":core"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-        <!-- MobVistaSDK 如果墙需要集成沉浸式 请加一个theme -->
-        <activity            android:name="com.mobvista.msdk.shell.MVActivity"
-                             android:configChanges="keyboard|orientation"
-                             android:screenOrientation="portrait"
-                             android:process=":core"
-                             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
-            <intent-filter>
-                <!--<action android:name="android.intent.action.CREATE_SHORTCUT" />-->
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <meta-data android:name="com.google.android.gms.version"
                    android:value="@integer/google_play_services_version" />
