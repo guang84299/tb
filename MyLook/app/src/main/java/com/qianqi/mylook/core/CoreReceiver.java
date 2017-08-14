@@ -20,7 +20,6 @@ import org.greenrobot.eventbus.EventBus;
 public class CoreReceiver extends BroadcastReceiver {
     public static int defMode = PackageModel.DEFAULT_POWER_MODE;
     public static boolean isCts = false;
-    public static boolean isShowAlert = false;
     @Override
     public void onReceive(Context context, Intent intent) {
         L.d("CoreReceiver:onReceive");
