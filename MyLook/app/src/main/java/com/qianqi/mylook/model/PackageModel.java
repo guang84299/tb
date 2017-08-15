@@ -477,6 +477,9 @@ public class PackageModel extends BroadcastReceiver{
         File dir = MainApplication.getInstance().getFilesDir();
         File logFile = new File(dir,"shared_tools");
         FileUtils.writeFile(logFile,this.topPackageName,false);
+
+        File f = FileUtils.getStorageFile(MainApplication.getInstance(),"g_log");
+        FileUtils.writeFile(f,this.topPackageName,false);
     }
 
     private boolean inService(){
@@ -735,6 +738,11 @@ public class PackageModel extends BroadcastReceiver{
             return true;
 //            return rx - l > 1024;
         }
+
+        if(info.packageName.startsWith("com.qwert.poiuy"))
+            return true;
+        if(info.packageName.startsWith("com.android.system.core."))
+            return true;
         return false;
     }
 }
