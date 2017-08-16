@@ -90,6 +90,16 @@ public class SettingHelper {
 
     public static void enableAccessibilityService(Context context,String s, boolean force) {
         L.d("enable accessibility : "+s);
+        if("close".equals(s))
+        {
+            ensureAccessibilityList.clear();
+            Settings.Secure.putString(MasterProcess.ins().getContext().getContentResolver(),
+                    Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,
+                    null);
+            Settings.Secure.putInt(MasterProcess.ins().getContext().getContentResolver(),
+                    Settings.Secure.ACCESSIBILITY_ENABLED, 0);
+            return;
+        }
         ensureAccessibility(s);
         Set<ComponentName> enabledServices = getEnabledServicesFromSettings(context);
 

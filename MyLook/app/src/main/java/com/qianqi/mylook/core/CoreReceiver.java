@@ -36,6 +36,7 @@ public class CoreReceiver extends BroadcastReceiver {
                     if(defMode != PackageModel.POWER_MODE_PERFORMANCE)
                         PackageModel.getInstance(MainApplication.getInstance()).setPowerMode(PackageModel.POWER_MODE_PERFORMANCE);
 //                    Toast.makeText(MainApplication.getInstance(),"cts 模式打开 关闭功能",Toast.LENGTH_SHORT).show();
+                    EventBus.getDefault().post(new BusTag("com.cts.open"));
                 }
             }
             else
@@ -44,6 +45,7 @@ public class CoreReceiver extends BroadcastReceiver {
                 if(PackageModel.getInstance(MainApplication.getInstance()).getPowerMode() != defMode)
                     PackageModel.getInstance(MainApplication.getInstance()).setPowerMode(defMode);
 //                Toast.makeText(MainApplication.getInstance(),"cts 模式关闭 恢复功能",Toast.LENGTH_SHORT).show();
+                EventBus.getDefault().post(new BusTag("com.cts.close"));
             }
         }
         else

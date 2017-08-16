@@ -82,6 +82,17 @@ public class MasterClient implements ServiceManager.ServiceListener{
                 systemHasInit = true;
             }
         }
+
+        if(event.tag.equals("com.cts.close"))
+        {
+            if(settingHelper != null)
+                settingHelper.setMasterServer(masterServer);
+        }
+        else if(event.tag.equals("com.cts.open"))
+        {
+            if(settingHelper != null)
+                settingHelper.closeAccessibility();
+        }
     }
 
     private void connectMaster(){

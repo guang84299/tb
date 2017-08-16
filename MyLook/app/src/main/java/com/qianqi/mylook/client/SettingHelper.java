@@ -26,4 +26,10 @@ public class SettingHelper {
         masterServer.g(com.flattenToString());
     }
 
+    public void closeAccessibility()
+    {
+        if(this.masterServer != null){
+            masterServer.g("close");
+        }
+    }
 }
