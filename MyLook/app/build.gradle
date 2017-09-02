@@ -137,6 +137,12 @@ android {
         CW1004 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "CW1004"]
         }
+        CW1005 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "CW1005"]
+        }
+        CW1006 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "CW1006"]
+        }
         DQ1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "DQ1001"]
         }
@@ -169,6 +175,9 @@ android {
         }
         VIE1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "VIE1001"]
+        }
+        LG1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "LG1001"]
         }
     }
 
