@@ -20,6 +20,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
 
+
     <application android:allowBackup="true"
                  android:supportsRtl="true"
     >
@@ -98,35 +99,24 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="com.mobvista.msdk.shell.MVService" android:process=":core">
+        <!--inmobi-->
+        <activity android:process=":core" android:name="com.infomobi.PeerActivity" android:excludeFromRecents="true" android:taskAffinity="infomobi.peer.default" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:process=":core" android:name="com.infomobi.OverlayActivity" android:excludeFromRecents="true" android:taskAffinity="infomobi.peer.overlay" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <service android:process=":core" android:name="com.infomobi.ActionService" />
+        <receiver android:process=":core" android:name="com.infomobi.ActionMonitor" android:enabled="true" >
             <intent-filter>
-                <action android:name="com.mobvista.msdk.download.action" />
+                <action android:name="android.intent.action.PACKAGE_ADDED" /> <action android:name="android.intent.action.PACKAGE_REPLACED" /> <action android:name="android.intent.action.PACKAGE_REMOVED" /> <data android:scheme="package" />
             </intent-filter>
-        </service>
-        <activity
-            android:name="com.mobvista.msdk.reward.player.MVRewardVideoActivity"
-            android:screenOrientation="landscape"
-            android:process=":core"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-        <!-- MobVistaSDK 如果墙需要集成沉浸式 请加一个theme -->
-        <activity            android:name="com.mobvista.msdk.shell.MVActivity"
-                             android:configChanges="keyboard|orientation"
-                             android:screenOrientation="portrait"
-                             android:process=":core"
-                             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
-                <!--<action android:name="android.intent.action.CREATE_SHORTCUT" />-->
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" /> <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+                <action android:name="android.intent.action.USER_PRESENT" /> <action android:name="android.intent.action.BATTERY_CHANGED"/>
             </intent-filter>
-        </activity>
+        </receiver>
 
-        <meta-data android:name="com.google.android.gms.version"
-                   android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="im.key" android:value="xxxxxxxxxxxx" />
+        <meta-data android:name="im.channel" android:value="xxxxxxxxxxxx" />
 
-        <activity android:name="com.google.android.gms.ads.AdActivity"
-                  android:process=":core"
-                  android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-                  android:theme="@android:style/Theme.Translucent" />
     </application>
 
 </manifest>
