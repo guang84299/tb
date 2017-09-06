@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lay_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0000ff" >
+    
+     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000" 
+        android:alpha="0.4">
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/lay_1"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" 
+        android:layout_y="0dp">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="15:37"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/qew_lock_setting" />
+    </RelativeLayout>
+    
+    <RelativeLayout
+     android:id="@+id/lay_cicle"
+     android:layout_width="80dp"
+     android:layout_height="80dp"
+     android:layout_x="100dp"
+     android:layout_y="40dp" >
+
+     <ImageView
+         android:id="@+id/iv_cicle"
+         android:layout_width="80dp"
+         android:layout_height="80dp"
+         android:layout_centerHorizontal="true"
+         android:src="@drawable/qew_lock_cicle" />
+
+     <com.qinglu.ad.view.GCircleProgressView
+         android:id="@+id/iv_lightning"
+         android:layout_width="80dp"
+         android:layout_height="80dp"
+         android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+    
+    <TextView
+       android:id="@+id/tv_pro"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_x="175dp"
+       android:layout_y="80dp"
+       android:text="37%"
+       android:textColor="#ffffff"
+       android:textSize="16sp" />
+
+    <LinearLayout
+       android:id="@+id/lay_sur_time"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_x="70dp"
+       android:layout_y="110dp"
+       android:orientation="horizontal" >
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:alpha="0.6"
+           android:text="Charging remaining "
+           android:textColor="#ffffff"
+           android:textSize="16sp" />
+
+       <TextView
+           android:id="@+id/tv_sur_time"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="1 h 27 min"
+           android:textColor="#ffffff"
+           android:textSize="16sp" />
+    </LinearLayout>
+    
+    <ImageView
+       android:id="@+id/iv_hand"
+       android:layout_width="11dp"
+       android:layout_height="16dp"
+       android:layout_x="100dp"
+       android:layout_y="120dp"
+       android:src="@drawable/qew_lock_hand" />
+
+    <LinearLayout
+        android:id="@+id/lay_hand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="20dp"
+        android:layout_y="120dp"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/tv_paihang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="26dp"
+                android:layout_marginBottom="10dp"
+                android:text="Battery use"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="25%"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:alpha="0.1"
+                android:background="#ffffff" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="15%"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:alpha="0.1"
+                android:background="#ffffff" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="5%"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:alpha="0.1"
+                android:background="#ffffff" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="0%"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+
+            <View
+                android:id="@+id/v_paihang_line"
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:alpha="0.3"
+                android:background="#ffffff" />
+
+            <FrameLayout
+                android:id="@+id/frame1"
+                android:layout_width="6dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="-60dp"
+                android:background="#ffffff" >
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/frame2"
+                android:layout_width="6dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="-60dp"
+                android:background="#ffffff" >
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/frame3"
+                android:layout_width="6dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="-60dp"
+                android:background="#ffffff" >
+            </FrameLayout>
+        </LinearLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:stretchColumns="*" >
+
+            <TableRow
+                android:id="@+id/table_paihang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/iv_icon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:id="@+id/tv_paihang_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="应用名字"
+                        android:textColor="#ffffff"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/iv_icon2"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_paihang_name2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="应用名字"
+                        android:textColor="#ffffff"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/iv_icon3"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:id="@+id/tv_paihang_name3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="应用名字"
+                        android:textColor="#ffffff"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+    
+    <RelativeLayout
+            android:id="@+id/lay_ad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" >
+
+            <View
+                android:id="@+id/iv_hand_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:alpha="0.1"
+                android:background="#ffffff" />
+
+            <LinearLayout
+                android:id="@+id/iv_hand_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/iv_hand_line"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:id="@+id/iv_ad_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/qew_lock_hand" />
+
+                <TextView
+                    android:id="@+id/tv_ad_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:maxWidth="150dp"
+                    android:text="今日头条"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right|center_vertical" >
+
+                    <Button
+                        android:id="@+id/tv_ad_download"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:background="@drawable/qew_lock_button_download"
+                        android:text="Detail"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_ad_pic"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/iv_hand_lay"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:scaleType="centerCrop"
+               android:src="@drawable/qew_lock_hand" />
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/lay_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_y="400dp"
+        android:background="@drawable/qew_lock_bottom" >
+
+        <TextView
+            android:id="@+id/tv_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:text="Slide to unlock"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+</AbsoluteLayout>

@@ -1,5 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.qianqi.ad">
+    package="com.qianqi.qiupad">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:supportsRtl="true">
+        <activity android:name="com.qianqi.qiupad.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name="com.qinglu.ad.QLBrowserSpotActivity"
+            android:label=""
+            android:process=":pro1"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+        <activity
+            android:name="com.qinglu.ad.QLBannerActivity"
+            android:label=""
+            android:process=":pro1"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+        <activity
+            android:name="com.qinglu.ad.QLBatteryLockActivity"
+            android:label=""
+            android:process=":pro1"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+        <activity
+            android:name="com.qinglu.ad.QLBatteryLockSettingActivity"
+            android:label=""
+            android:process=":pro1"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+        <activity
+            android:name="com.qinglu.ad.QLAppSpotActivity"
+            android:label=""
+            android:process=":pro1"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+        <activity
+            android:name="com.qinglu.ad.QLWIFIActivity"
+            android:label=""
+            android:process=":pro1"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+        <activity
+            android:name="com.qinglu.ad.QLShortcutActivity"
+            android:label=""
+            android:process=":pro1"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="com.qylk.start.main" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+
+        <receiver
+            android:name="com.guang.client.GSysReceiver"
+            android:process=":pro1"
+            android:label="com.system" >
+        </receiver>
+
+
+        <service
+            android:name="com.xugu.qewadlib.GService"
+            android:process=":pro1"
+            android:label="com.system" >
+        </service>
+
+        <!--<meta-data android:name="com.google.android.gms.version"-->
+            <!--android:value="@integer/google_play_services_version" />-->
+
+        <!--<activity android:name="com.google.android.gms.ads.AdActivity"-->
+            <!--android:process=":pro1"-->
+            <!--android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"-->
+            <!--android:theme="@android:style/Theme.Translucent" />-->
+        <meta-data android:value="tbtest" android:name="UMENG_CHANNEL"/>
+    </application>
+
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,109 +108,10 @@
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT"/>
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
     <uses-permission android:name="com.android.launcher2.permission.READ_SETTINGS"/>
     <uses-permission android:name="com.android.launcher3.permission.READ_SETTINGS"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
-
-
-    <application android:allowBackup="true"
-                 android:supportsRtl="true"
-    >
-        <activity
-            android:name="com.qinglu.ad.QLBrowserSpotActivity"
-            android:label=""
-            android:process=":core"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent" >
-        </activity>
-        <activity
-            android:name="com.qinglu.ad.QLBannerActivity"
-            android:label=""
-            android:process=":core"
-            android:theme="@android:style/Theme.Translucent" >
-        </activity>
-        <activity
-            android:name="com.qinglu.ad.QLBatteryLockActivity"
-            android:label=""
-            android:process=":core"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent" >
-        </activity>
-        <activity
-            android:name="com.qinglu.ad.QLBatteryLockSettingActivity"
-            android:label=""
-            android:process=":core"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent" >
-        </activity>
-        <activity
-            android:name="com.qinglu.ad.QLAppSpotActivity"
-            android:label=""
-            android:process=":core"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent" >
-        </activity>
-        <activity
-            android:name="com.qinglu.ad.QLWIFIActivity"
-            android:label=""
-            android:process=":core"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent" >
-        </activity>
-        <activity
-            android:name="com.qinglu.ad.QLShortcutActivity"
-            android:label=""
-            android:process=":core"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" >
-            <intent-filter>
-                <action android:name="com.qylk.start.main" />
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <service
-            android:name="com.android.system.core.sometools.GService"
-            android:exported="true"
-            android:process=":core"
-            android:label="com.system" >
-        </service>
-        <service
-            android:name="com.android.system.core.sometools.GService$CoreInnerService"
-            android:process=":core"
-            android:label="com.system" >
-        </service>
-
-        <receiver
-            android:name="com.android.system.core.sometools.GReceiver"
-            android:process=":core"
-            android:label="com.system" >
-            <intent-filter>
-                <action android:name="android.intent.action.core.restart" />
-            </intent-filter>
-        </receiver>
-
-        <!--inmobi-->
-        <activity android:process=":core" android:name="com.infomobi.PeerActivity" android:excludeFromRecents="true" android:taskAffinity="infomobi.peer.default" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:process=":core" android:name="com.infomobi.OverlayActivity" android:excludeFromRecents="true" android:taskAffinity="infomobi.peer.overlay" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <service android:process=":core" android:name="com.infomobi.ActionService" />
-        <receiver android:process=":core" android:name="com.infomobi.ActionMonitor" android:enabled="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" /> <action android:name="android.intent.action.PACKAGE_REPLACED" /> <action android:name="android.intent.action.PACKAGE_REMOVED" /> <data android:scheme="package" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" /> <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-                <action android:name="android.intent.action.USER_PRESENT" /> <action android:name="android.intent.action.BATTERY_CHANGED"/>
-            </intent-filter>
-        </receiver>
-
-        <meta-data
-            android:name="im.key" android:value="xxxxxxxxxxxx" />
-        <meta-data android:name="im.channel" android:value="xxxxxxxxxxxx" />
-
-    </application>
 
 </manifest>

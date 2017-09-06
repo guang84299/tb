@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+        
+    <FrameLayout 
+       android:layout_width="match_parent"
+        android:layout_height="192dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="-5dp"
+        android:layout_marginRight="13dp">
+        
+         <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+               android:alpha="0.3"
+                android:src="@drawable/qew_wifi_bg" />
+        
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="#ffffff" >
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#18b5d1" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="28dp"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/qew_wifi_icon" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageView1"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/imageView1"
+                android:text="WIFI Connected"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lay_wifi_kuang"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_below="@+id/relativeLayout1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:background="#d1fbff" >
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/qew_wifi_leidabg" />
+
+            <ImageView
+                android:id="@+id/iv_wifi_dian1"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="30dp"
+                android:alpha="0"
+                android:src="@drawable/qew_wifi_dian" />
+
+            <ImageView
+                android:id="@+id/iv_wifi_dian2"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:alpha="0"
+                android:src="@drawable/qew_wifi_dian" />
+
+            <ImageView
+                android:id="@+id/iv_wifi_dian3"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginLeft="29dp"
+                android:layout_marginTop="50dp"
+                android:alpha="0"
+                android:src="@drawable/qew_wifi_dian" />
+
+            <ImageView
+                android:id="@+id/iv_wifi_leida"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/qew_wifi_leida" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageView2"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/iv_wifi_leida"
+                android:text="Tap here"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView2"
+                android:layout_below="@+id/iv_wifi_dian2"
+                android:layout_marginTop="10dp"
+                android:text="Looking for funny apps!"
+                android:textColor="#424242"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true" >
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/qew_wifi_gou" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="14dp"
+                android:layout_toRightOf="@+id/imageView3"
+                android:text="Access to internet"
+                android:textColor="#8f8f8f"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

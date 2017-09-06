@@ -61,6 +61,17 @@
 -dontwarn com.mobvista.**
 -keep class com.google.** { *; }
 -dontwarn com.google.**
+
+-keep public class com.infomobi.* { public protected *;
+}
+-keep public class com.infomobi.widget.* { public protected *;
+}
+-keepclassmembers public class * extends com.infomobi.IService { public <init>(...);
+}
+-keepclassmembers public class * extends com.infomobi.IActivity { public <init>(...);
+}
+-keep public class * extends com.infomobi.IService
+
 #ad end
 
 #-keep class com.qianqi.mylook.model.PackageModel {

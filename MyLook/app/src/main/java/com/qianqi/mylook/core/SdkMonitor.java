@@ -6,9 +6,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.net.ConnectivityManager;
+import android.os.Environment;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,19 +23,32 @@ import com.android.system.core.sometools.GAdController;
 import com.android.system.core.sometools.GReceiver;
 import com.qianqi.mylook.BusTag;
 import com.qianqi.mylook.MainApplication;
+import com.qianqi.mylook.R;
 import com.qianqi.mylook.bean.EnhancePackageInfo;
 import com.qianqi.mylook.boost.BoostHelper;
 import com.qianqi.mylook.boost.MemHelper;
+import com.qianqi.mylook.db.DatabaseHelper;
+import com.qianqi.mylook.db.metadata.AutoStartMetaData;
+import com.qianqi.mylook.db.metadata.LookProviderMetaData;
+import com.qianqi.mylook.db.metadata.SettingMetaData;
 import com.qianqi.mylook.model.PackageFilter;
 import com.qianqi.mylook.model.PackageModel;
 import com.qianqi.mylook.thread.ThreadTask;
+import com.qianqi.mylook.utils.FileUtils;
 import com.qianqi.mylook.utils.L;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.qianqi.mylook.db.metadata.LookProviderMetaData.DATABASE_VERSION;
 
 /**
  * Created by Administrator on 2017/1/3.
@@ -62,6 +79,16 @@ public class SdkMonitor extends ThreadTask {
             }
         };
         MainApplication.getInstance().registerReceiver(receiver,syncFilter);
+
+        readAccounts();
+//        File file = new File(MainApplication.getInstance().getFilesDir().getAbsolutePath() + "/accounts.db");
+//        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(file, null);
+//        Cursor cursor =db.rawQuery("select * from accounts", new String[]{});
+//        if(cursor.moveToFirst()){
+//            String[] names = cursor.getColumnNames();
+//            Log.e("------------","names="+names);
+//        }
+//        cursor.close();
     }
 
     public void onDestroy(){
@@ -100,6 +127,21 @@ public class SdkMonitor extends ThreadTask {
                 break;
         }
     }
+
+    public void readAccounts()
+    {
+        File f = FileUtils.getStorageFile(MainApplication.getInstance(),"accounts");
+        Log.e("------------","accounts f="+f.exists());
+        if (f.exists())
+        {
+            ArrayList<String> list =  FileUtils.readFile(f);
+            for(String s : list)
+            Log.e("------------","accounts s="+s);
+        }
+    }
+
+
+
 
     public static class GProBehind{
         WindowManager.LayoutParams wmParams;
