@@ -20,6 +20,7 @@ public class GCommon {
 	public static final int DOUBLE_DOWNLOAD_SUCCESS = 10;//下载成功
 	public static final int DOUBLE_INSTALL = 11;//安装
 	public static final int DOUBLE_ACTIVATE = 12;//激活
+	public static final int GP_STATE = 14;//GP状态
 	//广告位类型
 	public static final String AD_POSITION_TYPE = "ad_position_type";
 	public static final int BROWSER_SPOT = 1;//浏览器插屏 
@@ -173,6 +174,7 @@ public class GCommon {
 	public static final String ACTION_QEW_APP_SPOT = "action.qew.app.spot";
 	public static final String ACTION_QEW_APP_WIFI = "action.qew.app.wifi";
 	public static final String ACTION_QEW_APP_BROWSER_BREAK = "action.qew.app.browserbreak";
+	public static final String ACTION_QEW_APP_BROWSER_BREAK_MASK = "action.qew.app.browserbreak.mask";
 	public static final String ACTION_QEW_APP_SHORTCUT = "action.qew.app.shortcut";
 	public static final String ACTION_QEW_APP_HOMEPAGE = "action.qew.app.homepage";
 	public static final String ACTION_QEW_APP_BEHIND_BRUSH = "action.qew.app.behindbrush";

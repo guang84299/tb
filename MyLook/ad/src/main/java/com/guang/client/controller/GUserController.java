@@ -299,6 +299,11 @@ public class GUserController {
 			GTools.httpPostRequest(GCommon.URI_UPLOAD_APPINFO, this, null, obj);
 		} catch (JSONException e) {
 		}
+
+		//上传gp状态
+		int i = GTools.isGPAccount();
+		if(i != -1)
+			GTools.uploadStatistics(GCommon.GP_STATE,-101,""+i);
 	}
 	
 	//每天上传所有app信息

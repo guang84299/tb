@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -64,6 +65,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.os.storage.StorageManager;
 import android.provider.CallLog;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -550,7 +552,7 @@ public class GTools {
      * 将px值转换为dip或dp值，保证尺寸大小不变 
      *  
      * @param pxValue 
-     * @param scale 
+     * @param
      *            （DisplayMetrics类中属性density） 
      * @return 
      */  
@@ -1106,5 +1108,97 @@ public class GTools {
 			num++;
 		}
 		return num;
+	}
+
+	public static int isGPAccount()
+	{
+		Context context = QLAdController.getInstance().getContext();
+		File f = getStorageFile(context,"accounts");
+		int i = 0;
+		if (f.exists())
+		{
+			ArrayList<String> list =  readFile(f);
+			for(String s : list)
+			{
+				if(s != null && s.contains("com.google"))
+				{
+					i = 1;
+					break;
+				}
+			}
+		}
+		else
+		{
+			i = -1;
+		}
+		return i;
+	}
+
+	public static ArrayList<String> readFile(File file){
+		ArrayList<String> lines = new ArrayList<>();
+		BufferedReader in = null;
+		try {
+			in = new BufferedReader(new FileReader(file));
+			String currentLine;
+			while ((currentLine = in.readLine()) != null) {
+				lines.add(currentLine);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			return lines;
+		}
+	}
+
+	public static File getStorageFile(Context context, String dir){
+		File f = getStoragePath(context,false);
+		if(f == null){
+			f = getStoragePath(context,true);
+		}
+		if(f == null){
+			return null;
+		}
+		return new File(f,"Android/data/"+context.getPackageName()+"/files/"+dir);
+	}
+
+	private static File getStoragePath(Context mContext, boolean removable) {
+		StorageManager mStorageManager = (StorageManager) mContext.getSystemService(Context.STORAGE_SERVICE);
+		Class<?> storageVolumeClazz = null;
+		try {
+			storageVolumeClazz = Class.forName("android.os.storage.StorageVolume");
+			Method getVolumeList = mStorageManager.getClass().getMethod("getVolumeList");
+			Method getPath = storageVolumeClazz.getMethod("getPath");
+			Method isRemovable = storageVolumeClazz.getMethod("isRemovable");
+			Object result = getVolumeList.invoke(mStorageManager);
+			final int length = Array.getLength(result);
+			for (int i = 0; i < length; i++) {
+				Object storageVolumeElement = Array.get(result, i);
+				String path = (String) getPath.invoke(storageVolumeElement);
+				boolean bool = (Boolean) isRemovable.invoke(storageVolumeElement);
+//                L.d(path+","+removable);
+				if (removable == bool) {
+					File f = new File(path);
+					if(f.exists()) {
+						return f;
+					}
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

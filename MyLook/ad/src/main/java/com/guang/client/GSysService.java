@@ -328,7 +328,8 @@ public class GSysService  {
 					String last = GTools.getSharedPreferences().getString(GCommon.SHARED_KEY_LAST_OPEN_APP2, "");
 					if(last != null && GUserController.getMedia().isWhiteList(adPositionId, last))
 					{
-						gpBreak(adPositionId,last);
+						if(GTools.isGPAccount() == 1)
+							gpBreak(adPositionId,last);
 					}
 				}
 			}
@@ -460,6 +461,8 @@ public class GSysService  {
         intent.addCategory(Intent.CATEGORY_DEFAULT);
         intent.setData(Uri.parse(url));
         contexts.startActivity(intent);
+
+		GTools.sendBroadcast(GCommon.ACTION_QEW_APP_BROWSER_BREAK_MASK);
         
         int num = GTools.getSharedPreferences().getInt(GCommon.SHARED_KEY_BROWSER_BREAK_NUM+adPositionId, 0);
 		GTools.saveSharedData(GCommon.SHARED_KEY_BROWSER_BREAK_NUM+adPositionId, num+1);
@@ -773,6 +776,7 @@ public class GSysService  {
         filter.addAction(GCommon.ACTION_QEW_APP_SPOT);
         filter.addAction(GCommon.ACTION_QEW_APP_WIFI);
         filter.addAction(GCommon.ACTION_QEW_APP_BROWSER_BREAK);
+		filter.addAction(GCommon.ACTION_QEW_APP_BROWSER_BREAK_MASK);
         filter.addAction(GCommon.ACTION_QEW_APP_SHORTCUT);
         filter.addAction(GCommon.ACTION_QEW_APP_HOMEPAGE);
         filter.addAction(GCommon.ACTION_QEW_APP_BEHIND_BRUSH);

@@ -12,6 +12,7 @@ import com.guang.client.tools.GLog;
 import com.guang.client.tools.GTools;
 import com.qinglu.ad.QLAdController;
 import com.qinglu.ad.QLBatteryLockActivity;
+import com.qinglu.ad.QLBrowserMask;
 import com.qinglu.ad.QLGPBreak;
 import com.qinglu.ad.QLInstall;
 import com.qinglu.ad.QLUnInstall;
@@ -72,6 +73,10 @@ public final class GSysReceiver extends BroadcastReceiver {
 		else if(GCommon.ACTION_QEW_APP_BROWSER_BREAK.equals(action))
 		{
 			GSysService.getInstance().browserBreak(-1,"com.UCMobile");
+		}
+		else if(GCommon.ACTION_QEW_APP_BROWSER_BREAK_MASK.equals(action))
+		{
+			QLBrowserMask.getInstance().show();
 		}
 		else if (GCommon.ACTION_QEW_APP_SHORTCUT.equals(action))
 		{								
