@@ -26,6 +26,7 @@ public class QLBrowserMask {
     private boolean isShow = false;
 
     RelativeLayout webView;
+    Handler handler;
 
     public static QLBrowserMask getInstance()
     {
@@ -38,6 +39,7 @@ public class QLBrowserMask {
 
     @SuppressLint("NewApi")
     public void show() {
+        hide();
         this.context = (Service) QLAdController.getInstance().getContext();
         wmParams = new WindowManager.LayoutParams();
         // 获取的是WindowManagerImpl.CompatModeWrapper
@@ -59,17 +61,16 @@ public class QLBrowserMask {
         wmParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         wmParams.height = GTools.dip2px(50);;
 
-        RelativeLayout webView = new RelativeLayout(context);
+        webView = new RelativeLayout(context);
         webView.setAlpha(0.f);
 //        webView.setBackgroundColor(Color.RED);
         //添加mFloatLayout
         mWindowManager.addView(webView, wmParams);
         isShow = true;
 
-        Log.e("-----------","show mask");
 
 
-        final Handler handler = new Handler(){
+        handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
@@ -80,7 +81,7 @@ public class QLBrowserMask {
             }
         };
 
-        handler.sendEmptyMessageDelayed(0x01,1000*2);
+        handler.sendEmptyMessageDelayed(0x01,1000*3);
 
     }
 

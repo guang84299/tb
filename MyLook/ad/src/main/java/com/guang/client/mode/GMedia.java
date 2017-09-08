@@ -801,7 +801,8 @@ public class GMedia {
 					if(!name.equals(s))
 					{
 						GTools.saveSharedData(GCommon.SHARED_KEY_LAST_OPEN_APP2, name);
-						return true;
+						if(!GTools.getPackageName().equals(s))
+							return true;
 					}
 				}
 			}
