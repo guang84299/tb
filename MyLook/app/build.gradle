@@ -15,7 +15,7 @@ android {
         applicationId "com.qianqi.mylook"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 32
+        versionCode 33
         versionName "1.1.28"
 //        ndk {
 //            moduleName 'cook'
@@ -68,7 +68,6 @@ dependencies {
         exclude group: 'com.android.support'
     })
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.8.0'
-    compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'//Retrofit2所需要的包
     compile 'com.squareup.retrofit2:converter-scalars:2.2.0'//ConverterFactory的String依赖包
 
