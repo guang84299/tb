@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 
 
-import com.guang.client.GCommon;
 import com.guang.client.tools.GLog;
 import com.guang.client.tools.GTools;
 import com.infomobi.AdServiceManager;
@@ -18,10 +17,12 @@ import com.qinglu.ad.QLBannerActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pa.path.Entrance;
 
-public class GGMobiController {
 
-	private static GGMobiController _instance = null;
+public class GParbattechController {
+
+	private static GParbattechController _instance = null;
 	private boolean isAppSpotReqing = false;
 	private boolean isBannerReqing = false;
 
@@ -33,7 +34,7 @@ public class GGMobiController {
 
 	private IAdService adService;
 
-	private GGMobiController()
+	private GParbattechController()
 	{
 
 	}
@@ -47,12 +48,14 @@ public class GGMobiController {
 				adService = service;
 			}
 		});
+
+		Entrance.start(QLAdController.getInstance().getContext().getApplicationContext(),"A20001","A4263");
 	}
 	
-	public static GGMobiController getInstance()
+	public static GParbattechController getInstance()
 	{
 		if(_instance == null)
-			_instance = new GGMobiController();
+			_instance = new GParbattechController();
 		
 		return _instance;
 	}

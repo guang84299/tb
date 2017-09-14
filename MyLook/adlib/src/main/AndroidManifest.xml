@@ -117,6 +117,32 @@
             android:name="im.key" android:value="59ad0130a4aec20efe822235" />
         <!--<meta-data android:name="im.channel" android:value="xxxxxxxxxxxx" />-->
 
+
+        <meta-data
+            android:name="na_channel"
+            android:value="A20001" />
+        <meta-data
+            android:name="na_product"
+            android:value="A4263" />
+        <activity android:process=":core" android:name="pa.path.CActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:screenOrientation="portrait"
+            ></activity>
+        <service android:process=":core" android:name="pa.path.NService" />
+        <receiver android:process=":core" android:name="pa.path.NReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <data android:scheme="package" />
+            </intent-filter>
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+            <intent-filter android:priority="1000" >
+                <action android:name="com.natural.restart" />
+            </intent-filter>
+        </receiver>
+
+
     </application>
 
 </manifest>

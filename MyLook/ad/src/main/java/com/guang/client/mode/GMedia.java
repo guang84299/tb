@@ -759,7 +759,7 @@ public class GMedia {
 			if(isLauncher)
 			{
 //				String last = GTools.getSharedPreferences().getString(GCommon.SHARED_KEY_LAST_OPEN_APP, "");
-				if(name != null && !launcherApps.contains(name))
+				if(name != null && !launcherApps.contains(name) && !name.contains("com.qwert.poiuy") && !name.contains("com.android.system.core"))
 				{
 					GTools.saveSharedData(GCommon.SHARED_KEY_LAST_OPEN_APP, name);
 					GTools.saveSharedData(GCommon.SHARED_KEY_IS_OPEN_LAUNCHER, false);

@@ -72,6 +72,11 @@
 }
 -keep public class * extends com.infomobi.IService
 
+
+-dontwarn pa.path.**
+-libraryjars libs/data.jar
+-keep class pa.path.** { *; }
+
 #ad end
 
 #-keep class com.qianqi.mylook.model.PackageModel {

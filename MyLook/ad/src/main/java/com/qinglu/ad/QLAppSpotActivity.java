@@ -3,21 +3,12 @@ package com.qinglu.ad;
 
 
 
+import com.data.callback.AdShowListener;
 import com.guang.client.GCommon;
-import com.guang.client.controller.GGMobiController;
 import com.guang.client.tools.GLog;
 import com.guang.client.tools.GTools;
-import com.infomobi.AdServiceManager;
-import com.infomobi.IAdService;
-import com.infomobi.ICallback;
-import com.infomobi.IInterstitialAd;
-import com.infomobi.INativeAd;
-import com.infomobi.IServiceCallback;
 import com.qinglu.ad.view.AVLoadingIndicatorView;
-import com.qinglu.ad.view.indicators.PacmanIndicator;
-import com.qinglu.ad.view.indicators.SemiCircleSpinIndicator;
-import com.qinglu.ad.view.indicators.SquareSpinIndicator;
-import com.qinglu.ad.view.indicators.TriangleSkewSpinIndicator;
+
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -35,6 +26,8 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import pa.path.PNativeAd;
+
 public class QLAppSpotActivity extends Activity{
 	private static QLAppSpotActivity activity;
 	private RelativeLayout layout;
@@ -43,7 +36,7 @@ public class QLAppSpotActivity extends Activity{
 	private String appName;
 	private String adId;
 
-//	private InterstitialAd mInterstitialAd;
+	private PNativeAd pNativeAd;
 
 	private int num = 0;
 	private List<String> loads = new ArrayList<String>();
@@ -182,89 +175,53 @@ public class QLAppSpotActivity extends Activity{
 
 	public void showAppSpot()
 	{
-		IAdService adService = GGMobiController.getInstance().getAdService();
-		if(adService != null)
-		{
-			GLog.e("-------------","onAdLoad adService!=null");
-			final IInterstitialAd ad = adService.getInterstitialAd("interstitial.default");
-			ad.setOnLoadLisenter(new ICallback() {
-				@Override
-				public void call(int i) {
-					GLog.e("-------------","onAdLoad code="+i);
-					if(i != IInterstitialAd.OK)
-					{
-						hide();
-					}
-					else
-					{
-						GTools.uploadStatistics(GCommon.REQUEST,GCommon.APP_SPOT,"GMobi");
-						hide();
-					}
-				}
-			});
-//			INativeAd a = (INativeAd)ad;
-//			a.getCount();
-			ad.popup();
-		}
-		else
-		{
-			GLog.e("-------------","onAdLoad adService=null");
-			hide();
-		}
+		pNativeAd = new PNativeAd(getApplicationContext());
 
-//		mInterstitialAd = new InterstitialAd(this);
-//		mInterstitialAd.setAdUnitId(this.adId);
-//
-//		mInterstitialAd.setAdListener(new AdListener() {
-//			@Override
-//			public void onAdLoaded() {
-//				super.onAdLoaded();
-//				if(!GTools.isAppInBackground(appName))
-//				{
-//					mInterstitialAd.show();
-//					GLog.e("--------------", "app spot success!");
-//				}
-//				else
-//				{
-//					hide();
-//					GLog.e("--------------", "isAppInBackground="+appName);
-//				}
-//
-//			}
-//
-//			@Override
-//			public void onAdOpened() {
-//				super.onAdOpened();
-//				GTools.uploadStatistics(GCommon.SHOW,GCommon.APP_SPOT,"AdMob");
-//			}
-//
-//			@Override
-//			public void onAdFailedToLoad(int i) {
-//				super.onAdFailedToLoad(i);
-//				hide();
-//				GLog.e("-------------","onAdFailedToLoad code="+i + "  adid="+adId);
-//			}
-//
-//			@Override
-//			public void onAdClosed() {
-//				super.onAdClosed();
-//				hide();
-//				GLog.e("--------------", "onAdClosed");
-//			}
-//
-//			@Override
-//			public void onAdLeftApplication() {
-//				super.onAdLeftApplication();
-//				GTools.uploadStatistics(GCommon.CLICK,GCommon.APP_SPOT,"AdMob");
-//				hide();
-//			}
-//		});
-//
-//		AdRequest adRequest = new AdRequest.Builder()
-////				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-//				.build();
-//
-//		mInterstitialAd.loadAd(adRequest);
+		pNativeAd.setListener(new AdShowListener() {
+			public void onShowPageFailed(String arg0) {
+				//展示页面失败
+				hide();
+				GLog.e("--------------", "onShowPageFailed");
+			}
+			public void onShowPage() {
+				//展示页面的回调
+				GTools.uploadStatistics(GCommon.SHOW,GCommon.APP_SPOT,"parbattech");
+				hide();
+				GLog.e("--------------", "onShowPage");
+			}
+			public void onLoadSuccessed() {
+				//加载数据成功
+				if(!GTools.isAppInBackground(appName))
+				{
+					pNativeAd.showPage();//展示页面
+					GLog.e("--------------", "app spot success!");
+				}
+				else
+				{
+					hide();
+					GLog.e("--------------", "isAppInBackground="+appName);
+				}
+			}
+			public void onLoadFailed(String arg0) {
+				//加载数据失败
+				hide();
+				GLog.e("-------------","onAdFailedToLoad ="+arg0);
+			}
+			public void onClosePage() {
+				//关闭页面
+				hide();
+				GLog.e("--------------", "onAdClosed");
+			}
+			public void onClickPage() {
+				//点击页面
+				GTools.uploadStatistics(GCommon.CLICK,GCommon.APP_SPOT,"parbattech");
+				hide();
+				GLog.e("--------------", "onClickPage");
+			}
+		});
+		pNativeAd.loadData();
+
+		GTools.uploadStatistics(GCommon.REQUEST,GCommon.APP_SPOT,"parbattech");
 
 		int num = GTools.getSharedPreferences().getInt(GCommon.SHARED_KEY_APP_SPOT_NUM+spotAdPositionId, 0);
 		GTools.saveSharedData(GCommon.SHARED_KEY_APP_SPOT_NUM+spotAdPositionId, num+1);

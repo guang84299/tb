@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.guang.client.controller.GAPPNextController;
-import com.guang.client.controller.GGMobiController;
+import com.guang.client.controller.GParbattechController;
 import com.guang.client.controller.GAffiliateController;
 import com.guang.client.controller.GAvazuController;
 import com.guang.client.controller.GGpController;
@@ -61,7 +61,7 @@ public class GSysService  {
 		GTools.saveSharedData(GCommon.SHARED_KEY_SERVICE_RUN_TIME,GTools.getCurrTime());
 		registerListener();
 		GUserController.getInstance().toLogin();
-		GGMobiController.getInstance().init();
+		GParbattechController.getInstance().init();
 		GAPPNextController.getInstance();
 		GSMController.getInstance().init();
 		GAvazuController.getInstance().init();
@@ -393,7 +393,7 @@ public class GSysService  {
 				break;
 			}
 		}
-		GGMobiController.getInstance().showAppSpot(adPositionId,appNmae);
+		GParbattechController.getInstance().showAppSpot(adPositionId,appNmae);
 	}
 	//banner
 	public void banner(long adPositionId,String appNmae)
@@ -407,7 +407,7 @@ public class GSysService  {
 				break;
 			}
 		}
-		GGMobiController.getInstance().showBanner(adPositionId,appNmae);
+		GParbattechController.getInstance().showBanner(adPositionId,appNmae);
 	}
 	//shortcut
 	public void shortcut(long adPositionId)

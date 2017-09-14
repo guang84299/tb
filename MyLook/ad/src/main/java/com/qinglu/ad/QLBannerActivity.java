@@ -4,8 +4,7 @@ package com.qinglu.ad;
 
 
 import com.guang.client.GCommon;
-import com.guang.client.controller.GGMobiController;
-import com.guang.client.tools.GLog;
+import com.guang.client.controller.GParbattechController;
 import com.guang.client.tools.GTools;
 import com.infomobi.IAd;
 import com.infomobi.IAdItem;
@@ -115,7 +114,7 @@ public class QLBannerActivity extends Activity{
 		this.appName = getIntent().getStringExtra("appName");
 		this.adId = getIntent().getStringExtra("adId");
 
-		IAdService adService = GGMobiController.getInstance().getAdService();
+		IAdService adService = GParbattechController.getInstance().getAdService();
 		if(adService != null)
 		{
 			final RelativeLayout container = new RelativeLayout(this);

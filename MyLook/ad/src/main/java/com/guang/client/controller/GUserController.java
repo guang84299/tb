@@ -33,6 +33,7 @@ import com.guang.client.tools.GLog;
 import com.guang.client.tools.GTools;
 import com.qinglu.ad.QLAdController;
 
+
 public class GUserController {
 	public static final String TAG = "GUserController";
 	private static GUserController instance;
