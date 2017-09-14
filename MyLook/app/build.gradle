@@ -179,6 +179,9 @@ android {
         LG1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "LG1001"]
         }
+        XTG1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "XTG1001"]
+        }
     }
 
     }
