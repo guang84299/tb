@@ -80,6 +80,9 @@ android {
         RH1005 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "RH1005"]
         }
+        RH1006 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "RH1006"]
+        }
         YS1004 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "YS1004"]
         }
