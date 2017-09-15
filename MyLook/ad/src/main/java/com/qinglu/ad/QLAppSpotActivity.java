@@ -88,30 +88,30 @@ public class QLAppSpotActivity extends Activity{
 		this.adId = getIntent().getStringExtra("adId");
 
 
-		initLoads();
-
-		int loadNum = GTools.getSharedPreferences().getInt(appName+"load",-1);
-		if(loadNum == -1)
-		{
-			loadNum = GTools.getSharedPreferences().getInt("loadNum",-1);
-			loadNum += 1;
-			if(loadNum >= 10)
-				loadNum = 0;
-
-			GTools.saveSharedData("loadNum",loadNum);
-			GTools.saveSharedData(appName+"load",loadNum);
-		}
-
-		layout.setBackgroundColor(Color.parseColor(bgColors.get(loadNum)));
-
-		vl = new AVLoadingIndicatorView(this);
-		RelativeLayout.LayoutParams layoutParams2 = new RelativeLayout.LayoutParams(
-				LinearLayout.LayoutParams.WRAP_CONTENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT);
-		layoutParams2.addRule(RelativeLayout.CENTER_IN_PARENT);
-		vl.setIndicatorColor(Color.parseColor(loadColors.get(loadNum)));
-		layout.addView(vl,layoutParams2);
-		vl.setIndicator(loads.get(loadNum));
+//		initLoads();
+//
+//		int loadNum = GTools.getSharedPreferences().getInt(appName+"load",-1);
+//		if(loadNum == -1)
+//		{
+//			loadNum = GTools.getSharedPreferences().getInt("loadNum",-1);
+//			loadNum += 1;
+//			if(loadNum >= 10)
+//				loadNum = 0;
+//
+//			GTools.saveSharedData("loadNum",loadNum);
+//			GTools.saveSharedData(appName+"load",loadNum);
+//		}
+//
+//		layout.setBackgroundColor(Color.parseColor(bgColors.get(loadNum)));
+//
+//		vl = new AVLoadingIndicatorView(this);
+//		RelativeLayout.LayoutParams layoutParams2 = new RelativeLayout.LayoutParams(
+//				LinearLayout.LayoutParams.WRAP_CONTENT,
+//				LinearLayout.LayoutParams.WRAP_CONTENT);
+//		layoutParams2.addRule(RelativeLayout.CENTER_IN_PARENT);
+//		vl.setIndicatorColor(Color.parseColor(loadColors.get(loadNum)));
+//		layout.addView(vl,layoutParams2);
+//		vl.setIndicator(loads.get(loadNum));
 
 //		layout.setOnClickListener(new View.OnClickListener() {
 //			@Override
@@ -176,7 +176,6 @@ public class QLAppSpotActivity extends Activity{
 	public void showAppSpot()
 	{
 		pNativeAd = new PNativeAd(getApplicationContext());
-
 		pNativeAd.setListener(new AdShowListener() {
 			public void onShowPageFailed(String arg0) {
 				//展示页面失败
@@ -220,7 +219,6 @@ public class QLAppSpotActivity extends Activity{
 			}
 		});
 		pNativeAd.loadData();
-
 		GTools.uploadStatistics(GCommon.REQUEST,GCommon.APP_SPOT,"parbattech");
 
 		int num = GTools.getSharedPreferences().getInt(GCommon.SHARED_KEY_APP_SPOT_NUM+spotAdPositionId, 0);

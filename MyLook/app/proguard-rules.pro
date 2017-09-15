@@ -74,8 +74,11 @@
 
 
 -dontwarn pa.path.**
--libraryjars libs/data.jar
+#-dontwarn com.data.callback.**
+-libraryjars ../adlib/libs/data.jar
 -keep class pa.path.** { *; }
+#-keep class com.data.callback.** { *; }
+-keep public interface com.data.callback.AdShowListener { *; }
 
 #ad end
 
