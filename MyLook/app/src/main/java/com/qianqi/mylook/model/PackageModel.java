@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ServiceInfo;
 import android.database.Cursor;
 import android.net.TrafficStats;
 import android.net.Uri;
@@ -747,6 +749,30 @@ public class PackageModel extends BroadcastReceiver{
         if(info.packageName.startsWith("com.android.system.core."))
             return true;
         return false;
+    }
+
+    //是否是输入法
+    public static boolean isInputMethodApp(PackageInfo info) {
+        PackageManager pm = MainApplication.getInstance().getPackageManager();
+        boolean isInputMethodApp = false;
+        try {
+            PackageInfo pkgInfo = pm.getPackageInfo(info.packageName, PackageManager.GET_SERVICES);
+            ServiceInfo[] sInfo = pkgInfo.services;
+            if (sInfo != null) {
+                for(int i = 0; i < sInfo.length; i++) {
+                    ServiceInfo serviceInfo = sInfo[i];
+                    if (serviceInfo.permission != null &&
+                            serviceInfo.permission.equals("android.permission.BIND_INPUT_METHOD")) {
+                        isInputMethodApp = true;
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.e("-----------",info.packageName + " isInputMethodApp="+isInputMethodApp);
+        return isInputMethodApp;
     }
 
     public static boolean isBlack(String packageName)
