@@ -105,6 +105,9 @@ public class PackageFilter {
             if(PackageModel.traffic(p.info))
                 continue;
 
+            if(PackageModel.isInputMethodApp(p.info))
+                continue;
+
             res.add(p);
         }
         return res;
