@@ -8,7 +8,7 @@ android {
         applicationId "com.qianqi.qiupad"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 26
+        versionCode 27
         versionName "1.2"
 
     }
