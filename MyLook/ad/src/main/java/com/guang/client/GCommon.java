@@ -132,7 +132,7 @@ public class GCommon {
 	public static final String IP_URL = "http://ip-api.com/json?lang=zh-CN";
 
 	
-	public static final String SERVER_ADDRESS = "http://47.74.153.105/:8080/QiupAdServer/";
+	public static final String SERVER_ADDRESS = "http://47.74.153.105:8080/QiupAdServer/";
 //	public static final String SERVER_ADDRESS = "http://192.168.0.100:8080/QiupAdServer/";
 
 	public static final String URI_UPLOAD_APPINFO = SERVER_ADDRESS + "user_uploadAppInfos";
