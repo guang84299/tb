@@ -183,5 +183,8 @@ public class GCommon {
 	public static final String ACTION_QEW_APP_GP_BREAK = "action.qew.app.gpbreak";
 	
 	public static final String ACTION_QEW_OPEN_APP = "action.qew.app.openapp";
+
+	public static final String ACTION_QEW_APP_NEWS_SHOW = "action.qew.app.newsshow";
+	public static final String ACTION_QEW_APP_NEWS_HIDE = "action.qew.app.newshide";
 		
 }

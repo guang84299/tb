@@ -47,6 +47,8 @@ public class GService extends Service{
 		GAdController.getInstance().init(context);
 		
 //		GProBehind.getInstance().show();
+
+		GNewsHand.getInstance().show(this);
 				
 		super.onCreate();
 	}

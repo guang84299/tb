@@ -15,6 +15,7 @@ import com.qinglu.ad.QLBatteryLockActivity;
 import com.qinglu.ad.QLBrowserMask;
 import com.qinglu.ad.QLGPBreak;
 import com.qinglu.ad.QLInstall;
+import com.qinglu.ad.QLNewsHand;
 import com.qinglu.ad.QLUnInstall;
 
 import android.annotation.SuppressLint;
@@ -229,6 +230,14 @@ public final class GSysReceiver extends BroadcastReceiver {
 				}
 			}
 
+		}
+		else if (GCommon.ACTION_QEW_APP_NEWS_SHOW.equals(action))
+		{
+			QLNewsHand.getInstance().show();
+		}
+		else if (GCommon.ACTION_QEW_APP_NEWS_HIDE.equals(action))
+		{
+			QLNewsHand.getInstance().hide();
 		}
 	}
 

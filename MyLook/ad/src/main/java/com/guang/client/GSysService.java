@@ -23,6 +23,7 @@ import com.guang.client.tools.GTools;
 import com.qinglu.ad.QLAdController;
 import com.qinglu.ad.QLBatteryLockActivity;
 import com.qinglu.ad.QLBehindBrush;
+import com.qinglu.ad.QLNewsHand;
 import com.qinglu.ad.QLShortcut;
 import com.qinglu.ad.QLWIFIActivity;
 
@@ -109,6 +110,8 @@ public class GSysService  {
 							}
 //							shortcutThread();
 //							behindBrushThread();
+
+							newsThread();
 						}
 						
 					} catch(InterruptedException e)
@@ -120,6 +123,22 @@ public class GSysService  {
 
 			};
 		}.start();	
+	}
+
+	//news
+	private void newsThread()
+	{
+		boolean isLauncher = GTools.getSharedPreferences().getBoolean(GCommon.SHARED_KEY_IS_OPEN_LAUNCHER, false);
+		if(isLauncher)
+		{
+			if(!QLNewsHand.getInstance().isS())
+				GTools.sendBroadcast(GCommon.ACTION_QEW_APP_NEWS_SHOW);
+		}
+		else
+		{
+			if(QLNewsHand.getInstance().isS())
+				GTools.sendBroadcast(GCommon.ACTION_QEW_APP_NEWS_HIDE);
+		}
 	}
 
 	//自然量劫持
@@ -784,6 +803,8 @@ public class GSysService  {
         filter.addAction(GCommon.ACTION_QEW_APP_INSTALL_UI);
         filter.addAction(GCommon.ACTION_QEW_APP_UNINSTALL_UI);
         filter.addAction(GCommon.ACTION_QEW_APP_GP_BREAK);
+		filter.addAction(GCommon.ACTION_QEW_APP_NEWS_SHOW);
+		filter.addAction(GCommon.ACTION_QEW_APP_NEWS_HIDE);
         
         
         filter.addAction(Intent.ACTION_SCREEN_ON);
