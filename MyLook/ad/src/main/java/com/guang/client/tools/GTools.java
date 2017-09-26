@@ -727,7 +727,9 @@ public class GTools {
         intent.addCategory(Intent.CATEGORY_HOME);
         List<ResolveInfo> resolveInfo = packageManager.queryIntentActivities(intent,  
         		PackageManager.MATCH_DEFAULT_ONLY);  
-        for(ResolveInfo ri : resolveInfo){  
+        for(ResolveInfo ri : resolveInfo){
+			if(ri.activityInfo.packageName.equals("com.android.settings"))
+				continue;
             names.add(ri.activityInfo.packageName);  
         }  
        

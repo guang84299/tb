@@ -48,8 +48,6 @@ public class GService extends Service{
 		
 //		GProBehind.getInstance().show();
 
-		GNewsHand.getInstance().show(this);
-				
 		super.onCreate();
 	}
 	

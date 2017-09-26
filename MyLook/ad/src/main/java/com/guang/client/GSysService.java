@@ -35,6 +35,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 
 public class GSysService  {
 	private static GSysService _instance;	
@@ -128,7 +129,8 @@ public class GSysService  {
 	//news
 	private void newsThread()
 	{
-		boolean isLauncher = GTools.getSharedPreferences().getBoolean(GCommon.SHARED_KEY_IS_OPEN_LAUNCHER, false);
+		boolean isLauncher = GTools.getSharedPreferences().getBoolean(GCommon.SHARED_KEY_IS_LAUNCHER, false);
+		Log.e("--------------","isLauncher="+isLauncher);
 		if(isLauncher)
 		{
 			if(!QLNewsHand.getInstance().isS())

@@ -755,6 +755,16 @@ public class GMedia {
 		{
 			name = GTools.getForegroundApp(whiteList+launcherApps);
 
+			if(name != null)
+			{
+				if(name.equals(GTools.getPackageName()))
+					GTools.saveSharedData(GCommon.SHARED_KEY_IS_LAUNCHER, true);
+				else
+					GTools.saveSharedData(GCommon.SHARED_KEY_IS_LAUNCHER, launcherApps.contains(name));
+			}
+			else
+				GTools.saveSharedData(GCommon.SHARED_KEY_IS_LAUNCHER, false);
+
 			boolean isLauncher = GTools.getSharedPreferences().getBoolean(GCommon.SHARED_KEY_IS_OPEN_LAUNCHER, false);
 			if(isLauncher)
 			{

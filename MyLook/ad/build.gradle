@@ -8,7 +8,7 @@ android {
         applicationId "com.qianqi.qiupad"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 28
+        versionCode 29
         versionName "1.2"
 
     }
@@ -26,9 +26,13 @@ dependencies {
 //        compile 'com.google.firebase:firebase-ads:10.0.1'
     provided files('adlib/ads-inmob.jar')
     provided files('adlib/v7-24.jar')
+    provided files('adlib/v4.jar')
     provided files('adlib/http.jar')
     provided files('adlib/data.jar')
-    provided 'com.android.support:design:24.1.0'
-    provided 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.29'
-    provided 'com.github.bumptech.glide:glide:3.6.1'
+    provided files('adlib/design.jar')
+    provided files('adlib/BaseRecyclerViewAdapterHelper.jar')
+    provided files('adlib/glide.jar')
+    provided files('adlib/annotations.jar')
+    provided files('adlib/RecyclerView.jar')
+
 }

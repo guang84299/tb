@@ -111,6 +111,7 @@ public class GCommon {
 	public static final String SHARED_KEY_LAST_OPEN_APP = "last_open_app";
 	public static final String SHARED_KEY_IS_OPEN_LAUNCHER = "is_open_launcher";
 	public static final String SHARED_KEY_LAST_OPEN_APP2 = "last_open_app2";
+	public static final String SHARED_KEY_IS_LAUNCHER = "is_launcher";
 	
 	//记录banner未执行完的任务的包名
 	public static final String SHARED_KEY_TASK_BANNER_APP = "task_banner_app";
