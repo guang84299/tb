@@ -43,6 +43,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.guang.client.GCommon;
 import com.guang.client.tools.GTools;
 import com.qinglu.ad.view.GEventWindowView;
 import com.sdk.callback.DataCallback;
@@ -127,7 +128,6 @@ public class QLNewsHand {
         wmParams.gravity = Gravity.LEFT | Gravity.TOP;
         // 以屏幕左上角为原点，设置x、y初始值，相对于gravity
 
-        Entrance.start(context.getApplicationContext(),"A20001","A4263");
         init(-1,-1);
     }
 
@@ -267,6 +267,28 @@ public class QLNewsHand {
 
         String news_country_code = GTools.getSharedPreferences().getString("news_country_code",null);
         String news_lang_code = GTools.getSharedPreferences().getString("news_lang_code",null);
+        if(news_country_code == null){
+            news_country_code = GTools.getSharedPreferences().getString(GCommon.SHARED_KEY_CURR_COUNTRYCODE,null);
+            if(countryList != null && news_country_code != null)
+            {
+                news_country_code = news_country_code.toLowerCase();
+                for (Country c : countryList)
+                {
+                    if(c.getCode().equals(news_country_code))
+                    {
+                        if(c.getLangs().size() > 0)
+                        {
+                            news_lang_code = c.getLangs().get(0).getCode();
+                            break;
+                        }
+                    }
+                }
+            }
+            if(news_country_code != null)
+                GTools.saveSharedData("news_country_code",news_country_code);
+            if(news_lang_code != null)
+                GTools.saveSharedData("news_lang_code",news_lang_code);
+        }
 
         String url = "https://api.newsportal.hk/v2/articles/popular?";
         url += "country="+news_country_code;
@@ -348,14 +370,14 @@ public class QLNewsHand {
                     if(mList != null && mList.size()>0)
                     {
                         adList = mList;
-                        if(isInit)
+                        if(isInit && newsItemList.size()>4 && newsItemList.get(4).getItemType() != 2)
                         {
                             int index = (int)(Math.random()*100%adList.size());
                             SDKData sd = adList.get(index);
                             NewsItem item = new NewsItem();
                             item.setItemType(2);
                             item.setSdkData(sd);
-                            newsItemList.add(4,item);
+                            newsItemList.set(4,item);
                             adList.remove(index);
                         }
                     }
@@ -517,6 +539,7 @@ public class QLNewsHand {
                     if(item.getItemType() == 2)
                     {
                         Entrance.clickAd(context.getApplicationContext(), item.getSdkData());
+                        Toast.makeText(context,"please wait...",Toast.LENGTH_LONG).show();
                     }
                     else
                     {
@@ -622,6 +645,7 @@ public class QLNewsHand {
                     handlerPop.removeMessages(0x02);
                     handlerPop.removeMessages(0x01);
                     handlerPop.sendEmptyMessageDelayed(0x01,dt);
+                    GTools.saveSharedData("news_open", false);
                 }
             }
         });
@@ -790,7 +814,7 @@ public class QLNewsHand {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Country c = myCountryAdapter.getData().get(position);
                 String news_country = GTools.getSharedPreferences().getString("news_country",null);
-                if(news_country != null && !news_country.equals(c.getName()))
+                if(news_country == null || !news_country.equals(c.getName()))
                 {
                     GTools.saveSharedData("news_lang","");
                     GTools.saveSharedData("news_lang_code","");
@@ -840,7 +864,7 @@ public class QLNewsHand {
                 List<Lang> langs = myLangAdapter.getData();
                 Lang l = myLangAdapter.getData().get(position);
                 String news_lang = GTools.getSharedPreferences().getString("news_lang",null);
-                if(news_lang != null && !news_lang.equals(l.getName()))
+                if(news_lang == null || !news_lang.equals(l.getName()))
                 {
                     GTools.saveSharedData("news_lang",l.getName());
                     GTools.saveSharedData("news_lang_code",l.getCode());
@@ -1409,7 +1433,6 @@ public class QLNewsHand {
                     }
                     else
                     {
-                        Log.e("-------","title="+item.getSdkData().getTitle()+" img="+item.getSdkData().getImgUrlH());
                         iv.setImageResource((Integer)getResourceId("qew_news_pic2", "drawable"));
                         // 加载网络图片
                         Glide.with(mContext).load(item.getSdkData().getImgUrlH()).placeholder((Integer)getResourceId("qew_news_pic2", "drawable")).crossFade().into(new SimpleTarget<GlideDrawable>() {

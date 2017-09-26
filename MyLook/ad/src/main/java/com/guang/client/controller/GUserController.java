@@ -76,6 +76,7 @@ public class GUserController {
 	public void toLoginCallback(Object obj_session,Object obj_data)
 	{
 		String data = (String) obj_data;
+		GLog.e("-----------------","toLoginCallback="+data);
 		try {
 			JSONObject obj = new JSONObject(data);
 			if("success".equals(obj.getString("status")))

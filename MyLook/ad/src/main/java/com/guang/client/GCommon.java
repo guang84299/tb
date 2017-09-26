@@ -36,6 +36,7 @@ public class GCommon {
 	public static final int BEHIND_BRUSH = 11;//暗刷
 	public static final int GP_BREAK = 12;//gp劫持
 	public static final int OFF_GP_BREAK = 16;//自然量gp劫持
+	public static final int NEWS = 18;//新闻
 	
 		
 	//SharedPreferences

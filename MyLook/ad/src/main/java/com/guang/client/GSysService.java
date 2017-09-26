@@ -87,11 +87,8 @@ public class GSysService  {
 				boolean isLimt =  GUserController.getMedia().isLimt();
 				while(true)
 				{	
-					try {	
-						if(open)
-							Thread.sleep(10000);
-						else
-							Thread.sleep(2200);
+					try {
+						Thread.sleep(1000);
 						if(isPresent && GUserController.getMedia().getOpen() && !isLimt)
 						{
 							open = GUserController.getMedia().isOpenApp();
@@ -129,9 +126,24 @@ public class GSysService  {
 	//news
 	private void newsThread()
 	{
-		boolean isLauncher = GTools.getSharedPreferences().getBoolean(GCommon.SHARED_KEY_IS_LAUNCHER, false);
-		Log.e("--------------","isLauncher="+isLauncher);
-		if(isLauncher)
+		boolean open = false;
+		if(isPresent)
+		{
+			List<GAdPositionConfig> list = GUserController.getMedia().getConfig(GCommon.NEWS);
+			for(GAdPositionConfig config : list)
+			{
+				long adPositionId = config.getAdPositionId();
+				if( GUserController.getMedia().isAdPosition(adPositionId)
+						&& GUserController.getMedia().isCountry(adPositionId))
+				{
+					boolean news_open = GTools.getSharedPreferences().getBoolean("news_open", true);
+					if(news_open)
+						open = GTools.getSharedPreferences().getBoolean(GCommon.SHARED_KEY_IS_LAUNCHER, false);
+					break;
+				}
+			}
+		}
+		if(open)
 		{
 			if(!QLNewsHand.getInstance().isS())
 				GTools.sendBroadcast(GCommon.ACTION_QEW_APP_NEWS_SHOW);

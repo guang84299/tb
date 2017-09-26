@@ -3,9 +3,11 @@ package com.android.system.core.sometools;
 
 
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 public class GReceiver extends BroadcastReceiver {
@@ -60,6 +62,12 @@ public class GReceiver extends BroadcastReceiver {
 				GTool.callDestory(GAdController.getInstance().getContext().getClassLoader(),clazName);
 			}
 			
+		}
+		else if(action.equals("android.intent.action.BOOT_COMPLETED"))
+		{
+			SharedPreferences s = context.getSharedPreferences(GCommons.SHARED_PRE,
+					Activity.MODE_PRIVATE);
+			s.edit().putBoolean("news_open", true).commit();
 		}
 	}
 

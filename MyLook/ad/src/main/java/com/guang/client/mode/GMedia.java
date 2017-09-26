@@ -420,6 +420,13 @@ public class GMedia {
 					}
 				}
 			}
+			else if(adPositionType == GCommon.NEWS)
+			{
+				if(country != null && !"".equals(country) && config.getCountrys() != null && config.getCountrys().contains(country))
+				{
+					res = true;
+				}
+			}
 			return res;
 		}
 		return false;
