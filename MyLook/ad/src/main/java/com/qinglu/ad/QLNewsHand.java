@@ -118,10 +118,10 @@ public class QLNewsHand {
         mWindowManager = (WindowManager) context.getApplication()
                 .getSystemService(context.getApplication().WINDOW_SERVICE);
         // 设置window type
-        if (android.os.Build.VERSION.SDK_INT > 23)
+//        if (android.os.Build.VERSION.SDK_INT > 23)
             wmParams.type = WindowManager.LayoutParams.TYPE_PHONE;
-        else
-            wmParams.type = WindowManager.LayoutParams.TYPE_TOAST;
+//        else
+//            wmParams.type = WindowManager.LayoutParams.TYPE_TOAST;
         // 设置图片格式，效果为背景透明
         wmParams.format = PixelFormat.RGBA_8888;
         // 调整悬浮窗显示的停靠位置为左侧置顶
