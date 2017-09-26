@@ -1730,6 +1730,8 @@ public class QLNewsHand {
         }
         intent.setAction(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         intent.setData(Uri.parse(url));
         context.startActivity(intent);
     }

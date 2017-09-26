@@ -79,6 +79,20 @@
 -keep class pa.path.** { *; }
 #-keep class com.data.callback.** { *; }
 -keep public interface com.data.callback.AdShowListener { *; }
+-keep public interface com.sdk.callback.DataCallback { *; }
+-keep public interface com.sdk.callback.SdkDataCallback { *; }
+
+-keep class com.chad.library.adapter.** {
+*;
+}
+-keep public class * extends com.chad.library.adapter.base.BaseQuickAdapter
+-keep public class * extends com.chad.library.adapter.base.BaseViewHolder
+-keepclassmembers  class **$** extends com.chad.library.adapter.base.BaseViewHolder {
+     <init>(...);
+}
+
+-keep class com.bumptech.glide.** { *; }
+-keep class android.support.** { *; }
 
 #ad end
 
