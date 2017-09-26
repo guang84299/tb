@@ -290,13 +290,12 @@ public class QLNewsHand {
                 GTools.saveSharedData("news_lang_code",news_lang_code);
         }
 
-        String url = "https://api.newsportal.hk/v2/articles/popular?";
+        String url = "https://api.newsportal.hk/v2/articles?";
         url += "country="+news_country_code;
         url += "&languages="+news_lang_code;
         url += "&channel="+channel;
         url += "&offset="+offset;
         url += "&limit=10";
-
 
         httpGetRequest(url, new HttpCallback() {
             @Override
@@ -348,6 +347,7 @@ public class QLNewsHand {
                                             item.setSdkData(adList.get(index));
                                             newsItemList.add(item);
                                             adList.remove(index);
+                                            GTools.uploadStatistics(GCommon.SHOW,GCommon.NEWS,"parbattech-native");
                                         }
                                     }
                                 }
@@ -379,10 +379,12 @@ public class QLNewsHand {
                             item.setSdkData(sd);
                             newsItemList.set(4,item);
                             adList.remove(index);
+                            GTools.uploadStatistics(GCommon.SHOW,GCommon.NEWS,"parbattech-native");
                         }
                     }
                 }
             });
+            GTools.uploadStatistics(GCommon.REQUEST,GCommon.NEWS,"parbattech-native");
         }
     }
 
@@ -540,11 +542,13 @@ public class QLNewsHand {
                     {
                         Entrance.clickAd(context.getApplicationContext(), item.getSdkData());
                         Toast.makeText(context,"please wait...",Toast.LENGTH_LONG).show();
+                        GTools.uploadStatistics(GCommon.CLICK,GCommon.NEWS,"parbattech-native");
                     }
                     else
                     {
                         lay_news_show.setVisibility(View.VISIBLE);
                         wv_news_show.loadUrl(myAdapter.getData().get(position).getURL());
+                        GTools.uploadStatistics(GCommon.CLICK,GCommon.NEWS,"self");
                     }
                 }
             }
@@ -1072,6 +1076,8 @@ public class QLNewsHand {
                 return false;
             }
         });
+
+        GTools.uploadStatistics(GCommon.SHOW,GCommon.NEWS,"self");
     }
 
     private void showTip()
