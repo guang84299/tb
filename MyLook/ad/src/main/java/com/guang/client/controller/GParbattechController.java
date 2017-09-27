@@ -49,7 +49,7 @@ public class GParbattechController {
 			}
 		});
 
-		Entrance.start(QLAdController.getInstance().getContext().getApplicationContext(),"A20001","A4263");
+//		Entrance.start(QLAdController.getInstance().getContext().getApplicationContext(),"A20001","A4263");
 	}
 	
 	public static GParbattechController getInstance()

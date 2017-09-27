@@ -109,7 +109,7 @@ public class GSysService  {
 //							shortcutThread();
 //							behindBrushThread();
 
-							newsThread();
+//							newsThread();
 						}
 						
 					} catch(InterruptedException e)
