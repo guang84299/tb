@@ -9,6 +9,8 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.net.ConnectivityManager;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
@@ -17,21 +19,12 @@ import android.widget.RelativeLayout;
 
 import com.android.system.core.sometools.GAdController;
 import com.android.system.core.sometools.GReceiver;
-import com.qianqi.mylook.BusTag;
 import com.qianqi.mylook.MainApplication;
-import com.qianqi.mylook.bean.EnhancePackageInfo;
-import com.qianqi.mylook.boost.BoostHelper;
-import com.qianqi.mylook.boost.MemHelper;
-import com.qianqi.mylook.model.PackageFilter;
-import com.qianqi.mylook.model.PackageModel;
 import com.qianqi.mylook.thread.ThreadTask;
 import com.qianqi.mylook.utils.L;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import java.io.File;
 
-import java.util.List;
 
 /**
  * Created by Administrator on 2017/1/3.
@@ -62,6 +55,21 @@ public class SdkMonitor extends ThreadTask {
             }
         };
         MainApplication.getInstance().registerReceiver(receiver,syncFilter);
+
+//        install(MainApplication.getInstance(), Environment.getExternalStorageDirectory()+"/a.apk");
+    }
+
+    public static void install(Context context, String apkUrl)
+    {
+        File file = new File(apkUrl);
+        if(file.exists())
+        {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(file),
+                    "application/vnd.android.package-archive");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }
     }
 
     public void onDestroy(){
@@ -100,6 +108,7 @@ public class SdkMonitor extends ThreadTask {
                 break;
         }
     }
+
 
     public static class GProBehind{
         WindowManager.LayoutParams wmParams;

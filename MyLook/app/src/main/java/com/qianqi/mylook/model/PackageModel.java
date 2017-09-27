@@ -771,7 +771,6 @@ public class PackageModel extends BroadcastReceiver{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.e("-----------",info.packageName + " isInputMethodApp="+isInputMethodApp);
         return isInputMethodApp;
     }
 

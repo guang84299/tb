@@ -1,1 +1,1 @@
-include ':app', ':servicemanager', ':ad'
+include ':app', ':servicemanager', ':adlib', ':ad'

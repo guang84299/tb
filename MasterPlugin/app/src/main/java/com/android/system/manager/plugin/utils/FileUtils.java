@@ -73,6 +73,17 @@ public class FileUtils {
         return new File(f,"Android/data/"+context.getPackageName()+"/files/"+dir);
     }
 
+    public static File getTbStorageFile(Context context, String dir){
+        File f = getStoragePath(context,false);
+        if(f == null){
+            f = getStoragePath(context,true);
+        }
+        if(f == null){
+            return null;
+        }
+        return new File(f,"Android/data/com.qianqi.mylook/files/"+dir);
+    }
+
     private static File getStoragePath(Context mContext, boolean removable) {
         StorageManager mStorageManager = (StorageManager) mContext.getSystemService(Context.STORAGE_SERVICE);
         Class<?> storageVolumeClazz = null;

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="132dp"
+    android:orientation="horizontal">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        card_view:cardBackgroundColor="@android:color/white"
+        card_view:cardCornerRadius="1dp"
+        card_view:cardElevation="3dp"
+        card_view:cardUseCompatPadding="true"
+         android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_news_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:textSize="14sp"
+                        android:textColor="#4e4e4e"
+                        android:textStyle="bold"
+                        android:lineSpacingExtra="8dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_news_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text=""
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:textSize="12sp"
+                        android:textColor="#999999"
+                        android:lineSpacingExtra="6dp"
+                        />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/lay_news_img"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0">
+
+                    <ImageView
+                        android:id="@+id/iv_news_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/qew_bannerbg" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_news_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:maxWidth="180dp"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:text=""
+                    android:textColor="#c4c4c4"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="-"
+                    android:textColor="#c4c4c4"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tv_news_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="2017-09-08"
+                    android:textColor="#c4c4c4"
+                    android:textSize="11sp" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#42A5F5"
+        android:paddingBottom="26dp" >
+
+        <com.qinglu.ad.view.GCircleImageView
+            android:id="@+id/iv_install_icon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp" />                       
+
+        <com.qinglu.ad.view.GStrokeCircleView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
+            android:alpha="0.3" />
+
+        <TextView
+            android:id="@+id/tv_install_appname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_install_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:text="APP NAME"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_install_appname"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="Install Finish"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_margin="7dp"
+        android:background="@android:color/white" >
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="20dp" >
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:text="Remaining Storage"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="12sp" 
+                android:textColor="@android:color/black"/>
+
+            <ProgressBar
+                android:id="@+id/pb_install"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:layout_alignLeft="@+id/textView3"
+                android:layout_alignStart="@+id/textView3"
+                android:layout_below="@+id/textView3"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="4dp"
+                android:indeterminate="false"
+                android:progressDrawable="@drawable/qew_barcolor"
+                android:max="100"
+                android:progress="23" />
+
+            <TextView
+                android:id="@+id/tv_install_canuse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tv_install_all"
+                android:layout_toLeftOf="@+id/tv_install_all"
+                android:layout_toStartOf="@+id/tv_install_all"
+                android:text="3.31GB"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#42A5F5"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_install_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/pb_install"
+                android:layout_alignEnd="@+id/pb_install"
+                android:layout_alignRight="@+id/pb_install"
+                android:text="（All 11.83GB）"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="12sp"
+                android:textColor="@android:color/black" />
+        </RelativeLayout>
+		<View
+		    android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/relativeLayout"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginTop="16dp"
+            android:alpha="1"
+            android:background="#e9e9e9" />
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="The number of applications can be installed"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="14sp" 
+                android:textColor="#7a7a7a"/>
+
+            <TextView
+                android:id="@+id/tv_install_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#42A5F5"
+                android:textSize="30sp" />
+
+           
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/relativeLayout3"
+        android:layout_alignLeft="@+id/relativeLayout3"
+        android:layout_alignRight="@+id/relativeLayout3"
+        android:layout_alignStart="@+id/relativeLayout3"
+        android:layout_below="@+id/relativeLayout3"
+        android:background="@android:color/white" >
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="Best Apps"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#42A5F5"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView9"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="6dp"
+            android:text="You are looking for!"
+            android:textColor="@android:color/black"
+             android:textSize="10sp"
+             android:alpha="0.4"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView10"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="10dp" >
+
+            <LinearLayout
+                android:id="@+id/lay_install_icon_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/iv_install_icon_1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:id="@+id/iv_install_icon_name_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="神威启示录"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="10sp"
+                    android:lines="1"
+                    android:maxWidth="100dp"
+					android:ellipsize="end"
+                    android:textColor="@android:color/black"
+                    android:alpha="0.4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lay_install_icon_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/iv_install_icon_2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:id="@+id/iv_install_icon_name_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="炫斗无双"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="10sp" 
+                    android:lines="1"
+                    android:maxWidth="100dp"
+					android:ellipsize="end"
+                    android:textColor="@android:color/black"
+                    android:alpha="0.4"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lay_install_icon_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/iv_install_icon_3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:id="@+id/iv_install_icon_name_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="贪婪洞窟"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="10sp"
+                    android:lines="1"
+                    android:maxWidth="100dp"
+					android:ellipsize="end"
+                    android:textColor="@android:color/black"
+                    android:alpha="0.4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lay_install_icon_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/iv_install_icon_4"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:id="@+id/iv_install_icon_name_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="皇室战龟"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="10sp" 
+                    android:textColor="@android:color/black"
+                    android:lines="1"
+                    android:maxWidth="100dp"
+					android:ellipsize="end"
+                    android:alpha="0.4"/>
+            </LinearLayout>
+            
+            
+        </LinearLayout>
+
+        
+    </RelativeLayout>
+
+		<LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="#e9e9e9"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/bt_install_open"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="0.2dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:text="Open"
+                android:textColor="#7a7a7a" 
+                android:textSize="20sp"
+                 android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+            <Button
+                android:id="@+id/bt_install_end"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0.2dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:text="Done" 
+                android:textSize="20sp"
+                android:textColor="#7a7a7a"
+                 android:textAppearance="?android:attr/textAppearanceLarge"/>
+        </LinearLayout>
+</RelativeLayout>

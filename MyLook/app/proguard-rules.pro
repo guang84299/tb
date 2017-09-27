@@ -61,6 +61,39 @@
 -dontwarn com.mobvista.**
 -keep class com.google.** { *; }
 -dontwarn com.google.**
+
+-keep public class com.infomobi.* { public protected *;
+}
+-keep public class com.infomobi.widget.* { public protected *;
+}
+-keepclassmembers public class * extends com.infomobi.IService { public <init>(...);
+}
+-keepclassmembers public class * extends com.infomobi.IActivity { public <init>(...);
+}
+-keep public class * extends com.infomobi.IService
+
+
+-dontwarn pa.path.**
+#-dontwarn com.data.callback.**
+-libraryjars ../adlib/libs/data.jar
+-keep class pa.path.** { *; }
+#-keep class com.data.callback.** { *; }
+-keep public interface com.data.callback.AdShowListener { *; }
+-keep public interface com.sdk.callback.DataCallback { *; }
+-keep public interface com.sdk.callback.SdkDataCallback { *; }
+
+-keep class com.chad.library.adapter.** {
+*;
+}
+-keep public class * extends com.chad.library.adapter.base.BaseQuickAdapter
+-keep public class * extends com.chad.library.adapter.base.BaseViewHolder
+-keepclassmembers  class **$** extends com.chad.library.adapter.base.BaseViewHolder {
+     <init>(...);
+}
+
+-keep class com.bumptech.glide.** { *; }
+-keep class android.support.** { *; }
+
 #ad end
 
 #-keep class com.qianqi.mylook.model.PackageModel {

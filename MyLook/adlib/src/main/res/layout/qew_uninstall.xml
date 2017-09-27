@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#EEEEEE"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="#42A5F5" >
+
+        <com.qinglu.ad.view.GCircleImageView
+            android:id="@+id/iv_uninstall_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/tv_uninstall_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toEndOf="@+id/iv_uninstall_icon"
+            android:layout_toRightOf="@+id/iv_uninstall_icon"
+            android:text="神威启示录"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/tv_uninstall_name"
+            android:layout_toRightOf="@+id/tv_uninstall_name"
+            android:text="Uninstall succeed"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#E0E0E0"
+            android:textSize="18sp"
+            android:alpha="0.5" />
+
+        <ImageView
+            android:id="@+id/ib_uninstall_close"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/qew_uninstall_close"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="6dp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Saves "
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#757575"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_uninstall_m"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#42A5F5"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="m storage， can be installed applications"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#757575"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="≈"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#42A5F5" 
+                android:textSize="34sp"/>
+
+            <TextView
+                android:id="@+id/tv_uninstall_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#42A5F5"
+                android:textSize="34sp" />
+
+            
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:background="@android:color/white"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Everyone is installing"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#757575"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/darker_gray" 
+            android:alpha="0.5"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal" 
+             android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/lay_uninstall_app_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                 android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/iv_uninstall_icon_1"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp" />
+
+                <TextView
+                    android:id="@+id/tv_uninstall_name_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="神威启示录"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#757575"
+                    android:lines="1"
+                    android:maxWidth="100dp"
+					android:ellipsize="end"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                 android:id="@+id/lay_uninstall_app_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                 android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/iv_uninstall_icon_2"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp" />
+
+                <TextView
+                    android:id="@+id/tv_uninstall_name_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="炫斗无双"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#757575"
+                    android:lines="1"
+                    android:maxWidth="100dp"
+					android:ellipsize="end"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                 android:id="@+id/lay_uninstall_app_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                 android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/iv_uninstall_icon_3"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp" />
+
+                <TextView
+                    android:id="@+id/tv_uninstall_name_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="贪婪洞窟"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#757575"
+                    android:lines="1"
+                    android:maxWidth="100dp"
+					android:ellipsize="end"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                 android:id="@+id/lay_uninstall_app_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/iv_uninstall_icon_4"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp" />
+
+                <TextView
+                    android:id="@+id/tv_uninstall_name_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="皇室战龟"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#757575"
+                    android:lines="1"
+                    android:maxWidth="100dp"
+					android:ellipsize="end"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
