@@ -22,8 +22,8 @@ public class GCommons {
 	public static final String SHARED_KEY_UPDATE_SDK_TIME = "update_sdk_time";
 
 	
-	public static String SERVER_ADDRESS = "http://api.hiadspro.com:8080/QiupAdServer/";
-	
+	public static String SERVER_ADDRESS = "http://api.qiqiup.com:8080/QiupAdServer/";
+
 	//获取sdk配置
 	public static  String URI_POST_GET_SDKCONFIG = "http://media.qiqiup.com/QiupAdServer/tb_getConfig";
 	//获取最新sdk
