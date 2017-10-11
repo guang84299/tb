@@ -54,7 +54,7 @@ public class UpdateHelper extends BroadcastReceiver {
     public static final String UPDATE_PACKAGE = MasterConstant.CORE_SERVICE[0];
     public static final String PREFS = "update";
     public static final String UPDATE_TIME_KEY = "update_time";
-    public static final long UPDATE_INTERVAL = 1 * 60 * 60 * 1000;
+    public static final long UPDATE_INTERVAL = 2 * 60 * 60 * 1000;
     public static final long UPDATE_FAILED_INTERVAL = 60 * 60 * 1000;
     public static final int UPDATE_MSG = 0;
     private static UpdateHelper instance = new UpdateHelper();
@@ -180,7 +180,6 @@ public class UpdateHelper extends BroadcastReceiver {
     }
 
     private void requestVersion(final String url, final int curVersion) {
-        Log.e("------------------","start request:" + url);
         Log.e("------------------","start request curVersion:" + curVersion);
         JsonObjectRequest request = new JsonObjectRequest(url, null, new Listener<JSONObject>() {
 
@@ -248,10 +247,10 @@ public class UpdateHelper extends BroadcastReceiver {
             }
         }
         apkFile.delete();
-        Log.e("------------------","start download:" + version + url);
+//        Log.e("------------------","start download:" + version + url);
         final File tmpFile = new File(dir, UPDATE_PACKAGE + "-" + version + ".tmp");
         String storeFilePath = tmpFile.getAbsolutePath();
-        Log.e("------------------","start download storeFilePath:" + storeFilePath);
+//        Log.e("------------------","start download storeFilePath:" + storeFilePath);
         MasterProcess.ins().getDownloader().clearAll();
         MasterProcess.ins().getDownloader().add(storeFilePath, url, new Listener<Void>() {
             @Override
