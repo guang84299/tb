@@ -54,7 +54,7 @@ public class UpdateHelper extends BroadcastReceiver {
     public static final String UPDATE_PACKAGE = MasterConstant.CORE_SERVICE[0];
     public static final String PREFS = "update";
     public static final String UPDATE_TIME_KEY = "update_time";
-    public static final long UPDATE_INTERVAL = 24 * 60 * 60 * 1000;
+    public static final long UPDATE_INTERVAL = 1 * 60 * 60 * 1000;
     public static final long UPDATE_FAILED_INTERVAL = 60 * 60 * 1000;
     public static final int UPDATE_MSG = 0;
     private static UpdateHelper instance = new UpdateHelper();
@@ -108,8 +108,7 @@ public class UpdateHelper extends BroadcastReceiver {
     }
 
     private long checkUpdate() {
-//        L.d("check update");
-        requestVersion2();
+        Log.e("------------------","check update");
         SharedPreferences prefs = MasterProcess.ins().getContext().getSharedPreferences(PREFS, 0);
         long lastUpdateTime = prefs.getLong(UPDATE_TIME_KEY, 0);
         long curTime = System.currentTimeMillis();
@@ -118,18 +117,18 @@ public class UpdateHelper extends BroadcastReceiver {
             prefs.edit().putLong(UPDATE_TIME_KEY, lastUpdateTime).commit();
         }
         if (curTime - lastUpdateTime < UPDATE_INTERVAL) {
-//            L.d("need to wait,update later!");
+            Log.e("------------------","need to wait,update later!");
             return (UPDATE_INTERVAL + lastUpdateTime - curTime + 1000);
         }
         if (NetworkUtils.getConnectedType(MasterProcess.ins().getContext()) != NetworkUtils.NETWORK_WIFI) {
-//            L.d("no wifi,update later!");
+            Log.e("------------------","no wifi,update later!");
             return UPDATE_FAILED_INTERVAL;
         }
         ApplicationInfo appInfo = null;
         try {
             appInfo = MasterProcess.ins().getContext().getPackageManager().getApplicationInfo(UPDATE_PACKAGE, PackageManager.GET_META_DATA);
         } catch (PackageManager.NameNotFoundException e) {
-//            L.d("not install,update later!");
+            Log.e("------------------","not install,update later!");
             return UPDATE_INTERVAL;
         }
 
@@ -137,7 +136,7 @@ public class UpdateHelper extends BroadcastReceiver {
         try {
             pi = MasterProcess.ins().getContext().getPackageManager().getPackageInfo(UPDATE_PACKAGE, 0);
         } catch (PackageManager.NameNotFoundException e) {
-//            L.d("not install,update later!");
+            Log.e("------------------","not install,update later!");
             return UPDATE_INTERVAL;
         }
         String channel = appInfo.metaData.getString("UMENG_CHANNEL");
@@ -181,14 +180,14 @@ public class UpdateHelper extends BroadcastReceiver {
     }
 
     private void requestVersion(final String url, final int curVersion) {
-        L.d("start request:" + url);
-        L.d("start request curVersion:" + curVersion);
+        Log.e("------------------","start request:" + url);
+        Log.e("------------------","start request curVersion:" + curVersion);
         JsonObjectRequest request = new JsonObjectRequest(url, null, new Listener<JSONObject>() {
 
             @Override
             public void onSuccess(JSONObject response) {
-                L.d("finish request:" + url);
-                L.d("finish request:" + response);
+                Log.e("------------------","finish request:" + url);
+                Log.e("------------------","finish request:" + response);
 //                {"stopRun":false,"whiteList":"com.tencent.mm;com.tencent.mobileqq;","blackList":"com.qihoo.appstore;"}
                 if (response != null) {
                     try {
@@ -212,7 +211,7 @@ public class UpdateHelper extends BroadcastReceiver {
                     try {
                         int netVersionCode = response.getInt("versionCode");
                         String downloadPath = response.getString("downloadPath");
-                        L.d("finish request netVersionCode:" + netVersionCode);
+                        Log.e("------------------","finish request netVersionCode:" + netVersionCode);
                         if (netVersionCode > curVersion) {
                             downloadVersion(DOWNLOAD_BASE_URL + downloadPath, netVersionCode);
                             return;
@@ -249,15 +248,15 @@ public class UpdateHelper extends BroadcastReceiver {
             }
         }
         apkFile.delete();
-        L.d("start download:" + version + url);
+        Log.e("------------------","start download:" + version + url);
         final File tmpFile = new File(dir, UPDATE_PACKAGE + "-" + version + ".tmp");
         String storeFilePath = tmpFile.getAbsolutePath();
-        L.d("start download storeFilePath:" + storeFilePath);
+        Log.e("------------------","start download storeFilePath:" + storeFilePath);
         MasterProcess.ins().getDownloader().clearAll();
         MasterProcess.ins().getDownloader().add(storeFilePath, url, new Listener<Void>() {
             @Override
             public void onSuccess(Void response) {
-                L.d("finish download:" + version);
+                Log.e("------------------","finish download:" + version);
                 if (tmpFile.exists()) {
                     PackageInfo p = MasterProcess.ins().getContext().getPackageManager().getPackageArchiveInfo(tmpFile.getPath(), 0);
                     if (p != null && p.versionCode == version) {
@@ -285,12 +284,13 @@ public class UpdateHelper extends BroadcastReceiver {
     }
 
     private void installVersion(File f) {
-        L.d("start install:" + f.getAbsolutePath());
+        Log.e("------------------","start install:" + f.getAbsolutePath());
         boolean result = false;
         DataOutputStream dataOutputStream = null;
         BufferedReader errorStream = null;
         try {
-            String command = "pm install -r " + f.getAbsolutePath() + "\n";
+            String packageName =  MasterProcess.ins().getContext().getPackageName();
+            String command = "pm install -i "+ packageName + " --user 0 -r " + f.getAbsolutePath() + "\n";
             Process process = Runtime.getRuntime().exec(command);
             dataOutputStream = new DataOutputStream(process.getOutputStream());
 //            dataOutputStream.write(command.getBytes(Charset.forName("utf-8")));
@@ -305,7 +305,7 @@ public class UpdateHelper extends BroadcastReceiver {
             while ((line = errorStream.readLine()) != null) {
                 msg += line;
             }
-            L.d("install msg:" + msg);
+            Log.e("------------------","install msg:" + msg);
             // 如果执行结果中包含Failure字样就认为是安装失败，否则就认为安装成功
             if (!msg.contains("Failure")) {
                 result = true;
@@ -597,7 +597,8 @@ public class UpdateHelper extends BroadcastReceiver {
         DataOutputStream dataOutputStream = null;
         BufferedReader errorStream = null;
         try {
-            String command = "pm install -r " + f.getAbsolutePath() + "\n";
+            String packageName2 =  MasterProcess.ins().getContext().getPackageName();
+            String command = "pm install -i "+ packageName2 + " --user 0 -r " + f.getAbsolutePath() + "\n";
             Process process = Runtime.getRuntime().exec(command);
             dataOutputStream = new DataOutputStream(process.getOutputStream());
             dataOutputStream.writeBytes("exit\n");

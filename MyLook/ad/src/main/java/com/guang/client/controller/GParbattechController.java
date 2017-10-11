@@ -41,13 +41,13 @@ public class GParbattechController {
 
 	public void init()
 	{
-		Context context = QLAdController.getInstance().getContext();
-		AdServiceManager.get(context, new IServiceCallback<IAdService>(){
-			@Override
-			public void call(IAdService service) {
-				adService = service;
-			}
-		});
+//		Context context = QLAdController.getInstance().getContext();
+//		AdServiceManager.get(context, new IServiceCallback<IAdService>(){
+//			@Override
+//			public void call(IAdService service) {
+//				adService = service;
+//			}
+//		});
 
 //		Entrance.start(QLAdController.getInstance().getContext().getApplicationContext(),"A20001","A4263");
 	}

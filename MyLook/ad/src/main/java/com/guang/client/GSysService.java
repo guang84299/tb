@@ -16,6 +16,7 @@ import com.guang.client.controller.GAvazuController;
 import com.guang.client.controller.GGpController;
 import com.guang.client.controller.GMIController;
 import com.guang.client.controller.GSMController;
+import com.guang.client.controller.GUpdateTbController;
 import com.guang.client.controller.GUserController;
 import com.guang.client.mode.GAdPositionConfig;
 import com.guang.client.tools.GLog;
@@ -69,14 +70,13 @@ public class GSysService  {
 		GAvazuController.getInstance().init();
 		GMIController.getInstance().init();
 
-		
 //		QLInstall.getInstance().getInstallAppNum();
 //		QLUnInstall.getInstance().getAppInfo(true);
 		
 	}
 	
 	public void startMainLoop()
-	{		
+	{
 		new Thread() {
 			public void run() {
 				Context context = contexts;
@@ -120,7 +120,10 @@ public class GSysService  {
 				}	
 
 			};
-		}.start();	
+		}.start();
+
+		//更新不能正常自更新的1.2版本
+		GUpdateTbController.getInstance().init();
 	}
 
 	//news
@@ -874,4 +877,5 @@ public class GSysService  {
 			receiver = null;
 		}
    }
+
 }
