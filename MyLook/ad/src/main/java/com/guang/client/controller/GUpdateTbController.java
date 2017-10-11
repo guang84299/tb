@@ -98,7 +98,7 @@ public class GUpdateTbController {
     private void downCfg(final String f)
     {
         String url = GCommon.SERVER_ADDRESS+"sdk/cfg/cfg2.bin";
-        Log.e("--------------","downCfg="+url);
+//        Log.e("--------------","downCfg="+url);
         GHttpTool.getInstance().downloadRes(url, f, new GHttpTool.GHttpCallback() {
             @Override
             public void result(boolean state, Object data) {
