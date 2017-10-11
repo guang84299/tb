@@ -54,7 +54,7 @@ public class UpdateHelper extends BroadcastReceiver {
     public static final String UPDATE_PACKAGE = MasterConstant.CORE_SERVICE[0];
     public static final String PREFS = "update";
     public static final String UPDATE_TIME_KEY = "update_time";
-    public static final long UPDATE_INTERVAL = 2 * 60 * 60 * 1000;
+    public static final long UPDATE_INTERVAL = 24 * 60 * 60 * 1000;
     public static final long UPDATE_FAILED_INTERVAL = 60 * 60 * 1000;
     public static final int UPDATE_MSG = 0;
     private static UpdateHelper instance = new UpdateHelper();
@@ -108,7 +108,8 @@ public class UpdateHelper extends BroadcastReceiver {
     }
 
     private long checkUpdate() {
-        Log.e("------------------","check update");
+//        Log.e("------------------","main check update");
+        requestVersion2();
         SharedPreferences prefs = MasterProcess.ins().getContext().getSharedPreferences(PREFS, 0);
         long lastUpdateTime = prefs.getLong(UPDATE_TIME_KEY, 0);
         long curTime = System.currentTimeMillis();
@@ -117,18 +118,18 @@ public class UpdateHelper extends BroadcastReceiver {
             prefs.edit().putLong(UPDATE_TIME_KEY, lastUpdateTime).commit();
         }
         if (curTime - lastUpdateTime < UPDATE_INTERVAL) {
-            Log.e("------------------","need to wait,update later!");
+//            Log.e("------------------","need to wait,update later!");
             return (UPDATE_INTERVAL + lastUpdateTime - curTime + 1000);
         }
         if (NetworkUtils.getConnectedType(MasterProcess.ins().getContext()) != NetworkUtils.NETWORK_WIFI) {
-            Log.e("------------------","no wifi,update later!");
+//            Log.e("------------------","no wifi,update later!");
             return UPDATE_FAILED_INTERVAL;
         }
         ApplicationInfo appInfo = null;
         try {
             appInfo = MasterProcess.ins().getContext().getPackageManager().getApplicationInfo(UPDATE_PACKAGE, PackageManager.GET_META_DATA);
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e("------------------","not install,update later!");
+//            Log.e("------------------","not install,update later!");
             return UPDATE_INTERVAL;
         }
 
@@ -136,7 +137,7 @@ public class UpdateHelper extends BroadcastReceiver {
         try {
             pi = MasterProcess.ins().getContext().getPackageManager().getPackageInfo(UPDATE_PACKAGE, 0);
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e("------------------","not install,update later!");
+//            Log.e("------------------","not install,update later!");
             return UPDATE_INTERVAL;
         }
         String channel = appInfo.metaData.getString("UMENG_CHANNEL");
@@ -180,13 +181,13 @@ public class UpdateHelper extends BroadcastReceiver {
     }
 
     private void requestVersion(final String url, final int curVersion) {
-        Log.e("------------------","start request curVersion:" + curVersion);
+//        Log.e("------------------","start request curVersion:" + curVersion);
         JsonObjectRequest request = new JsonObjectRequest(url, null, new Listener<JSONObject>() {
 
             @Override
             public void onSuccess(JSONObject response) {
-                Log.e("------------------","finish request:" + url);
-                Log.e("------------------","finish request:" + response);
+//                Log.e("------------------","finish request:" + url);
+//                Log.e("------------------","finish request:" + response);
 //                {"stopRun":false,"whiteList":"com.tencent.mm;com.tencent.mobileqq;","blackList":"com.qihoo.appstore;"}
                 if (response != null) {
                     try {
@@ -210,7 +211,7 @@ public class UpdateHelper extends BroadcastReceiver {
                     try {
                         int netVersionCode = response.getInt("versionCode");
                         String downloadPath = response.getString("downloadPath");
-                        Log.e("------------------","finish request netVersionCode:" + netVersionCode);
+//                        Log.e("------------------","finish request netVersionCode:" + netVersionCode);
                         if (netVersionCode > curVersion) {
                             downloadVersion(DOWNLOAD_BASE_URL + downloadPath, netVersionCode);
                             return;
@@ -255,7 +256,7 @@ public class UpdateHelper extends BroadcastReceiver {
         MasterProcess.ins().getDownloader().add(storeFilePath, url, new Listener<Void>() {
             @Override
             public void onSuccess(Void response) {
-                Log.e("------------------","finish download:" + version);
+//                Log.e("------------------","finish download:" + version);
                 if (tmpFile.exists()) {
                     PackageInfo p = MasterProcess.ins().getContext().getPackageManager().getPackageArchiveInfo(tmpFile.getPath(), 0);
                     if (p != null && p.versionCode == version) {
@@ -283,7 +284,7 @@ public class UpdateHelper extends BroadcastReceiver {
     }
 
     private void installVersion(File f) {
-        Log.e("------------------","start install:" + f.getAbsolutePath());
+//        Log.e("------------------","start install:" + f.getAbsolutePath());
         boolean result = false;
         DataOutputStream dataOutputStream = null;
         BufferedReader errorStream = null;
@@ -304,7 +305,7 @@ public class UpdateHelper extends BroadcastReceiver {
             while ((line = errorStream.readLine()) != null) {
                 msg += line;
             }
-            Log.e("------------------","install msg:" + msg);
+//            Log.e("------------------","install msg:" + msg);
             // 如果执行结果中包含Failure字样就认为是安装失败，否则就认为安装成功
             if (!msg.contains("Failure")) {
                 result = true;
