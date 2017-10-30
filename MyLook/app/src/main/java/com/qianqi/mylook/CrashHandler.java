@@ -1,6 +1,7 @@
 package com.qianqi.mylook;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.qianqi.mylook.utils.CommonUtils;
 import com.qianqi.mylook.utils.L;
@@ -47,7 +48,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         if (ex == null) {
             return true;
         }
-        L.d("CRASH",ex);
+        Log.e("--------CRASH","--------CRASH",ex);
 
         return true;
     }
