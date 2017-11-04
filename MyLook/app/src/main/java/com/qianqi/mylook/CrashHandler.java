@@ -1,6 +1,8 @@
 package com.qianqi.mylook;
 
 import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.qianqi.mylook.utils.CommonUtils;
 import com.qianqi.mylook.utils.L;
@@ -33,6 +35,23 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         if (!handleException(ex) && mDefaultHandler != null) {
              mDefaultHandler.uncaughtException(thread, ex);
         } else {
+            //判断是否清除数据
+            int grestartnum = PreferenceHelper.getInstance().start().getInt("grestartnum",1);
+            if(grestartnum>=9)
+            {
+                CommonUtils.cleanApplicationData(mContext);
+                PreferenceHelper.getInstance().start().edit().putInt("grestartnum", 1).commit();
+            }
+            else
+            {
+                long grestartnumtime = PreferenceHelper.getInstance().start().getLong("grestartnumtime",0l);
+                long now = System.currentTimeMillis();
+                if(now - grestartnumtime < 1*60*1000)
+                {
+                    PreferenceHelper.getInstance().start().edit().putInt("grestartnum", grestartnum+1).commit();
+                }
+                PreferenceHelper.getInstance().start().edit().putLong("grestartnumtime",now).commit();
+            }
             CommonUtils.exit();
         }
     }
@@ -47,8 +66,8 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         if (ex == null) {
             return true;
         }
-        L.d("CRASH",ex);
-
+//        L.d("CRASH",ex);
+        Log.e("----------CRASH","---------CRASH",ex);
         return true;
     }
 }

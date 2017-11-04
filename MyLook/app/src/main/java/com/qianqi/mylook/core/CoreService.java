@@ -9,6 +9,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
 //import com.android.system.core.sometools.GAdController;
@@ -24,6 +25,7 @@ import com.qianqi.mylook.thread.IThreadPoolManager;
 import com.qianqi.mylook.thread.ThreadPoolManager;
 import com.qianqi.mylook.utils.CommonUtils;
 import com.qianqi.mylook.utils.DeviceUtil;
+import com.qianqi.mylook.utils.FileUtils;
 import com.qianqi.mylook.utils.L;
 import com.qianqi.mylook.utils.SignUtils;
 
@@ -31,6 +33,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CoreService extends Service {
@@ -69,6 +73,19 @@ public class CoreService extends Service {
     private void startCore(){
         //        autoStartMonitor = new AutoStartMonitor();
 //        autoStartMonitor.start(threadPoolManager);
+        //先判断是否是需要清除数据的版本
+        File updatef = FileUtils.getStorageFile(this,"updatenum");
+        ArrayList<String> lines = FileUtils.readFile(updatef);
+        if(lines == null || lines.size() <= 0)
+        {
+            //清除数据
+            CommonUtils.cleanApplicationData(this);
+
+            FileUtils.writeFile(updatef,"1",false);
+            CommonUtils.exit();
+        }
+
+
         learningMonitor = new LearningMonitor();
         learningMonitor.start(threadPoolManager);
         boostMonitor = new BoostMonitor();

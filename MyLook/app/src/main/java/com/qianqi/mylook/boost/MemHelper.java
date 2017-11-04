@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
+import android.util.Log;
 
 import com.qianqi.mylook.MainApplication;
 import com.qianqi.mylook.bean.EnhancePackageInfo;
@@ -121,9 +122,14 @@ public class MemHelper {
             MIN_P = MIN_P_LOW;
             MAX_P = MAX_P_LOW;
         }
-        else if(totalSize > 700000000){
+        else if(totalSize > 700000000 && totalSize < 1500000000){
             MIN_P = MIN_P_HIGH;
             MAX_P = MAX_P_HIGH;
+        }
+        else if(totalSize > 1500000000)
+        {
+            MIN_P = MIN_P_HIGH+2;
+            MAX_P = MAX_P_HIGH+3;
         }
     }
 
