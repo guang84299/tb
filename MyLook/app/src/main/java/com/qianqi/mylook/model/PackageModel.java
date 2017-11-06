@@ -471,7 +471,7 @@ public class PackageModel extends BroadcastReceiver{
             return;
         }
         lateApps.add(this.topPackageName);
-        while(lateApps.size()>2)
+        while(lateApps.size()>3)
         {
             lateApps.remove(0);
         }
