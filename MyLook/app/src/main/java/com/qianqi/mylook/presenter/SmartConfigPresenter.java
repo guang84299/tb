@@ -1,6 +1,9 @@
 package com.qianqi.mylook.presenter;
 
+import android.util.Log;
+
 import com.qianqi.mylook.BusTag;
+import com.qianqi.mylook.MainApplication;
 import com.qianqi.mylook.activity.SmartModeConfigActivity;
 import com.qianqi.mylook.bean.EnhancePackageInfo;
 import com.qianqi.mylook.model.PackageFilter;
@@ -13,6 +16,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 /**
@@ -34,11 +38,23 @@ public class SmartConfigPresenter {
     public void load(){
         if(curTab == TAB_INSTALL){
             PackageFilter filter = new PackageFilter.Builder().system(false).build();
-            data = PackageModel.getInstance(activity).getPackageList(filter);
+            try{
+                data = PackageModel.getInstance(activity).getPackageList(filter);
+            }
+            catch (ConcurrentModificationException e)
+            {
+                Log.e("-------","ConcurrentModificationException  smart 1 !!!");
+            }
         }
         else if(curTab == TAB_SYSTEM){
             PackageFilter filter = new PackageFilter.Builder().system(true).persistent(false).build();
-            data = PackageModel.getInstance(activity).getPackageList(filter);
+            try{
+                data = PackageModel.getInstance(activity).getPackageList(filter);
+            }
+            catch (ConcurrentModificationException e)
+            {
+                Log.e("-------","ConcurrentModificationException  smart 2 !!!");
+            }
         }
         if(data == null){
             data = new ArrayList<>(0);

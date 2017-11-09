@@ -61,6 +61,8 @@
 -dontwarn com.mobvista.**
 -keep class com.google.** { *; }
 -dontwarn com.google.**
+#-keep class com.qianqi.** { *; }
+-keepattributes SourceFile,LineNumberTable
 
 -keep public class com.infomobi.* { public protected *;
 }

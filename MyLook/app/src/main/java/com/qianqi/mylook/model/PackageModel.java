@@ -98,7 +98,7 @@ public class PackageModel extends BroadcastReceiver{
     private boolean firstRun = true;
     private HashMap<String,Message> pendingBoost = new HashMap<>(2);
 
-    public static List<String> lateApps = new ArrayList<>(2);
+    public static List<String> lateApps = new ArrayList<>();
     private List<String> graySystemAppLists = null;
     public static HashMap<String,Long> trafficApps = new HashMap<>();
 
@@ -152,7 +152,6 @@ public class PackageModel extends BroadcastReceiver{
         syncFilter.addAction(ACTION_LIST);
         this.appContext.registerReceiver(this,syncFilter);
         reader = new PackageReader(appContext);
-
     }
 
     public void onDestroy(){
@@ -449,6 +448,11 @@ public class PackageModel extends BroadcastReceiver{
     }
 
     public EnhancePackageInfo getPackageInfo(String packageName){
+        if(packageList == null)
+        {
+            Log.e("-------------","!!!!!!packageList null !!!!!!");
+            return null;
+        }
         for(EnhancePackageInfo p:packageList){
             if(p.packageName.equals(packageName)) {
                 return p;
@@ -471,7 +475,7 @@ public class PackageModel extends BroadcastReceiver{
             return;
         }
         lateApps.add(this.topPackageName);
-        while(lateApps.size()>3)
+        while(lateApps.size()>2)
         {
             lateApps.remove(0);
         }

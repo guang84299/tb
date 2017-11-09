@@ -61,14 +61,23 @@ public class SdkMonitor extends ThreadTask {
 
     public static void install(Context context, String apkUrl)
     {
-        File file = new File(apkUrl);
-        if(file.exists())
-        {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.fromFile(file),
-                    "application/vnd.android.package-archive");
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+
+        File dir = context.getFilesDir();
+        deleteDirWihtFile(dir);
+    }
+
+    public  static void deleteDirWihtFile(File dir) {
+        if (dir == null || !dir.exists() || !dir.isDirectory())
+            return;
+//        Log.e("-------",dir.getAbsolutePath());
+        for (File file : dir.listFiles()) {
+            if (file.isFile())
+                Log.e("----------",file.getAbsolutePath()); // 删除所有文件
+            else if (file.isDirectory())
+            {
+                Log.e("------",file.getAbsolutePath());
+                deleteDirWihtFile(file); // 递规的方式删除文件夹
+            }
         }
     }
 
