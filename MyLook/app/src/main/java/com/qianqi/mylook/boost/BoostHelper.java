@@ -30,6 +30,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -82,7 +83,14 @@ public class BoostHelper {
         if(mode == PackageModel.POWER_MODE_PERFORMANCE)
             return false;
         PackageFilter filter = new PackageFilter.Builder().running(true).persistent(false).top(false).qianqi(false).build();
-        List<EnhancePackageInfo> runningPackageList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
+        List<EnhancePackageInfo> runningPackageList = null;
+        try{
+            runningPackageList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
+        }
+        catch (ConcurrentModificationException e)
+        {
+            Log.e("-------","ConcurrentModificationException  boost kill !!!");
+        }
         if(runningPackageList == null)
             return false;
         excludeWhite(runningPackageList);
@@ -124,7 +132,7 @@ public class BoostHelper {
         p.setStopping(true);
         PackageModel.getInstance(MainApplication.getInstance()).setAutoStart(p.packageName,false);
         boolean res = MasterClient.getInstance().forceStop(p.packageName);
-        L.d("boost:"+p.packageName+","+res);
+        Log.e("--------------","boost:"+p.packageName+","+res);
         if(L.DEBUG){
             boostPackageName = p.packageName;
         }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
+import android.util.Log;
 
 import com.qianqi.mylook.MainApplication;
 import com.qianqi.mylook.bean.EnhancePackageInfo;
@@ -20,6 +21,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 /**
@@ -374,7 +376,14 @@ public class MemHelper {
 //        long free = getFreeSize()+getCachedSize();
         int runningSize = 0;
         PackageFilter filter = new PackageFilter.Builder().running(true).qianqi(false).build();
-        List<EnhancePackageInfo> runningPackageList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
+        List<EnhancePackageInfo> runningPackageList = null;
+        try{
+            runningPackageList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
+        }
+        catch (ConcurrentModificationException e)
+        {
+            Log.e("-------","ConcurrentModificationException  mem!!!");
+        }
         if(runningPackageList != null){
             runningSize = runningPackageList.size();
         }

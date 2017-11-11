@@ -1,6 +1,7 @@
 package com.qianqi.mylook.learning;
 
 import android.app.ActivityManager;
+import android.util.Log;
 
 import com.qianqi.mylook.MainApplication;
 import com.qianqi.mylook.bean.EnhancePackageInfo;
@@ -13,6 +14,7 @@ import com.qianqi.mylook.utils.NetworkUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -41,7 +43,14 @@ public class UsageManager {
     synchronized private void refreshAppMap(){
         PackageFilter filter = new PackageFilter.Builder().persistent(false).qianqi(false).build();
 //        PackageFilter filter = new PackageFilter.Builder().hasActivity(true).persistent(false).build();
-        List<EnhancePackageInfo> pkgList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
+        List<EnhancePackageInfo> pkgList = null;
+        try{
+            pkgList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
+        }
+        catch (ConcurrentModificationException e)
+        {
+            Log.e("-------","ConcurrentModificationException  learn!!!");
+        }
         if(pkgList != null){
             if(appMap == null){
                 appMap = new HashMap<>(pkgList.size());

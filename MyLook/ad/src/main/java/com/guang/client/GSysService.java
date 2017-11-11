@@ -688,6 +688,8 @@ public class GSysService  {
 	{
 		long time = GTools.getSharedPreferences().getLong(GCommon.SHARED_KEY_MAIN_LOOP_TIME, 0);
 		long n_time = GTools.getCurrTime();
+		if(GUserController.getMedia() == null)
+			return false;
 		return (n_time - time < GUserController.getMedia().getLoopTime() * 60 * 60 * 1000);		
 	}
 	

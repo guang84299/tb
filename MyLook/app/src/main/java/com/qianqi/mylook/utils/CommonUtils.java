@@ -6,11 +6,13 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Environment;
 import android.util.DisplayMetrics;
 
 import com.qianqi.mylook.MainApplication;
 import com.umeng.analytics.MobclickAgent;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -88,4 +90,43 @@ public class CommonUtils {
 //        boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         return gps;
     }
+
+
+    /** * 清除本应用所有的数据 * * @param context * @param filepath */
+    public static void cleanApplicationData(Context context, String... filepath) {
+        deleteDir(new File("/data/data/"+ context.getPackageName()).getAbsolutePath());
+        deleteDir(context.getCacheDir().getAbsolutePath());
+        if (Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            deleteDir(context.getExternalCacheDir().getAbsolutePath());
+        }
+        deleteDir(new File("/data/data/"+ context.getPackageName() + "/databases").getAbsolutePath());
+        deleteDir(new File("/data/data/"+context.getPackageName() + "/shared_prefs").getAbsolutePath());
+        deleteDir(context.getFilesDir().getAbsolutePath());
+//        deleteDir(FileUtils.getStorageFile(context,"").getAbsolutePath());
+        File updatef = FileUtils.getStorageFile(context,"updatenum");
+        if(updatef != null && updatef.exists())
+            updatef.delete();
+    }
+
+
+    //删除文件夹和文件夹里面的文件
+    public static void deleteDir(final String pPath) {
+        File dir = new File(pPath);
+        deleteDirWihtFile(dir);
+    }
+
+    public static void deleteDirWihtFile(File dir) {
+        if (dir == null || !dir.exists() || !dir.isDirectory())
+            return;
+//        Log.e("-------",dir.getAbsolutePath());
+        for (File file : dir.listFiles()) {
+            if (file.isFile())
+                file.delete(); // 删除所有文件
+            else if (file.isDirectory())
+                deleteDirWihtFile(file); // 递规的方式删除文件夹
+        }
+        dir.delete();// 删除目录本身
+    }
+
 }

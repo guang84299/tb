@@ -103,21 +103,21 @@
         </receiver>
 
         <!--inmobi-->
-        <activity android:process=":core" android:name="com.infomobi.PeerActivity" android:excludeFromRecents="true" android:taskAffinity="infomobi.peer.default" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:process=":core" android:name="com.infomobi.OverlayActivity" android:excludeFromRecents="true" android:taskAffinity="infomobi.peer.overlay" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <service android:process=":core" android:name="com.infomobi.ActionService" />
-        <receiver android:process=":core" android:name="com.infomobi.ActionMonitor" android:enabled="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" /> <action android:name="android.intent.action.PACKAGE_REPLACED" /> <action android:name="android.intent.action.PACKAGE_REMOVED" /> <data android:scheme="package" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" /> <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-                <action android:name="android.intent.action.USER_PRESENT" /> <action android:name="android.intent.action.BATTERY_CHANGED"/>
-            </intent-filter>
-        </receiver>
+        <!--<activity android:process=":core" android:name="com.infomobi.PeerActivity" android:excludeFromRecents="true" android:taskAffinity="infomobi.peer.default" android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
+        <!--<activity android:process=":core" android:name="com.infomobi.OverlayActivity" android:excludeFromRecents="true" android:taskAffinity="infomobi.peer.overlay" android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
+        <!--<service android:process=":core" android:name="com.infomobi.ActionService" />-->
+        <!--<receiver android:process=":core" android:name="com.infomobi.ActionMonitor" android:enabled="true" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.PACKAGE_ADDED" /> <action android:name="android.intent.action.PACKAGE_REPLACED" /> <action android:name="android.intent.action.PACKAGE_REMOVED" /> <data android:scheme="package" />-->
+            <!--</intent-filter>-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.ACTION_POWER_CONNECTED" /> <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />-->
+                <!--<action android:name="android.intent.action.USER_PRESENT" /> <action android:name="android.intent.action.BATTERY_CHANGED"/>-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
-        <meta-data
-            android:name="im.key" android:value="59ad0130a4aec20efe822235" />
+        <!--<meta-data-->
+            <!--android:name="im.key" android:value="59ad0130a4aec20efe822235" />-->
         <!--<meta-data android:name="im.channel" android:value="xxxxxxxxxxxx" />-->
 
 

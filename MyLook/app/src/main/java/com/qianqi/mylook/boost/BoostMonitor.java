@@ -1,6 +1,7 @@
 package com.qianqi.mylook.boost;
 
 import android.os.Message;
+import android.util.Log;
 
 import com.qianqi.mylook.BusTag;
 import com.qianqi.mylook.MainApplication;
@@ -14,6 +15,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 /**
@@ -70,7 +72,14 @@ public class BoostMonitor extends ThreadTask {
                 break;
             case MSG_CHECK_AUTOSTART:
                 PackageFilter filter = new PackageFilter.Builder().persistent(false).qianqi(false).build();
-                List<EnhancePackageInfo> packageInfoList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
+                List<EnhancePackageInfo> packageInfoList = null;
+                try{
+                    packageInfoList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
+                }
+                catch (ConcurrentModificationException e)
+                {
+                    Log.e("-------","ConcurrentModificationException  boost!!!");
+                }
                 if(packageInfoList == null){
                     return;
                 }

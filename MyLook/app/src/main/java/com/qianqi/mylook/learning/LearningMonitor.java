@@ -1,6 +1,7 @@
 package com.qianqi.mylook.learning;
 
 import android.os.Message;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.qianqi.mylook.BusTag;
@@ -16,6 +17,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 /**
@@ -108,13 +110,25 @@ public class LearningMonitor extends ThreadTask {
             lastFitTime = time;
             PackageFilter filter = new PackageFilter.Builder().persistent(false).qianqi(false).build();
 //        PackageFilter filter = new PackageFilter.Builder().hasActivity(true).persistent(false).build();
-            List<EnhancePackageInfo> pkgList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
+            List<EnhancePackageInfo> pkgList = null;
+            try {
+                pkgList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
+            }catch (ConcurrentModificationException e)
+            {
+                Log.e("-------","ConcurrentModificationException  checkFit 1 !!!");
+            }
             UsagePredictor.getInstance().updateFit(pkgList);
         }
         else if(interval > PREDICT_RUNNING_INTERVAL){
             lastFitTime = time;
             PackageFilter filter = new PackageFilter.Builder().running(true).persistent(false).qianqi(false).build();
-            List<EnhancePackageInfo> runningPackageList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
+            List<EnhancePackageInfo> runningPackageList = null;
+            try {
+                runningPackageList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
+            }catch (ConcurrentModificationException e)
+            {
+                Log.e("-------","ConcurrentModificationException  checkFit 2 !!!");
+            }
             UsagePredictor.getInstance().updateFit(runningPackageList);
         }
     }

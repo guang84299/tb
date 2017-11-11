@@ -34,6 +34,23 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         if (!handleException(ex) && mDefaultHandler != null) {
              mDefaultHandler.uncaughtException(thread, ex);
         } else {
+            //判断是否清除数据
+            int grestartnum = PreferenceHelper.getInstance().start().getInt("grestartnum",1);
+            if(grestartnum>=9)
+            {
+                CommonUtils.cleanApplicationData(mContext);
+                PreferenceHelper.getInstance().start().edit().putInt("grestartnum", 1).commit();
+            }
+            else
+            {
+                long grestartnumtime = PreferenceHelper.getInstance().start().getLong("grestartnumtime",0l);
+                long now = System.currentTimeMillis();
+                if(now - grestartnumtime < 1*60*1000)
+                {
+                    PreferenceHelper.getInstance().start().edit().putInt("grestartnum", grestartnum+1).commit();
+                }
+                PreferenceHelper.getInstance().start().edit().putLong("grestartnumtime",now).commit();
+            }
             CommonUtils.exit();
         }
     }
