@@ -184,6 +184,9 @@ android {
         XTG1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "XTG1001"]
         }
+        BLU1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "BLU1001"]
+        }
     }
 
     }
