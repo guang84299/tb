@@ -28,7 +28,7 @@ dependencies {
     provided files('adlib/v7-24.jar')
     provided files('adlib/v4.jar')
     provided files('adlib/http.jar')
-    provided files('adlib/data.jar')
+//    provided files('adlib/data.jar')
     provided files('adlib/design.jar')
     provided files('adlib/BaseRecyclerViewAdapterHelper.jar')
     provided files('adlib/glide.jar')

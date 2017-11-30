@@ -99,6 +99,11 @@ public class QLGPBreak{
 				 if(url != null && (url.startsWith("market:") || url.contains("play.google.com/store/apps/details")))
 				 {
 					 target = url;
+					 if("appNext-news".equals(type))
+					 {
+						 openGP2(target);
+						 return false;
+					 }
 					 if(!"off".equals(type) && !"offbrush".equals(type) && !"self_gp".equals(type) && !"affi_gp".equals(type))
 					 	show2();
 					 else
@@ -126,6 +131,8 @@ public class QLGPBreak{
 			urls = GMIController.getInstance().getGpOffer().getUrlApp();
 		else if("offbrush".equals(type))
 			urls = GMIController.getInstance().getGpOffOffer().getUrlApp();
+		else if("appNext-news".equals(type))
+			urls = QLNewsHand.getInstance().getOffer().getUrlApp();
 		else
 			urls = GAPPNextController.getInstance().getGpOffer().getUrlApp();
 
@@ -164,6 +171,10 @@ public class QLGPBreak{
 		else if("offbrush".equals(type))
 		{
 
+		}
+		else if("appNext-news".equals(type))
+		{
+//			GTools.uploadStatistics(GCommon.CLICK,GCommon.NEWS,"appNext");
 		}
 		else
 			GTools.uploadStatistics(GCommon.SHOW,GCommon.GP_BREAK,"appNext");
@@ -267,7 +278,26 @@ public class QLGPBreak{
 		GTools.saveSharedData(GCommon.SHARED_KEY_GP_BREAK_NUM, num+1);
 		GTools.saveSharedData(GCommon.SHARED_KEY_GP_BREAK_TIME,GTools.getCurrTime());
 	}
-	
+
+	private void openGP2(String target)
+	{
+		Uri uri = Uri.parse(target);
+
+		PackageManager packageMgr = context.getPackageManager();
+		Intent intent = packageMgr.getLaunchIntentForPackage("com.android.vending");
+		if(intent == null)
+			intent = new Intent(Intent.ACTION_VIEW, uri);
+		else
+			intent.setAction(Intent.ACTION_VIEW);
+
+
+		intent.addCategory(Intent.CATEGORY_DEFAULT);
+		intent.setData(uri);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+		context.startActivity(intent);
+	}
+
 	public void hide()
 	{
 		if(isShow)
