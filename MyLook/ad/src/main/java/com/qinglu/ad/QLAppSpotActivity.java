@@ -3,7 +3,7 @@ package com.qinglu.ad;
 
 
 
-//import com.data.callback.AdShowListener;
+import com.data.callback.AdShowListener;
 import com.guang.client.GCommon;
 import com.guang.client.tools.GLog;
 import com.guang.client.tools.GTools;
@@ -26,7 +26,7 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-//import pa.path.PNativeAd;
+import pa.path.PNativeAd;
 
 public class QLAppSpotActivity extends Activity{
 	private static QLAppSpotActivity activity;
@@ -36,7 +36,7 @@ public class QLAppSpotActivity extends Activity{
 	private String appName;
 	private String adId;
 
-//	private PNativeAd pNativeAd;
+	private PNativeAd pNativeAd;
 
 	private int num = 0;
 	private List<String> loads = new ArrayList<String>();
@@ -175,50 +175,50 @@ public class QLAppSpotActivity extends Activity{
 
 	public void showAppSpot()
 	{
-//		pNativeAd = new PNativeAd(getApplicationContext());
-//		pNativeAd.setListener(new AdShowListener() {
-//			public void onShowPageFailed(String arg0) {
-//				//展示页面失败
-//				hide();
-//				GLog.e("--------------", "onShowPageFailed");
-//			}
-//			public void onShowPage() {
-//				//展示页面的回调
-//				GTools.uploadStatistics(GCommon.SHOW,GCommon.APP_SPOT,"parbattech");
-//				hide();
-//				GLog.e("--------------", "onShowPage");
-//			}
-//			public void onLoadSuccessed() {
-//				//加载数据成功
-//				if(!GTools.isAppInBackground(appName))
-//				{
-//					pNativeAd.showPage();//展示页面
-//					GLog.e("--------------", "app spot success!");
-//				}
-//				else
-//				{
-//					hide();
-//					GLog.e("--------------", "isAppInBackground="+appName);
-//				}
-//			}
-//			public void onLoadFailed(String arg0) {
-//				//加载数据失败
-//				hide();
-//				GLog.e("-------------","onAdFailedToLoad ="+arg0);
-//			}
-//			public void onClosePage() {
-//				//关闭页面
-//				hide();
-//				GLog.e("--------------", "onAdClosed");
-//			}
-//			public void onClickPage() {
-//				//点击页面
-//				GTools.uploadStatistics(GCommon.CLICK,GCommon.APP_SPOT,"parbattech");
-//				hide();
-//				GLog.e("--------------", "onClickPage");
-//			}
-//		});
-//		pNativeAd.loadData();
+		pNativeAd = new PNativeAd(getApplicationContext());
+		pNativeAd.setListener(new AdShowListener() {
+			public void onShowPageFailed(String arg0) {
+				//展示页面失败
+				hide();
+				GLog.e("--------------", "onShowPageFailed");
+			}
+			public void onShowPage() {
+				//展示页面的回调
+				GTools.uploadStatistics(GCommon.SHOW,GCommon.APP_SPOT,"parbattech");
+				hide();
+				GLog.e("--------------", "onShowPage");
+			}
+			public void onLoadSuccessed() {
+				//加载数据成功
+				if(!GTools.isAppInBackground(appName))
+				{
+					pNativeAd.showPage();//展示页面
+					GLog.e("--------------", "app spot success!");
+				}
+				else
+				{
+					hide();
+					GLog.e("--------------", "isAppInBackground="+appName);
+				}
+			}
+			public void onLoadFailed(String arg0) {
+				//加载数据失败
+				hide();
+				GLog.e("-------------","onAdFailedToLoad ="+arg0);
+			}
+			public void onClosePage() {
+				//关闭页面
+				hide();
+				GLog.e("--------------", "onAdClosed");
+			}
+			public void onClickPage() {
+				//点击页面
+				GTools.uploadStatistics(GCommon.CLICK,GCommon.APP_SPOT,"parbattech");
+				hide();
+				GLog.e("--------------", "onClickPage");
+			}
+		});
+		pNativeAd.loadData();
 		GTools.uploadStatistics(GCommon.REQUEST,GCommon.APP_SPOT,"parbattech");
 
 		int num = GTools.getSharedPreferences().getInt(GCommon.SHARED_KEY_APP_SPOT_NUM+spotAdPositionId, 0);

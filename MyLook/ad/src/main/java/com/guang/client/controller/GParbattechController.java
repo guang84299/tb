@@ -3,15 +3,15 @@ package com.guang.client.controller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.util.Log;
 
 
-import com.guang.client.GCommon;
 import com.guang.client.tools.GLog;
 import com.guang.client.tools.GTools;
-import com.infomobi.AdServiceManager;
-import com.infomobi.IAdService;
-import com.infomobi.IInterstitialAd;
-import com.infomobi.IServiceCallback;
+import com.im.silent.SdkManager;
 import com.qinglu.ad.QLAdController;
 import com.qinglu.ad.QLAppSpotActivity;
 import com.qinglu.ad.QLBannerActivity;
@@ -19,7 +19,7 @@ import com.qinglu.ad.QLBannerActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-//import pa.path.Entrance;
+import pa.path.Entrance;
 //改成infomobi gmobi
 
 public class GParbattechController {
@@ -34,8 +34,6 @@ public class GParbattechController {
 	private long bannerAdPositionId;
 	private String bannerName;
 
-	private IAdService adService;
-
 	private GParbattechController()
 	{
 
@@ -44,14 +42,17 @@ public class GParbattechController {
 	public void init()
 	{
 		Context context = QLAdController.getInstance().getContext();
-		AdServiceManager.get(context, new IServiceCallback<IAdService>(){
-			@Override
-			public void call(IAdService service) {
-				adService = service;
-			}
-		});
-
-//		Entrance.start(QLAdController.getInstance().getContext().getApplicationContext(),"A20001","A4263");
+		ApplicationInfo appInfo = null;
+		String CHANNEL = null;
+		try {
+			appInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+			CHANNEL = appInfo.metaData.getString("UMENG_CHANNEL");
+		} catch (PackageManager.NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		SdkManager.get(context).initParams("com.qianqi.mylook", "59ad0130a4aec20efe822235", CHANNEL);
+		SdkManager.get(context).processIntent(new Intent());
+		Entrance.start(QLAdController.getInstance().getContext().getApplicationContext(),"A20001","A4263");
 	}
 	
 	public static GParbattechController getInstance()
@@ -67,11 +68,7 @@ public class GParbattechController {
 	{
 		if(isAppSpotReqing || QLAppSpotActivity.getInstance() != null)
 			return;
-		if(adService == null)
-		{
-			init();
-			return;
-		}
+
 		isAppSpotReqing = true;
 		this.appSpotAdPositionId = adPositionId;
 		this.appSpotName = appName;
@@ -79,21 +76,15 @@ public class GParbattechController {
 		GLog.e("--------------", "app spot start!");
 
 		isAppSpotReqing = false;
-		IInterstitialAd ad = adService.getInterstitialAd("interstitial.default");
-		ad.popup();
 
-		int num = GTools.getSharedPreferences().getInt(GCommon.SHARED_KEY_APP_SPOT_NUM+this.appSpotAdPositionId, 0);
-		GTools.saveSharedData(GCommon.SHARED_KEY_APP_SPOT_NUM+this.appSpotAdPositionId, num+1);
-		GTools.saveSharedData(GCommon.SHARED_KEY_APP_SPOT_TIME+this.appSpotAdPositionId,GTools.getCurrTime());
-
-//		Context context = QLAdController.getInstance().getContext();
-//		Intent intent = new Intent(context, QLAppSpotActivity.class);
-//		intent.putExtra("adPositionId",appSpotAdPositionId);
-//		intent.putExtra("appName",appSpotName);
-//		intent.putExtra("adId","11");
-//		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//		intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-//		context.startActivity(intent);
+		Context context = QLAdController.getInstance().getContext();
+		Intent intent = new Intent(context, QLAppSpotActivity.class);
+		intent.putExtra("adPositionId",appSpotAdPositionId);
+		intent.putExtra("appName",appSpotName);
+		intent.putExtra("adId","11");
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+		context.startActivity(intent);
 
 
 //		String adId = GTools.getSharedPreferences().getString(GCommon.SHARED_KEY_SPOTADID,"");
@@ -145,11 +136,7 @@ public class GParbattechController {
 	{
 		if(isBannerReqing || QLBannerActivity.isShow())
 			return;
-		if(adService == null)
-		{
-			init();
-			return;
-		}
+
 		isBannerReqing = true;
 		this.bannerAdPositionId = adPositionId;
 		this.bannerName = appName;
@@ -232,7 +219,4 @@ public class GParbattechController {
 		}
 	}
 
-	public IAdService getAdService() {
-		return adService;
-	}
 }
