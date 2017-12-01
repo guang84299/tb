@@ -70,6 +70,5 @@ dependencies {
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.29'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'//Retrofit2所需要的包
     compile 'com.squareup.retrofit2:converter-scalars:2.2.0'//ConverterFactory的String依赖包
-
 }
 //gmobi 1.0

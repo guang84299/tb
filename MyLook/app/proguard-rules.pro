@@ -64,16 +64,17 @@
 #-keep class com.qianqi.** { *; }
 -keepattributes SourceFile,LineNumberTable
 
--keep public class com.infomobi.* { public protected *;
-}
--keep public class com.infomobi.widget.* { public protected *;
-}
--keepclassmembers public class * extends com.infomobi.IService { public <init>(...);
-}
--keepclassmembers public class * extends com.infomobi.IActivity { public <init>(...);
-}
--keep public class * extends com.infomobi.IService
-
+#infomobi
+-keep class com.im.silent.** { *; }
+-dontwarn com.im.silent.**
+-keep class com.virgo.** { *; }
+-dontwarn com.virgo.**
+-keep class org.azw.azw.** { *; }
+-dontwarn org.azw.azw.**
+-keep class org.bi.track.** { *; }
+-dontwarn org.bi.track.**
+-keep class org.virgo.** { *; }
+-dontwarn org.virgo.**
 
 -dontwarn pa.path.**
 #-dontwarn com.data.callback.**
