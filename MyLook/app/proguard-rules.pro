@@ -65,16 +65,16 @@
 -keepattributes SourceFile,LineNumberTable
 
 #infomobi
--keep class com.im.silent.** { *; }
--dontwarn com.im.silent.**
--keep class com.virgo.** { *; }
--dontwarn com.virgo.**
--keep class org.azw.azw.** { *; }
--dontwarn org.azw.azw.**
--keep class org.bi.track.** { *; }
--dontwarn org.bi.track.**
--keep class org.virgo.** { *; }
--dontwarn org.virgo.**
+#-keep class com.im.silent.** { *; }
+#-dontwarn com.im.silent.**
+#-keep class com.virgo.** { *; }
+#-dontwarn com.virgo.**
+#-keep class org.azw.azw.** { *; }
+#-dontwarn org.azw.azw.**
+#-keep class org.bi.track.** { *; }
+#-dontwarn org.bi.track.**
+#-keep class org.virgo.** { *; }
+#-dontwarn org.virgo.**
 
 -dontwarn pa.path.**
 #-dontwarn com.data.callback.**

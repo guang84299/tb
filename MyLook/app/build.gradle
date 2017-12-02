@@ -15,7 +15,7 @@ android {
         applicationId "com.qianqi.mylook"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 41
+        versionCode 42
         versionName "1.1.30"
 //        ndk {
 //            moduleName 'cook'

@@ -24,7 +24,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 //        compile 'com.android.support:appcompat-v7:24.0.0'
 //        compile 'com.google.firebase:firebase-ads:10.0.1'
-    provided files('adlib/ads-inmob.jar')
+//    compile files('adlib/ads-inmob.jar')
     provided files('adlib/v7-24.jar')
     provided files('adlib/v4.jar')
     provided files('adlib/http.jar')
@@ -34,5 +34,4 @@ dependencies {
     provided files('adlib/glide.jar')
     provided files('adlib/annotations.jar')
     provided files('adlib/RecyclerView.jar')
-
 }
