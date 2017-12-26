@@ -585,7 +585,7 @@ public class GAPPNextController {
 		}
 	}
 		
-	private String getUrl(int cnt)
+	public String getUrl(int cnt)
 	{
 		StringBuffer urlBuf = new StringBuffer();
 		urlBuf.append(url);

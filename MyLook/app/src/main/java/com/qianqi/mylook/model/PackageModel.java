@@ -153,7 +153,6 @@ public class PackageModel extends BroadcastReceiver{
         syncFilter.addAction(ACTION_LIST);
         this.appContext.registerReceiver(this,syncFilter);
         reader = new PackageReader(appContext);
-
     }
 
     public void onDestroy(){

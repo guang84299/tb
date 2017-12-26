@@ -3,6 +3,7 @@ package com.qianqi.mylook.presenter;
 import android.util.Log;
 
 import com.qianqi.mylook.BusTag;
+import com.qianqi.mylook.MainApplication;
 import com.qianqi.mylook.activity.SmartModeConfigActivity;
 import com.qianqi.mylook.bean.EnhancePackageInfo;
 import com.qianqi.mylook.model.PackageFilter;

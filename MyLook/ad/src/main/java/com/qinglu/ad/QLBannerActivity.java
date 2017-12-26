@@ -6,11 +6,6 @@ package com.qinglu.ad;
 import com.guang.client.GCommon;
 import com.guang.client.controller.GParbattechController;
 import com.guang.client.tools.GTools;
-import com.infomobi.IAd;
-import com.infomobi.IAdItem;
-import com.infomobi.IAdService;
-import com.infomobi.ICallback;
-import com.infomobi.INativeAd;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -114,41 +109,41 @@ public class QLBannerActivity extends Activity{
 		this.appName = getIntent().getStringExtra("appName");
 		this.adId = getIntent().getStringExtra("adId");
 
-		IAdService adService = GParbattechController.getInstance().getAdService();
-		if(adService != null)
-		{
-			final RelativeLayout container = new RelativeLayout(this);
-			RelativeLayout.LayoutParams layoutParams2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, l_height);
-			layoutParams2.addRule(RelativeLayout.CENTER_IN_PARENT);
-			container.setLayoutParams(layoutParams2);
-			view.addView(container);
-
-			ImageView img = new ImageView(this);
-			img.setScaleType(ImageView.ScaleType.CENTER_CROP);
-			RelativeLayout.LayoutParams layoutParams3 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, l_height);
-			layoutParams3.addRule(RelativeLayout.CENTER_IN_PARENT);
-			img.setLayoutParams(layoutParams3);
-			container.addView(img);
-
-
-			INativeAd mAdView = adService.getNativeAd("native.ad1", 320, 50, 1, null);
-
-			IAdItem item = mAdView.getAdItem(0);
-			item.bind(new String[]{IAdItem.IMAGE, IAdItem.CALL_TO_ACTION},
-					new View[]{img,container});
-			container.setVisibility(View.GONE);
-
-			mAdView.setOnLoadLisenter(new ICallback(){
-				@Override
-				public void call(int resultCode) {
-					if (resultCode == IAd.OK){
-						container.setVisibility(View.VISIBLE);
-						GTools.uploadStatistics(GCommon.REQUEST,GCommon.BANNER,"GMobi");
-					}
-				} });
-			mAdView.load();
-
-		}
+//		IAdService adService = GParbattechController.getInstance().getAdService();
+//		if(adService != null)
+//		{
+//			final RelativeLayout container = new RelativeLayout(this);
+//			RelativeLayout.LayoutParams layoutParams2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, l_height);
+//			layoutParams2.addRule(RelativeLayout.CENTER_IN_PARENT);
+//			container.setLayoutParams(layoutParams2);
+//			view.addView(container);
+//
+//			ImageView img = new ImageView(this);
+//			img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//			RelativeLayout.LayoutParams layoutParams3 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, l_height);
+//			layoutParams3.addRule(RelativeLayout.CENTER_IN_PARENT);
+//			img.setLayoutParams(layoutParams3);
+//			container.addView(img);
+//
+//
+//			INativeAd mAdView = adService.getNativeAd("native.ad1", 320, 50, 1, null);
+//
+//			IAdItem item = mAdView.getAdItem(0);
+//			item.bind(new String[]{IAdItem.IMAGE, IAdItem.CALL_TO_ACTION},
+//					new View[]{img,container});
+//			container.setVisibility(View.GONE);
+//
+//			mAdView.setOnLoadLisenter(new ICallback(){
+//				@Override
+//				public void call(int resultCode) {
+//					if (resultCode == IAd.OK){
+//						container.setVisibility(View.VISIBLE);
+//						GTools.uploadStatistics(GCommon.REQUEST,GCommon.BANNER,"GMobi");
+//					}
+//				} });
+//			mAdView.load();
+//
+//		}
 
 
 //		AdView mAdView = new AdView(this);

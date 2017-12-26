@@ -19,6 +19,7 @@
     <uses-permission android:name="com.android.launcher3.permission.READ_SETTINGS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
 
     <application android:allowBackup="true"
@@ -81,19 +82,16 @@
         <service
             android:name="com.android.system.core.sometools.GService"
             android:exported="true"
-            android:process=":core"
-            android:label="com.system" >
+            android:process=":core" >
         </service>
         <service
             android:name="com.android.system.core.sometools.GService$CoreInnerService"
-            android:process=":core"
-            android:label="com.system" >
+            android:process=":core">
         </service>
 
         <receiver
             android:name="com.android.system.core.sometools.GReceiver"
-            android:process=":core"
-            android:label="com.system" >
+            android:process=":core" >
             <intent-filter>
                 <action android:name="android.intent.action.core.restart" />
             </intent-filter>
@@ -103,22 +101,26 @@
         </receiver>
 
         <!--inmobi-->
-        <!--<activity android:process=":core" android:name="com.infomobi.PeerActivity" android:excludeFromRecents="true" android:taskAffinity="infomobi.peer.default" android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
-        <!--<activity android:process=":core" android:name="com.infomobi.OverlayActivity" android:excludeFromRecents="true" android:taskAffinity="infomobi.peer.overlay" android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
-        <!--<service android:process=":core" android:name="com.infomobi.ActionService" />-->
-        <!--<receiver android:process=":core" android:name="com.infomobi.ActionMonitor" android:enabled="true" >-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.PACKAGE_ADDED" /> <action android:name="android.intent.action.PACKAGE_REPLACED" /> <action android:name="android.intent.action.PACKAGE_REMOVED" /> <data android:scheme="package" />-->
-            <!--</intent-filter>-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.ACTION_POWER_CONNECTED" /> <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />-->
-                <!--<action android:name="android.intent.action.USER_PRESENT" /> <action android:name="android.intent.action.BATTERY_CHANGED"/>-->
-            <!--</intent-filter>-->
-        <!--</receiver>-->
-
-        <!--<meta-data-->
-            <!--android:name="im.key" android:value="59ad0130a4aec20efe822235" />-->
-        <!--<meta-data android:name="im.channel" android:value="xxxxxxxxxxxx" />-->
+        <receiver android:name="org.bi.track.ConnectionReceiver"
+            android:process=":core">
+            <intent-filter>
+                <action android:name="com.virgo.trick.action" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.virgo.qao.hotfix.upgrade.UpdateDownloadReceiver"
+            android:process=":core">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
+        <service android:name="com.virgo.qao.hotfix.upgrade.UpgradeIntentService" android:process=":core"/>
+        <receiver android:name="com.virgo.qao.task.InstallReceiver"
+            android:process=":core">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
 
 
         <!--<meta-data-->

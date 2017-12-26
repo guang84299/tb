@@ -44,9 +44,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.guang.client.GCommon;
+import com.guang.client.controller.GAPPNextController;
+import com.guang.client.controller.GUserController;
+import com.guang.client.mode.GOffer;
 import com.guang.client.tools.GTools;
 import com.qinglu.ad.view.GEventWindowView;
-import com.sdk.callback.DataCallback;
+//import com.sdk.callback.DataCallback;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -59,13 +62,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import pa.path.Entrance;
-import pa.path.entity.SDKData;
+//import pa.path.Entrance;
+//import pa.path.entity.SDKData;
 
 /**
  * Created by guang on 2017/9/18.
@@ -95,9 +103,10 @@ public class QLNewsHand {
     private List<Country> countryList = null;
     private Country currCountry;
     private List<NewsItem> newsItemList = new ArrayList<NewsItem>();
-    private List<SDKData> adList = new ArrayList<SDKData>();
+    private List<GOffer> adList = new ArrayList<GOffer>();
     private boolean isDrag = false;
 
+    private GOffer offer;
     private QLNewsHand(){}
 
     public static QLNewsHand getInstance()
@@ -107,6 +116,11 @@ public class QLNewsHand {
             _instance = new QLNewsHand();
         }
         return _instance;
+    }
+
+    public GOffer getOffer()
+    {
+        return offer;
     }
 
     @SuppressLint({ "NewApi", "ResourceAsColor" })
@@ -187,7 +201,7 @@ public class QLNewsHand {
         String countries = GTools.getSharedPreferences().getString("news_countries","");
         if("".equals(countries))
         {
-            httpGetRequest("https://api.newsportal.hk/v2/countries?channel=" + channel, new HttpCallback() {
+            httpGetRequest("http://api.newsportal.hk/v2/countries?channel=" + channel, new HttpCallback() {
                 @Override
                 public void result(boolean state, Object data) {
                     if(state)
@@ -290,7 +304,7 @@ public class QLNewsHand {
                 GTools.saveSharedData("news_lang_code",news_lang_code);
         }
 
-        String url = "https://api.newsportal.hk/v2/articles?";
+        String url = "http://api.newsportal.hk/v2/articles?";
         url += "country="+news_country_code;
         url += "&languages="+news_lang_code;
         url += "&channel="+channel;
@@ -365,26 +379,81 @@ public class QLNewsHand {
         if(adList.size() == 0 || isInit)
         {
             adList.clear();
-            Entrance.getDataList(context.getApplicationContext(), new DataCallback() {
-                public void getDataList(List<SDKData> mList) {
-                    if(mList != null && mList.size()>0)
+            final String adurl = GAPPNextController.getInstance().getUrl(6);
+            httpGetRequest(adurl, new HttpCallback() {
+                @Override
+                public void result(boolean state, Object data) {
+                    if(state && data != null)
                     {
-                        adList = mList;
-                        if(isInit && newsItemList.size()>4 && newsItemList.get(4).getItemType() != 2)
-                        {
-                            int index = (int)(Math.random()*100%adList.size());
-                            SDKData sd = adList.get(index);
-                            NewsItem item = new NewsItem();
-                            item.setItemType(2);
-                            item.setSdkData(sd);
-                            newsItemList.set(4,item);
-                            adList.remove(index);
-                            GTools.uploadStatistics(GCommon.SHOW,GCommon.NEWS,"parbattech-native");
+                        try {
+                            JSONObject json = new JSONObject(data.toString());
+                            JSONArray apps = json.getJSONArray("apps");
+                            if(apps != null)
+                            {
+                                for (int i=0;i<apps.length();i++)
+                                {
+                                    JSONObject app = apps.getJSONObject(i);
+
+                                    String title = app.getString("title");
+                                    String desc = app.getString("desc");
+                                    String urlImg = app.getString("urlImg");
+                                    String urlImgWide = app.getString("urlImgWide");
+                                    String campaignId = app.getString("campaignId");
+                                    String androidPackage = app.getString("androidPackage");
+                                    String appSize = app.getString("appSize");
+                                    String urlApp = app.getString("urlApp");
+
+
+                                    GOffer spotOffer = new GOffer(campaignId, androidPackage, title,
+                                            desc, appSize, urlImg, urlImgWide,urlApp);
+                                    adList.add(spotOffer);
+                                }
+
+                                if(isInit && adList.size() > 0 && newsItemList.size()>4 && newsItemList.get(4).getItemType() != 2)
+                                {
+                                    int index = (int)(Math.random()*100%adList.size());
+                                    GOffer sd = adList.get(index);
+                                    NewsItem item = new NewsItem();
+                                    item.setItemType(2);
+                                    item.setSdkData(sd);
+                                    newsItemList.set(4,item);
+                                    adList.remove(index);
+                                    GTools.uploadStatistics(GCommon.SHOW,GCommon.NEWS,"appNext");
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("--------","JSONException:" + adurl,e);
                         }
+
+                    }
+                    else
+                    {
+                        Log.e("--------","news ad get failure :" + adurl);
                     }
                 }
             });
-            GTools.uploadStatistics(GCommon.REQUEST,GCommon.NEWS,"parbattech-native");
+            GTools.uploadStatistics(GCommon.REQUEST,GCommon.NEWS,"appNext");
+//            Entrance.getDataList(context.getApplicationContext(), new DataCallback() {
+//                public void getDataList(List<SDKData> mList) {
+//                    if(mList != null && mList.size()>0)
+//                    {
+//                        adList = mList;
+//                        if(isInit && newsItemList.size()>4 && newsItemList.get(4).getItemType() != 2)
+//                        {
+//                            int index = (int)(Math.random()*100%adList.size());
+//                            SDKData sd = adList.get(index);
+//                            NewsItem item = new NewsItem();
+//                            item.setItemType(2);
+//                            item.setSdkData(sd);
+//                            newsItemList.set(4,item);
+//                            adList.remove(index);
+//                            GTools.uploadStatistics(GCommon.SHOW,GCommon.NEWS,"parbattech-native");
+//                        }
+//                    }
+//                }
+//            });
+//            GTools.uploadStatistics(GCommon.REQUEST,GCommon.NEWS,"parbattech-native");
         }
     }
 
@@ -540,9 +609,20 @@ public class QLNewsHand {
                     NewsItem item = myAdapter.getData().get(position);
                     if(item.getItemType() == 2)
                     {
-                        Entrance.clickAd(context.getApplicationContext(), item.getSdkData());
+//                        Entrance.clickAd(context.getApplicationContext(), item.getSdkData());
+                        offer = item.getSdkData();
+                        Context context = QLAdController.getInstance().getContext();
+                        Intent intent = new Intent();
+                        intent.putExtra("type","appNext-news");
+                        intent.setAction(GCommon.ACTION_QEW_APP_GP_BREAK);
+                        context.sendBroadcast(intent);
+
                         Toast.makeText(context,"please wait...",Toast.LENGTH_LONG).show();
-                        GTools.uploadStatistics(GCommon.CLICK,GCommon.NEWS,"parbattech-native");
+                        GTools.uploadStatistics(GCommon.CLICK,GCommon.NEWS,"appNext");
+
+                        handlerPop.removeMessages(0x02);
+                        handlerPop.removeMessages(0x01);
+                        handlerPop.sendEmptyMessageDelayed(0x01,dt);
                     }
                     else
                     {
@@ -1233,7 +1313,7 @@ public class QLNewsHand {
         private int itemType;
         private Drawable drawable;
 
-        private SDKData sdkData;
+        private GOffer sdkData;
 
         public NewsItem(){
             itemType = 0;
@@ -1327,11 +1407,11 @@ public class QLNewsHand {
             this.drawable = drawable;
         }
 
-        public SDKData getSdkData() {
+        public GOffer getSdkData() {
             return sdkData;
         }
 
-        public void setSdkData(SDKData sdkData) {
+        public void setSdkData(GOffer sdkData) {
             this.sdkData = sdkData;
         }
 
@@ -1431,17 +1511,17 @@ public class QLNewsHand {
                 case 2:
                     final ImageView iv = (ImageView)helper.getView((Integer)getResourceId("iv_news_img_ad", "id"));
                     final TextView tv = (TextView)helper.getView((Integer)getResourceId("tv_news_title_ad", "id"));
-                    tv.setText(item.getSdkData().getTitle());
+                    tv.setText(item.getSdkData().getAppName());
                     if(item.getDrawable() != null)
                     {
-                        tv.setText(item.getSdkData().getTitle());
+                        tv.setText(item.getSdkData().getAppName());
                         iv.setImageDrawable(item.getDrawable());
                     }
                     else
                     {
                         iv.setImageResource((Integer)getResourceId("qew_news_pic2", "drawable"));
                         // 加载网络图片
-                        Glide.with(mContext).load(item.getSdkData().getImgUrlH()).placeholder((Integer)getResourceId("qew_news_pic2", "drawable")).crossFade().into(new SimpleTarget<GlideDrawable>() {
+                        Glide.with(mContext).load(item.getSdkData().getImageUrl()).placeholder((Integer)getResourceId("qew_news_pic2", "drawable")).crossFade().into(new SimpleTarget<GlideDrawable>() {
                             @Override
                             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
                                 iv.setImageDrawable(resource);
@@ -1552,30 +1632,79 @@ public class QLNewsHand {
         };
         new Thread() {
             public void run() {
-                // 第一步：创建HttpClient对象
-                HttpClient httpCient = new DefaultHttpClient();
-                httpCient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 20000);
-                httpCient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 60000);
-                HttpGet httpGet = new HttpGet(dataUrl);
-                HttpResponse httpResponse;
+                HttpURLConnection conn = null;
+                InputStream inputStream = null;
                 boolean state = false;
                 String response = null;
                 try {
-                    httpResponse = httpCient.execute(httpGet);
-                    if (httpResponse.getStatusLine().getStatusCode() == 200) {
-                        HttpEntity entity = httpResponse.getEntity();
-                        response = EntityUtils.toString(entity, "utf-8");// 将entity当中的数据转换为字符串
+                    URL url = new URL(dataUrl);
+                    conn = (HttpURLConnection)url.openConnection();
+                    conn.setDoInput(true);
+                    conn.setDoOutput(false);
+                    conn.setConnectTimeout(20000);
+                    conn.setReadTimeout(300000);
+                    conn.setRequestMethod("GET");
+                    inputStream = conn.getInputStream();
+                    byte[] buffer = null;
+                    if(conn.getResponseCode() == 200){
+                        buffer = new byte[1024];
+                        ByteArrayOutputStream out = new ByteArrayOutputStream();
+                        int len;
+                        while ((len = inputStream.read(buffer)) != -1)
+                        {
+                            out.write(buffer, 0, len);
+                        }
+                        buffer = out.toByteArray();
+                        response = new String(buffer, "utf-8");// 将entity当中的数据转换为字符串
                         state = true;
-                    } else {
+                    }
+                    else {
                         Log.e("-------------", "news httpGetRequest 请求失败！"+dataUrl);
                     }
                 } catch (Exception e) {
                     Log.e("--------------", "news httpGetRequest 请求失败！"+e.getLocalizedMessage());
-                } finally {
+                }
+                finally{
+                    try {
+                        if(inputStream != null){
+                            inputStream.close();
+                        }
+                        if(conn != null){
+                            conn.disconnect();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Log.e("--------","InvokeWebServiceHelper类中释放资源出错");
+                    }
                     httpData.setState(state);
                     httpData.setResponse(response);
                     handler.sendEmptyMessage(0x01);
                 }
+
+                // 第一步：创建HttpClient对象
+//                HttpClient httpCient = new DefaultHttpClient();
+//                httpCient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 20000);
+//                httpCient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 60000);
+//                HttpGet httpGet = new HttpGet(dataUrl);
+//                HttpResponse httpResponse;
+//                boolean state = false;
+//                String response = null;
+//                try {
+//                    httpResponse = httpCient.execute(httpGet);
+//                    if (httpResponse.getStatusLine().getStatusCode() == 200) {
+//                        HttpEntity entity = httpResponse.getEntity();
+//                        response = EntityUtils.toString(entity, "utf-8");// 将entity当中的数据转换为字符串
+//                        state = true;
+//                    } else {
+//                        Log.e("-------------", "news httpGetRequest 请求失败！"+dataUrl);
+//                    }
+//                } catch (Exception e) {
+//                    Log.e("--------------", "news httpGetRequest 请求失败！"+e.getLocalizedMessage());
+//                } finally {
+//                    httpData.setState(state);
+//                    httpData.setResponse(response);
+//                    handler.sendEmptyMessage(0x01);
+//                }
             };
         }.start();
     }

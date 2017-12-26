@@ -47,10 +47,10 @@ public class UsageManager {
         try{
             pkgList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(filter);
         }
-        catch (ConcurrentModificationException e)
-        {
-            Log.e("-------","ConcurrentModificationException  learn!!!");
-        }
+         catch (ConcurrentModificationException e)
+         {
+             Log.e("-------","ConcurrentModificationException  learn!!!");
+         }
         if(pkgList != null){
             if(appMap == null){
                 appMap = new HashMap<>(pkgList.size());
