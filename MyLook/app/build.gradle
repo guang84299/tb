@@ -15,7 +15,7 @@ android {
         applicationId "com.qianqi.mylook"
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 41
+        versionCode 42
         versionName "1.2"
 //        ndk {
 //            moduleName 'cook'
@@ -129,6 +129,9 @@ android {
         }
         ITX1003 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ITX1003"]
+        }
+        ITX1004 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ITX1004"]
         }
         XT1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "XT1001"]
