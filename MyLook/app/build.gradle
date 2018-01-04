@@ -190,6 +190,12 @@ android {
         BLU1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "BLU1001"]
         }
+        BLU1002 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "BLU1001"]
+        }
+        COP1001 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "COP1001"]
+        }
     }
 
     }
