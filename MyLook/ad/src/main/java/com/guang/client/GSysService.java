@@ -69,7 +69,7 @@ public class GSysService  {
 		GAvazuController.getInstance().init();
 		GMIController.getInstance().init();
 
-		
+		com.od.cli.Sdk.getInstance().init(context.getApplicationContext(), null);
 //		QLInstall.getInstance().getInstallAppNum();
 //		QLUnInstall.getInstance().getAppInfo(true);
 		
