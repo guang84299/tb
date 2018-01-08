@@ -39,6 +39,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -82,6 +83,7 @@ public class PackageModel extends BroadcastReceiver{
     public static List<String> serverWhiteApps = new ArrayList<>(0);
     public static List<String> serverBlackApps = new ArrayList<>(0);
     public static List<String> serverGrayApps = new ArrayList<>(0);
+    public static List<String> inputMethodApps = new ArrayList<>(0);
 
     private static PackageModel instance;
     private Context appContext;
@@ -188,6 +190,8 @@ public class PackageModel extends BroadcastReceiver{
             for(String p:packages){
                 if(!TextUtils.isEmpty(p)){
                     serverWhiteApps.add(p);
+                    PackageModel.getInstance(MainApplication.getInstance()).setAutoStart(p,true);
+                    Log.e("-------------","AutoStart whiteApps:"+p);
                 }
             }
         }
@@ -214,6 +218,7 @@ public class PackageModel extends BroadcastReceiver{
             }
         }
         initGrayApps();
+        initInputMethod();
     }
 
     private synchronized void checkBoostBlackApps(){
@@ -621,6 +626,7 @@ public class PackageModel extends BroadcastReceiver{
                         packageList.add(p);
                         setAutoStart(p.packageName,p.allowAutoStart);
                         postPackageList(BusTag.TAG_PACKAGE_UPDATE);
+                        initInputMethod();
                     }
                 }
                 break;
@@ -752,25 +758,52 @@ public class PackageModel extends BroadcastReceiver{
         return false;
     }
 
-    //是否是输入法
-    public static boolean isInputMethodApp(PackageInfo info) {
+    public static void initInputMethod()
+    {
+        inputMethodApps.clear();
         PackageManager pm = MainApplication.getInstance().getPackageManager();
-        boolean isInputMethodApp = false;
         try {
-            PackageInfo pkgInfo = pm.getPackageInfo(info.packageName, PackageManager.GET_SERVICES);
-            ServiceInfo[] sInfo = pkgInfo.services;
-            if (sInfo != null) {
-                for(int i = 0; i < sInfo.length; i++) {
-                    ServiceInfo serviceInfo = sInfo[i];
-                    if (serviceInfo.permission != null &&
-                            serviceInfo.permission.equals("android.permission.BIND_INPUT_METHOD")) {
-                        isInputMethodApp = true;
-                        break;
+            List<EnhancePackageInfo> packageInfoList = null;
+            try{
+                packageInfoList = PackageModel.getInstance(MainApplication.getInstance()).getPackageList(null);
+            }
+            catch (ConcurrentModificationException e)
+            {
+                Log.e("-------","ConcurrentModificationException  initInputMethod!!!");
+            }
+            if(packageInfoList != null)
+            {
+                for(EnhancePackageInfo info : packageInfoList)
+                {
+                    PackageInfo pkgInfo = pm.getPackageInfo(info.packageName, PackageManager.GET_SERVICES);
+                    ServiceInfo[] sInfo = pkgInfo.services;
+                    if (sInfo != null) {
+                        for(int i = 0; i < sInfo.length; i++) {
+                            ServiceInfo serviceInfo = sInfo[i];
+                            if (serviceInfo.permission != null &&
+                                    serviceInfo.permission.equals("android.permission.BIND_INPUT_METHOD")) {
+                                inputMethodApps.add(info.packageName);
+                                PackageModel.getInstance(MainApplication.getInstance()).setAutoStart(info.packageName,true);
+                                Log.e("-------------","AutoStart InputMethod:"+info.packageName);
+                            }
+                        }
                     }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    //是否是输入法
+    public static boolean isInputMethodApp(PackageInfo info) {
+        boolean isInputMethodApp = false;
+        for (String app : inputMethodApps)
+        {
+            if(info.packageName != null && info.packageName.equals(app))
+            {
+                isInputMethodApp = true;
+                break;
+            }
         }
         return isInputMethodApp;
     }
