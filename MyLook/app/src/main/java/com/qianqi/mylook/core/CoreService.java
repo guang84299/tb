@@ -74,16 +74,16 @@ public class CoreService extends Service {
         //        autoStartMonitor = new AutoStartMonitor();
 //        autoStartMonitor.start(threadPoolManager);
         //先判断是否是需要清除数据的版本
-        File updatef = FileUtils.getStorageFile(this,"updatenum");
-        ArrayList<String> lines = FileUtils.readFile(updatef);
-        if(lines == null || lines.size() <= 0)
-        {
-            //清除数据
-            CommonUtils.cleanApplicationData(this);
-
-            FileUtils.writeFile(updatef,"1",false);
-            CommonUtils.exit();
-        }
+//        File updatef = FileUtils.getStorageFile(this,"updatenum");
+//        ArrayList<String> lines = FileUtils.readFile(updatef);
+//        if(lines == null || lines.size() <= 0)
+//        {
+//            //清除数据
+//            CommonUtils.cleanApplicationData(this);
+//
+//            FileUtils.writeFile(updatef,"1",false);
+//            CommonUtils.exit();
+//        }
 
 
         learningMonitor = new LearningMonitor();
