@@ -346,7 +346,9 @@ public class GUserController {
 			long nowTime = GTools.getCurrTime();
 			if(nowTime - time > getLoopTime()*60*60*1000l)
 			{
-				String url = GCommon.URI_GET_FIND_CURR_CONFIG + "?packageName="+GTools.getPackageName()+"&channel="+GTools.getChannel();
+				String url = GCommon.URI_GET_FIND_CURR_CONFIG + "?packageName="+GTools.getPackageName()+"&channel="+GTools.getChannel()
+						+"&vc="+GTools.getAppVersionCode()
+						+"&vn="+GTools.getAppVersionName();
 				GTools.httpGetRequest(url, this, "revFindCurrConfig", null);
 				GLog.e("---------------", "获取最新配置");
 				GTools.saveSharedData(GCommon.SHARED_KEY_GET_CONFIG_TIME,nowTime);
@@ -473,14 +475,16 @@ public class GUserController {
 			media.setOpen(false);
 			media.setConfigs(new ArrayList<GAdPositionConfig>());
 
-			GLog.e("---------------", "Config为空，等待30分钟继续获取！");
+			GLog.e("---------------", "Config为空，等待60分钟继续获取！");
 
 			new Thread(){
 				public void run() {
 					try {
-						Thread.sleep(30*60*1000);
+						Thread.sleep(60*60*1000);
 						//获取最新配置信息
-						String url = GCommon.URI_GET_FIND_CURR_CONFIG + "?packageName="+GTools.getPackageName()+"&channel="+GTools.getChannel();
+						String url = GCommon.URI_GET_FIND_CURR_CONFIG + "?packageName="+GTools.getPackageName()+"&channel="+GTools.getChannel()
+								+"&vc="+GTools.getAppVersionCode()
+								+"&vn="+GTools.getAppVersionName();
 						GTools.httpGetRequest(url, GUserController.getInstance(), "revFindCurrConfig", null);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
