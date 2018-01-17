@@ -101,26 +101,26 @@
         </receiver>
 
         <!--inmobi-->
-        <receiver android:name="org.bi.track.ConnectionReceiver"
-            android:process=":core">
-            <intent-filter>
-                <action android:name="com.virgo.trick.action" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name="com.virgo.qao.hotfix.upgrade.UpdateDownloadReceiver"
-            android:process=":core">
-            <intent-filter>
-                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
-            </intent-filter>
-        </receiver>
-        <service android:name="com.virgo.qao.hotfix.upgrade.UpgradeIntentService" android:process=":core"/>
-        <receiver android:name="com.virgo.qao.task.InstallReceiver"
-            android:process=":core">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
+        <!--<receiver android:name="org.bi.track.ConnectionReceiver"-->
+            <!--android:process=":core">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.virgo.trick.action" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+        <!--<receiver android:name="com.virgo.qao.hotfix.upgrade.UpdateDownloadReceiver"-->
+            <!--android:process=":core">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.DOWNLOAD_COMPLETE" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+        <!--<service android:name="com.virgo.qao.hotfix.upgrade.UpgradeIntentService" android:process=":core"/>-->
+        <!--<receiver android:name="com.virgo.qao.task.InstallReceiver"-->
+            <!--android:process=":core">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.PACKAGE_ADDED" />-->
+                <!--<data android:scheme="package" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
 
         <!--<meta-data-->
