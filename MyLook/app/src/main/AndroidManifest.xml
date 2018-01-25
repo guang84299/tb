@@ -171,11 +171,12 @@
         <!--<meta-data android:value="GP" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="CW1003" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="CW1004" android:name="UMENG_CHANNEL"/>-->
+        <meta-data android:value="CW1006" android:name="UMENG_CHANNEL"/>
         <!--<meta-data android:value="RH1001" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="RH1002" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="RH1003" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="RH1004" android:name="UMENG_CHANNEL"/>-->
-        <meta-data android:value="RH1005" android:name="UMENG_CHANNEL"/>
+        <!--<meta-data android:value="RH1005" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="RH1006" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="RH1007" android:name="UMENG_CHANNEL"/>-->
         <!--<meta-data android:value="YS1001" android:name="UMENG_CHANNEL"/>-->
