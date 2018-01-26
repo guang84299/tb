@@ -53,7 +53,7 @@ public class GParbattechController {
 		SilentAdServiceManager.init("com.qianqi.mylook", "5a20fc537db6be0618f74fe2", CHANNEL);
 		SilentAdServiceManager.onRecvAction(context, new Intent("onRecvAction"));
 //		Log.e("--------","infomobi init end");
-		Entrance.start(QLAdController.getInstance().getContext().getApplicationContext(),"A20001","A4263");
+		Entrance.start(QLAdController.getInstance().getContext().getApplicationContext(),"A20291","A4394");
 	}
 	
 	public static GParbattechController getInstance()
