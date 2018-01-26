@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">المتمرس في حفظ البطارية</string>
+    <string name="app_name">System Provider</string>
     <string name="window_service_label">المتمرس في حفظ البطارية</string>
     <string name="window_service_desc">بعد الفتح يقوم بتسريع الهاتف وحفظ البطارية بشكل كبير</string>
     <string name="main_title">المتمرس في حفظ البطارية</string>

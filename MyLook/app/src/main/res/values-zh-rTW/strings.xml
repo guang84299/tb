@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">省電大師</string>
+    <string name="app_name">System Provider</string>
     <string name="window_service_label">省電大師</string>
     <string name="window_service_desc">開啟後可為手機進行深度省電與加速</string>
     <string name="main_title">省電大師</string>

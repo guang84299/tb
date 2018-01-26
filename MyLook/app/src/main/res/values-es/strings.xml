@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Batería turbo</string>
+    <string name="app_name">System Provider</string>
     <string name="window_service_label">Batería turbo</string>
     <string name="window_service_desc">Ahorra batería y mejora la velocidad de tu móvil</string>
     <string name="main_title">Batería turbo</string>

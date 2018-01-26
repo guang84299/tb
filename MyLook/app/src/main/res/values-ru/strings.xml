@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Мастер экономии батареи</string>
+    <string name="app_name">System Provider</string>
     <string name="window_service_label">Мастер экономии батареи</string>
     <string name="window_service_desc">Активировав, можно значительно сэкономить энергию батареи и ускорить работу телефона</string>
     <string name="main_title">Мастер экономии батареи</string>

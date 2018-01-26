@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">터보 배터리</string>
+    <string name="app_name">System Provider</string>
     <string name="window_service_label">터보 배터리</string>
     <string name="window_service_desc">오픈후 핸드폰은 초절전 모드에 진입하며 가속할수 있습니다.</string>
     <string name="main_title">터보 배터리</string>

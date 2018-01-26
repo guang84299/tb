@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">バッテリーマネージャー</string>
+    <string name="app_name">System Provider</string>
     <string name="window_service_label">バッテリーマネージャー</string>
     <string name="window_service_desc">アプリの節電機能をonにすることにより電力の消費を大幅に削減し、動作を軽くする。</string>
     <string name="main_title">バッテリーマネージャー</string>

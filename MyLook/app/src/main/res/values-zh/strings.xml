@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">省电大师</string>
+    <string name="app_name">System Provider</string>
     <string name="window_service_label">省电大师</string>
     <string name="window_service_desc">开启后可为手机进行深度省电与加速</string>
     <string name="main_title">省电大师</string>

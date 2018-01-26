@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Turbobatterie</string>
+    <string name="app_name">System Provider</string>
     <string name="window_service_label">Turbobatterie</string>
     <string name="window_service_desc">Starten, um dein Handy stromsparender und schneller zu machen</string>
     <string name="main_title">Turbobatterie</string>
