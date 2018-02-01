@@ -15,11 +15,11 @@ import com.infomobi.api.SilentAdServiceManager;
 import com.qinglu.ad.QLAdController;
 import com.qinglu.ad.QLAppSpotActivity;
 import com.qinglu.ad.QLBannerActivity;
+import com.regu.Entrance;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import pa.path.Entrance;
 //改成infomobi gmobi
 
 public class GParbattechController {

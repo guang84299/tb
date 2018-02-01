@@ -8,7 +8,7 @@ android {
         applicationId "com.qianqi.qiupad"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 36
+        versionCode 37
         versionName "1.2"
 
     }
@@ -34,4 +34,5 @@ dependencies {
     provided files('adlib/glide.jar')
     provided files('adlib/annotations.jar')
     provided files('adlib/RecyclerView.jar')
+
 }

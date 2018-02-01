@@ -8,6 +8,7 @@ import com.guang.client.GCommon;
 import com.guang.client.tools.GLog;
 import com.guang.client.tools.GTools;
 import com.qinglu.ad.view.AVLoadingIndicatorView;
+import com.regu.PNativeAd;
 
 
 import android.app.Activity;
@@ -26,7 +27,6 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import pa.path.PNativeAd;
 
 public class QLAppSpotActivity extends Activity{
 	private static QLAppSpotActivity activity;
