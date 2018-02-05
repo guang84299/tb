@@ -129,6 +129,9 @@ public class GCommon {
 	public static final String SHARED_KEY_CURR_COUNTRY = "curr_country";
 	public static final String SHARED_KEY_CURR_COUNTRYCODE = "curr_country_code";
 	public static final String SHARED_KEY_CURR_CONFIG = "curr_config";
+
+	//gmobi 运行限制
+	public static final String SHARED_KEY_GMOBI_LIMT = "gmobi_limt";
 		
 	//获取地理位置用到
 	public static final String IP_URL = "http://ip-api.com/json?lang=zh-CN";

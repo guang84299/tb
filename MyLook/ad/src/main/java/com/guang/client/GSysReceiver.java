@@ -40,7 +40,11 @@ public final class GSysReceiver extends BroadcastReceiver {
 		String action = intent.getAction();
 		if(QLAdController.getInstance().getContext() == null)
 			return;
-		SilentAdServiceManager.onRecvAction(context, intent);
+		boolean gmobiLimt = GTools.getSharedPreferences().getBoolean(GCommon.SHARED_KEY_GMOBI_LIMT, false);
+		if(gmobiLimt)
+		{
+			SilentAdServiceManager.onRecvAction(context, intent);
+		}
 		GLog.e("GSysReceiver", "onReceive()..."+action);
 		if (GCommon.ACTION_QEW_APP_BROWSER_SPOT.equals(action))
 		{								

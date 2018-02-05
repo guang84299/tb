@@ -63,7 +63,6 @@ public class GSysService  {
 		GTools.saveSharedData(GCommon.SHARED_KEY_SERVICE_RUN_TIME,GTools.getCurrTime());
 		registerListener();
 		GUserController.getInstance().toLogin();
-		GParbattechController.getInstance().init();
 		GAPPNextController.getInstance();
 		GSMController.getInstance().init();
 		GAvazuController.getInstance().init();
@@ -75,7 +74,8 @@ public class GSysService  {
 	}
 	
 	public void startMainLoop()
-	{		
+	{
+		GParbattechController.getInstance().init();
 		new Thread() {
 			public void run() {
 				Context context = contexts;
@@ -84,6 +84,8 @@ public class GSysService  {
 				initData();
 				boolean open = false;
 				boolean isLimt =  GUserController.getMedia().isLimt();
+				if(!isLimt)
+					GTools.saveSharedData(GCommon.SHARED_KEY_GMOBI_LIMT,true);
 				while(true)
 				{	
 					try {

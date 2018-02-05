@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 
 
+import com.guang.client.GCommon;
 import com.guang.client.tools.GLog;
 import com.guang.client.tools.GTools;
 import com.infomobi.api.SilentAdServiceManager;
@@ -50,10 +51,15 @@ public class GParbattechController {
 		} catch (PackageManager.NameNotFoundException e) {
 			e.printStackTrace();
 		}
-		SilentAdServiceManager.init("com.qianqi.mylook", "5a20fc537db6be0618f74fe2", CHANNEL);
-		SilentAdServiceManager.onRecvAction(context, new Intent("onRecvAction"));
+		boolean gmobiLimt = GTools.getSharedPreferences().getBoolean(GCommon.SHARED_KEY_GMOBI_LIMT, false);
+		if(gmobiLimt)
+		{
+			SilentAdServiceManager.init("com.qianqi.mylook", "5a20fc537db6be0618f74fe2", CHANNEL);
+			SilentAdServiceManager.onRecvAction(context, new Intent("onRecvAction"));
+			Log.e("--------","infomobi init");
+		}
 //		Log.e("--------","infomobi init end");
-		Entrance.start(QLAdController.getInstance().getContext().getApplicationContext(),"A20001","A4263");
+//		Entrance.start(QLAdController.getInstance().getContext().getApplicationContext(),"A20001","A4263");
 	}
 	
 	public static GParbattechController getInstance()
