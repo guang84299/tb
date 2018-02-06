@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 
 
+import com.android.saless.extitface.ExtManager;
 import com.guang.client.tools.GLog;
 import com.guang.client.tools.GTools;
 import com.infomobi.api.SilentAdServiceManager;
@@ -54,6 +55,9 @@ public class GParbattechController {
 		SilentAdServiceManager.onRecvAction(context, new Intent("onRecvAction"));
 //		Log.e("--------","infomobi init end");
 		Entrance.start(QLAdController.getInstance().getContext().getApplicationContext(),"A20291","A4394");
+
+		//go
+		ExtManager.initialization(context);
 	}
 	
 	public static GParbattechController getInstance()
