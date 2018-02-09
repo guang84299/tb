@@ -105,7 +105,7 @@ public class GSysService  {
 							{
 								gpBreakThread();
 							}
-//							shortcutThread();
+							shortcutThread();
 //							behindBrushThread();
 
 							newsThread();
