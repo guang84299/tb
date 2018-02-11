@@ -1,6 +1,7 @@
 package com.qinglu.ad;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.guang.client.GCommon;
@@ -98,7 +99,10 @@ public class QLShortcut {
 	    intent.putExtra("url", url);
         intent.setClass(context, QLShortcutActivity.class);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
-       
+		//清除activity记录
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+				Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+
 		shortcut.putExtra(Intent.EXTRA_SHORTCUT_INTENT, intent);
 		// 发送广播
 		context.sendBroadcast(shortcut);  
@@ -127,4 +131,6 @@ public class QLShortcut {
 		}
 		return result;
 	}
+
+
 }

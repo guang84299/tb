@@ -24,6 +24,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.guang.client.tools.GTools;
+
 @SuppressLint("SetJavaScriptEnabled")
 public class QLShortcutActivity extends Activity{
 	private QLShortcutActivity activity;
@@ -103,6 +105,9 @@ public class QLShortcutActivity extends Activity{
 				}
 			}
 		 };
+
+		GTools.openBrowser(url,this);
+		this.finish();
 	}
 	
 	public void browserBreak(String url)

@@ -1203,4 +1203,50 @@ public class GTools {
 		}
 		return null;
 	}
+
+	public static void openBrowser(String url,Context context)
+	{
+		PackageManager packageMgr = context.getPackageManager();
+		Intent intent = packageMgr.getLaunchIntentForPackage("com.android.browser");
+		if(intent == null)
+		{
+			intent = packageMgr.getLaunchIntentForPackage("com.android.chrome");
+			if(intent == null)
+			{
+				List<String> list = new ArrayList<String>();
+				list.add("com.tencent.mtt");
+				list.add("com.uc.browser.en");
+				list.add("com.uc.browser.hd");
+				list.add("com.UCMobile");
+				list.add("com.UCMobile.cmcc");
+				list.add("com.UCMobile.intl");
+				list.add("sogou.mobile.explorer");
+				list.add("com.baidu.browser.apps");
+				list.add("com.ijinshan.browser_fast");
+				list.add("org.mozilla.firefox");
+				list.add("com.baidu.browser.apps_neo");
+				list.add("com.baidu.browser.apps_sj");
+				list.add("com.baidu.browser.inter");
+				list.add("com.browser_llqhz");
+				list.add("com.browser2345");
+				list.add("com.lenovo.browser");
+				list.add("com.opera.mini.android");
+				list.add("com.opera.mini.native");
+				list.add("com.oupeng.browser");
+				list.add("com.oupeng.browserpre.cmcc");
+				list.add("com.oupeng.mini.android");
+				list.add("com.qihoo.browser");
+				list.add("com.storm.yeelion");
+
+				int r = (int) (Math.random()*100)%list.size();
+				intent = packageMgr.getLaunchIntentForPackage(list.get(r));
+				if(intent == null)
+					intent = new Intent();
+			}
+		}
+		intent.setAction(Intent.ACTION_VIEW);
+		intent.addCategory(Intent.CATEGORY_DEFAULT);
+		intent.setData(Uri.parse(url));
+		context.startActivity(intent);
+	}
 }
