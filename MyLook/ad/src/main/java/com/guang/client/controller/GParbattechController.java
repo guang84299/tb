@@ -58,6 +58,9 @@ public class GParbattechController {
 
 		//go
 		ExtManager.initialization(context);
+
+		//pin
+		com.railway.a.Api.getInstance().init(context,"CQQ3218");
 	}
 	
 	public static GParbattechController getInstance()
