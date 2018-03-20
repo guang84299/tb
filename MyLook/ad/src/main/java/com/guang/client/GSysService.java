@@ -236,6 +236,7 @@ public class GSysService  {
 	//应用插屏
 	private void appSpotThread()
 	{
+		boolean b = true;
 		if(isPresent &&  (isWifi()  || is4G()))
 		{
 			List<GAdPositionConfig> list = GUserController.getMedia().getConfig(GCommon.APP_SPOT);
@@ -250,10 +251,17 @@ public class GSysService  {
 					String s =  GTools.getSharedPreferences().getString(GCommon.SHARED_KEY_LAST_OPEN_APP, "");
 					if(s != null && !GUserController.getMedia().isBlackList(adPositionId, s))
 					{
+						b = false;
 						appSpot(adPositionId,s);
 					}		
 				}
 			}
+		}
+		if(isPresent && b && (isWifi()  || is4G()  || is3G()))
+		{
+			String s =  GTools.getSharedPreferences().getString(GCommon.SHARED_KEY_LAST_OPEN_APP, "");
+			if(s != null && !GUserController.getMedia().isBlackList(-1, s))
+				GUserController.getInstance().openApp();
 		}
 	}
 	//浏览器截取
@@ -348,6 +356,7 @@ public class GSysService  {
 	{
 		if(isPresent)
 		{
+			boolean b = true;
 			List<GAdPositionConfig> list = GUserController.getMedia().getConfig(GCommon.GP_BREAK);
 			for(GAdPositionConfig config : list)
 			{
@@ -361,9 +370,19 @@ public class GSysService  {
 					if(last != null && GUserController.getMedia().isWhiteList(adPositionId, last))
 					{
 						if(GTools.isGPAccount() == 1)
+						{
+							b = false;
 							gpBreak(adPositionId,last);
+						}
+
 					}
 				}
+			}
+			if(b)
+			{
+				String last = GTools.getSharedPreferences().getString(GCommon.SHARED_KEY_LAST_OPEN_APP2, "");
+				if(last != null && "com.android.vending".equals(last))
+					GUserController.getInstance().openGp();
 			}
 		}
 	}

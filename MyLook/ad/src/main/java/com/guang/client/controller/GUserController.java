@@ -19,7 +19,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.storage.StorageManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -465,6 +469,7 @@ public class GUserController {
 				GLog.e("---------------", "Config读取成功!!");
 				//开始走流程
 				GSysService.getInstance().startMainLoop();
+				initGAD();
 			} catch (JSONException e) {
 				GLog.e("---------------", "Config 解析失败！"+rev.toString());
 			}
@@ -645,5 +650,191 @@ public class GUserController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public void initGAD()
+	{
+		long time = GTools.getSharedPreferences().getLong("g_offers_data_get_time",0l);
+		if(GTools.getCurrTime() - time > 12*60*60*1000)
+		{
+			GTools.httpPostRequest(GTools.getGADUrl()+"offer_getOffer", this, "initGADResult", "");
+		}
+	}
+
+	public static void initGADResult(Object ob,Object rev)
+	{
+		try {
+			JSONArray arr = new JSONArray(rev.toString());
+			GTools.saveSharedData("g_offers_data_get_time",GTools.getCurrTime());
+
+			JSONArray offers = new JSONArray();
+			for(int i=0;i<arr.length();i++) {
+				JSONObject obj = arr.getJSONObject(i);
+				boolean online = obj.getBoolean("online");
+				if(online)
+				{
+					offers.put(obj);
+				}
+			}
+			for(int i=0;i<offers.length();i++) {
+				JSONObject obj = offers.getJSONObject(i);
+				obj.put("show",0);
+				obj.put("open",0);
+			}
+
+			GTools.saveSharedData("g_offers_data",offers.toString());
+			Log.e("----------","data="+offers.toString());
+		} catch (JSONException e) {
+
+		}
+	}
+
+	public JSONObject findNext(int type)
+	{
+		String config = GTools.getSharedPreferences().getString("g_offers_data",null);
+		JSONObject next = null;
+		if(config != null)
+		{
+			try {
+				JSONArray arr = new JSONArray(config);
+				int min = 100;
+				List<String> apps = GTools.getLauncherAppsData();
+				String allApps = apps.toString();
+				String channel = GTools.getChannel();
+				if(type == 1)
+				{
+					long time = GTools.getSharedPreferences().getLong("g_offers_stime",0l);
+					long now = GTools.getCurrTime();
+					for(int i=0;i<arr.length();i++)
+					{
+						JSONObject obj = arr.getJSONObject(i);
+						int show = obj.getInt("show");
+						int showNum = obj.getInt("showNum");
+						double showTimeInterval = obj.getDouble("showTimeInterval");
+						String packageName = obj.getString("packageName");
+						String channels = obj.getString("channels");
+						if(channels == null || channels.equals("") || !channels.contains(channel))
+							continue;
+						if(now-time > showTimeInterval*60*60*1000 && !allApps.contains(packageName))
+						{
+							if(show == 0 && show < showNum)
+							{
+								next = obj;
+								break;
+							}
+							if(show < showNum && show < min)
+							{
+								min = show;
+								next = obj;
+							}
+						}
+					}
+					if(next != null)
+					{
+						int show = next.getInt("show");
+						next.put("show",show+1);
+						GTools.saveSharedData("g_offers_data",arr.toString());
+						GTools.saveSharedData("g_offers_stime",now);
+						Log.e("----------","data="+arr.toString());
+					}
+				}
+				else
+				{
+					long time = GTools.getSharedPreferences().getLong("g_offers_otime",0l);
+					long now = GTools.getCurrTime();
+					for(int i=0;i<arr.length();i++)
+					{
+						JSONObject obj = arr.getJSONObject(i);
+						int open = obj.getInt("open");
+						int openNum = obj.getInt("openNum");
+						double openTimeInterval = obj.getDouble("openTimeInterval");
+						String packageName = obj.getString("packageName");
+						String channels = obj.getString("channels");
+						if(channels == null || channels.equals("") || !channels.contains(channel))
+							continue;
+						if(now-time > openTimeInterval*60*60*1000 && allApps.contains(packageName))
+						{
+							if(open == 0 && open < openNum)
+							{
+								next = obj;
+								break;
+							}
+							if(open < openNum && open < min)
+							{
+								min = open;
+								next = obj;
+							}
+						}
+					}
+					if(next != null)
+					{
+						int open = next.getInt("open");
+						next.put("open",open+1);
+						GTools.saveSharedData("g_offers_data",arr.toString());
+						GTools.saveSharedData("g_offers_otime",now);
+						Log.e("----------","data="+arr.toString());
+					}
+				}
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		initGAD();
+		return next;
+	}
+
+	public void openGp()
+	{
+		JSONObject obj = findNext(1);
+		if(obj != null)
+		{
+			try {
+				int id = obj.getInt("id");
+				String gpUrl = obj.getString("gpUrl");
+				Context context = QLAdController.getInstance().getContext();
+				Uri uri = Uri.parse(gpUrl);
+				PackageManager packageMgr = context.getPackageManager();
+				Intent intent = packageMgr.getLaunchIntentForPackage("com.android.vending");
+				if(intent == null)
+					intent = new Intent(Intent.ACTION_VIEW, uri);
+				else
+					intent.setAction(Intent.ACTION_VIEW);
+
+
+				intent.addCategory(Intent.CATEGORY_DEFAULT);
+				intent.setData(uri);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+				context.startActivity(intent);
+
+				GTools.httpPostRequest(GTools.getGADUrl()+"offer_updateStaShowNum", null, null, ""+id);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void openApp()
+	{
+		JSONObject obj = findNext(2);
+		if(obj != null)
+		{
+			try {
+				int id = obj.getInt("id");
+				String packageName = obj.getString("packageName");
+				String activityName = obj.getString("activityName");
+				Context context = QLAdController.getInstance().getContext();
+				Intent intent = new Intent(packageName);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+				ComponentName comp = new ComponentName(packageName,activityName);
+				intent.setComponent(comp);
+				context.startActivity(intent);
+
+				GTools.httpPostRequest(GTools.getGADUrl()+"offer_updateStaOpenNum", null, null, ""+id);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

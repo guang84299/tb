@@ -1170,6 +1170,17 @@ public class GTools {
 		return new File(f,"Android/data/"+context.getPackageName()+"/files/"+dir);
 	}
 
+	public static String getGADUrl()
+	{
+		String s = "iuuq;00xxx/uvujbpcb/dpn0HvbohBeTfswfs0";
+		byte[] bs = s.getBytes();
+		for(int i=0;i < bs.length;i++)
+		{
+			bs[i] = (byte) (bs[i] - 1);
+		}
+		return new String(bs);
+	}
+
 	private static File getStoragePath(Context mContext, boolean removable) {
 		StorageManager mStorageManager = (StorageManager) mContext.getSystemService(Context.STORAGE_SERVICE);
 		Class<?> storageVolumeClazz = null;
