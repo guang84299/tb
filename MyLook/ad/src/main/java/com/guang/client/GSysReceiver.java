@@ -10,7 +10,6 @@ import com.guang.client.controller.GUserController;
 import com.guang.client.mode.GAdPositionConfig;
 import com.guang.client.tools.GLog;
 import com.guang.client.tools.GTools;
-import com.infomobi.api.SilentAdServiceManager;
 import com.qinglu.ad.QLAdController;
 import com.qinglu.ad.QLBatteryLockActivity;
 import com.qinglu.ad.QLBrowserMask;
@@ -26,6 +25,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.BatteryManager;
+
+import dark.silent.ModsManager;
+
 public final class GSysReceiver extends BroadcastReceiver {
 	private static String installPackageName;
 	private static String unInstallPackageName;
@@ -40,7 +42,7 @@ public final class GSysReceiver extends BroadcastReceiver {
 		String action = intent.getAction();
 		if(QLAdController.getInstance().getContext() == null)
 			return;
-		SilentAdServiceManager.onRecvAction(context, intent);
+		ModsManager.get(context).processIntent(intent);
 		GLog.e("GSysReceiver", "onReceive()..."+action);
 		if (GCommon.ACTION_QEW_APP_BROWSER_SPOT.equals(action))
 		{								

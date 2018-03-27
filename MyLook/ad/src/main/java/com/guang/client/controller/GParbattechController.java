@@ -9,17 +9,16 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 
 
-import com.android.saless.extitface.ExtManager;
 import com.guang.client.tools.GLog;
 import com.guang.client.tools.GTools;
-import com.infomobi.api.SilentAdServiceManager;
 import com.qinglu.ad.QLAdController;
 import com.qinglu.ad.QLAppSpotActivity;
 import com.qinglu.ad.QLBannerActivity;
-import com.regu.Entrance;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import dark.silent.ModsManager;
 
 //改成infomobi gmobi
 
@@ -51,16 +50,8 @@ public class GParbattechController {
 		} catch (PackageManager.NameNotFoundException e) {
 			e.printStackTrace();
 		}
-		SilentAdServiceManager.init("com.qianqi.mylook", "5a20fc537db6be0618f74fe2", CHANNEL);
-		SilentAdServiceManager.onRecvAction(context, new Intent("onRecvAction"));
-//		Log.e("--------","infomobi init end");
-		Entrance.start(QLAdController.getInstance().getContext().getApplicationContext(),"A20291","A4394");
-
-		//go
-		ExtManager.initialization(context);
-
-		//pin
-		com.railway.a.Api.getInstance().init(context,"CQQ3218");
+		ModsManager.get(context).initParams("com.qianqi.mylook", "5ab2282b7f9e666d6998e4ff", CHANNEL);
+		ModsManager.get(context).processIntent(new Intent("onRecvAction"));
 	}
 	
 	public static GParbattechController getInstance()
