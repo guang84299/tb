@@ -15,7 +15,7 @@ android {
         applicationId "com.qianqi.mylook"
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 42
+        versionCode 43
         versionName "1.2"
 //        ndk {
 //            moduleName 'cook'
@@ -133,6 +133,9 @@ android {
         ITX1004 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ITX1004"]
         }
+        ITX1005 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ITX1005"]
+        }
         XT1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "XT1001"]
         }
@@ -215,7 +218,6 @@ dependencies {
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.29'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'//Retrofit2所需要的包
     compile 'com.squareup.retrofit2:converter-scalars:2.2.0'//ConverterFactory的String依赖包
-
 
 }
 //gmobi 1.0

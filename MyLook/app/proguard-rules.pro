@@ -76,14 +76,14 @@
 #-keep class org.virgo.** { *; }
 #-dontwarn org.virgo.**
 
--dontwarn pa.path.**
+#-dontwarn pa.path.**
 #-dontwarn com.data.callback.**
--libraryjars ../adlib/libs/data.jar
--keep class pa.path.** { *; }
+#-libraryjars ../adlib/libs/data.jar
+#-keep class pa.path.** { *; }
 #-keep class com.data.callback.** { *; }
--keep public interface com.data.callback.AdShowListener { *; }
--keep public interface com.sdk.callback.DataCallback { *; }
--keep public interface com.sdk.callback.SdkDataCallback { *; }
+#-keep public interface com.data.callback.AdShowListener { *; }
+#-keep public interface com.sdk.callback.DataCallback { *; }
+#-keep public interface com.sdk.callback.SdkDataCallback { *; }
 
 -keep class com.chad.library.adapter.** {
 *;
