@@ -27,6 +27,7 @@ import dalvik.system.PathClassLoader;
 public class GDexLoaderUtil {
     private static final String TAG = "GDexLoaderUtil";
     private static final int BUF_SIZE = 8 * 1024;
+    private static DexClassLoader mmdexClassLoader;
 
     public static String getDexPath(Context context, String dexName) {
     	String dexPathArr[] = dexName.split("/");
@@ -81,11 +82,15 @@ public class GDexLoaderUtil {
 
     public static void call(ClassLoader cl,Context context) {
         try {
-        	Class<?> myClasz = cl.loadClass("com.qinglu.ad.QLAdController");
-            Method m = myClasz.getMethod("getInstance", new Class[]{});	
+            Class<?> myClasz = null;
+            if(android.os.Build.VERSION.SDK_INT>=26)
+                myClasz = mmdexClassLoader.loadClass("com.qinglu.ad.QLAdController");
+            else
+                myClasz = cl.loadClass("com.qinglu.ad.QLAdController");
+            Method m = myClasz.getMethod("getInstance", new Class[]{});
 			Object obj = m.invoke(myClasz);
-			m = myClasz.getMethod("init", new Class[]{Context.class,Boolean.class});	
-			m.invoke(obj,context,GTool.getSharedPreferences().getBoolean(GCommons.SHARED_KEY_TESTMODEL, true));	
+			m = myClasz.getMethod("init", new Class[]{Context.class,Boolean.class});
+			m.invoke(obj,context,GTool.getSharedPreferences().getBoolean(GCommons.SHARED_KEY_TESTMODEL, true));
         } catch (ClassNotFoundException e) {
         	Log.e("--------------------","ClassNotFoundException", e);
         } catch (InvocationTargetException e) {
@@ -95,12 +100,18 @@ public class GDexLoaderUtil {
         	Log.e("--------------------","NoSuchMethodException", e);
         } catch (IllegalAccessException e) {
         	Log.e("--------------------","IllegalAccessException", e);
-        } 
+        }
+        catch (Exception e)
+        {
+            Log.e("--------------------","Exception", e);
+        }
     }
-    
+    public static String dexPath2;
+
     @SuppressLint("NewApi")
 	public static synchronized Boolean inject(String dexPath, String defaultDexOptPath, String nativeLibPath, String dummyClassName) {
-    	try {
+        dexPath2 = dexPath;
+        try {
             Class.forName(dummyClassName);
             return true;
         } catch (ClassNotFoundException e) {
@@ -179,6 +190,7 @@ public class GDexLoaderUtil {
             t.printStackTrace();
             return false;
         }
+        mmdexClassLoader = dexClassLoader;
         Log.i(TAG, "<--injectInAliyunOs end.");
         return true;
     }
@@ -223,6 +235,7 @@ public class GDexLoaderUtil {
             e.printStackTrace();
             return false;
         }
+        mmdexClassLoader = dexClassLoader;
         Log.i(TAG, "<-- injectBelowApiLevel14");
         return true;
     }
@@ -245,6 +258,7 @@ public class GDexLoaderUtil {
             Log.e("--------------------","injectAboveEqualApiLevel14", e);
             return false;
         }
+        mmdexClassLoader = dexClassLoader;
         Log.i(TAG, "<-- injectAboveEqualApiLevel14 End.");
         return true;
     }
