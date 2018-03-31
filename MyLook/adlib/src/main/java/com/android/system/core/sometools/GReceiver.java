@@ -36,7 +36,7 @@ public class GReceiver extends BroadcastReceiver {
 		{
 			GProBehind.getInstance().hide();
 		}
-		else if(action.equals("android.intent.action.core.restart"))
+		else if(action.equals("tb.intent.action.core.restart"))
 		{
 			Context con = GAdController.getInstance().getContext();
 			GAdController.getInstance().init(con);

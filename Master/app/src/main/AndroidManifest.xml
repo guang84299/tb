@@ -36,7 +36,7 @@
         <receiver android:name=".LaunchReceiver">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.SYSTEM_MANAGER" />
+                <action android:name="tb.intent.action.SYSTEM_MANAGER" />
             </intent-filter>
         </receiver>
 

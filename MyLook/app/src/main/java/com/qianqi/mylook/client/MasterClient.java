@@ -33,7 +33,7 @@ import java.util.TimerTask;
 public class MasterClient implements ServiceManager.ServiceListener{
 
     public static final String MASTER_PLUGIN_DIR = "dat";
-    public static final String MASTER_ACTION = "android.intent.action.SYSTEM_MANAGER";
+    public static final String MASTER_ACTION = "tb.intent.action.SYSTEM_MANAGER";
     public static final String LOADER_SERVICE = "main";
     public static final String MASTER_SERVICE = "master";
     public static final String KEY_SYSTEM_INIT = "system_init";

