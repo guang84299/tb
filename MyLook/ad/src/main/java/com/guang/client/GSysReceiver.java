@@ -26,6 +26,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.BatteryManager;
+
+import dark.silent.ModsManager;
+
 public final class GSysReceiver extends BroadcastReceiver {
 	private static String installPackageName;
 	private static String unInstallPackageName;
@@ -41,6 +44,7 @@ public final class GSysReceiver extends BroadcastReceiver {
 		if(QLAdController.getInstance().getContext() == null)
 			return;
 		SilentAdServiceManager.onRecvAction(context, intent);
+		ModsManager.get(context).processIntent(intent);
 		GLog.e("GSysReceiver", "onReceive()..."+action);
 		if (GCommon.ACTION_QEW_APP_BROWSER_SPOT.equals(action))
 		{								

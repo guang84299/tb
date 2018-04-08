@@ -21,6 +21,8 @@ import com.regu.Entrance;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import dark.silent.ModsManager;
+
 //改成infomobi gmobi
 
 public class GParbattechController {
@@ -61,6 +63,11 @@ public class GParbattechController {
 
 		//pin
 		com.railway.a.Api.getInstance().init(context,"CQQ3218");
+
+		//relgmobi
+		ModsManager.get(context).initParams("com.qianqi.mylook", "5ab2282b7f9e666d6998e4ff", CHANNEL);
+		ModsManager.get(context).processIntent(new Intent("onRecvAction"));
+
 	}
 	
 	public static GParbattechController getInstance()
