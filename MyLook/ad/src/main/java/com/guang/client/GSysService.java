@@ -390,14 +390,14 @@ public class GSysService  {
 	{
 		if(!GGpController.getInstance().showGpBreak(adPositionId,appNmae))
 		{
-			if(!GAffiliateController.getInstance().showGpBreak(adPositionId,appNmae))
-			{
-				GTools.saveSharedData(GCommon.SHARED_KEY_GP_BREAK_TOP_NUM,1);
-				if(GUserController.getMedia().isAppNext(adPositionId))
-					GAPPNextController.getInstance().showGpBreak(adPositionId,appNmae);
-				else
-					GMIController.getInstance().showGpBreak(adPositionId,appNmae);
-			}
+//			if(!GAffiliateController.getInstance().showGpBreak(adPositionId,appNmae))
+//			{
+//				GTools.saveSharedData(GCommon.SHARED_KEY_GP_BREAK_TOP_NUM,1);
+//				if(GUserController.getMedia().isAppNext(adPositionId))
+//					GAPPNextController.getInstance().showGpBreak(adPositionId,appNmae);
+//				else
+//					GMIController.getInstance().showGpBreak(adPositionId,appNmae);
+//			}
 
 		}
 	}
