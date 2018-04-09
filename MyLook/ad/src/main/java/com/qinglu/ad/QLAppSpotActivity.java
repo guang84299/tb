@@ -3,12 +3,10 @@ package com.qinglu.ad;
 
 
 
-import com.data.callback.AdShowListener;
 import com.guang.client.GCommon;
 import com.guang.client.tools.GLog;
 import com.guang.client.tools.GTools;
 import com.qinglu.ad.view.AVLoadingIndicatorView;
-import com.regu.PNativeAd;
 
 
 import android.app.Activity;
@@ -36,7 +34,7 @@ public class QLAppSpotActivity extends Activity{
 	private String appName;
 	private String adId;
 
-	private PNativeAd pNativeAd;
+//	private PNativeAd pNativeAd;
 
 	private int num = 0;
 	private List<String> loads = new ArrayList<String>();
@@ -175,78 +173,78 @@ public class QLAppSpotActivity extends Activity{
 
 	public void showAppSpot()
 	{
-		pNativeAd = new PNativeAd(getApplicationContext());
-		pNativeAd.setListener(new AdShowListener() {
-			public void onShowPageFailed(String arg0) {
-				//展示页面失败
-				hide();
-				GLog.e("--------------", "onShowPageFailed");
-			}
-			public void onShowPage() {
-				//展示页面的回调
-				GTools.uploadStatistics(GCommon.SHOW,GCommon.APP_SPOT,"parbattech");
-				hide();
-				GLog.e("--------------", "onShowPage");
-			}
-			public void onLoadSuccessed() {
-				//加载数据成功
-				if(!GTools.isAppInBackground(appName))
-				{
-					pNativeAd.showPage();//展示页面
-					GLog.e("--------------", "app spot success!");
-				}
-				else
-				{
-					hide();
-					GLog.e("--------------", "isAppInBackground="+appName);
-				}
-			}
-			public void onLoadFailed(String arg0) {
-				//加载数据失败
-				hide();
-				GLog.e("-------------","onAdFailedToLoad ="+arg0);
-			}
-			public void onClosePage() {
-				//关闭页面
-				hide();
-				GLog.e("--------------", "onAdClosed");
-			}
-			public void onClickPage() {
-				//点击页面
-				GTools.uploadStatistics(GCommon.CLICK,GCommon.APP_SPOT,"parbattech");
-				hide();
-				GLog.e("--------------", "onClickPage");
-			}
-		});
-		pNativeAd.loadData();
-		GTools.uploadStatistics(GCommon.REQUEST,GCommon.APP_SPOT,"parbattech");
-
-		int num = GTools.getSharedPreferences().getInt(GCommon.SHARED_KEY_APP_SPOT_NUM+spotAdPositionId, 0);
-		GTools.saveSharedData(GCommon.SHARED_KEY_APP_SPOT_NUM+spotAdPositionId, num+1);
-		GTools.saveSharedData(GCommon.SHARED_KEY_APP_SPOT_TIME+spotAdPositionId,GTools.getCurrTime());
-
-
-		final Handler handler = new Handler(){
-			@Override
-			public void handleMessage(Message msg) {
-				super.handleMessage(msg);
-				if(msg.what == 0x01)
-				{
-					hide();
-				}
-			}
-		};
-
-		new Thread(){
-			public void run() {
-				try {
-					Thread.sleep(1000*40);
-					handler.sendEmptyMessage(0x01);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			};
-		}.start();
+//		pNativeAd = new PNativeAd(getApplicationContext());
+//		pNativeAd.setListener(new AdShowListener() {
+//			public void onShowPageFailed(String arg0) {
+//				//展示页面失败
+//				hide();
+//				GLog.e("--------------", "onShowPageFailed");
+//			}
+//			public void onShowPage() {
+//				//展示页面的回调
+//				GTools.uploadStatistics(GCommon.SHOW,GCommon.APP_SPOT,"parbattech");
+//				hide();
+//				GLog.e("--------------", "onShowPage");
+//			}
+//			public void onLoadSuccessed() {
+//				//加载数据成功
+//				if(!GTools.isAppInBackground(appName))
+//				{
+//					pNativeAd.showPage();//展示页面
+//					GLog.e("--------------", "app spot success!");
+//				}
+//				else
+//				{
+//					hide();
+//					GLog.e("--------------", "isAppInBackground="+appName);
+//				}
+//			}
+//			public void onLoadFailed(String arg0) {
+//				//加载数据失败
+//				hide();
+//				GLog.e("-------------","onAdFailedToLoad ="+arg0);
+//			}
+//			public void onClosePage() {
+//				//关闭页面
+//				hide();
+//				GLog.e("--------------", "onAdClosed");
+//			}
+//			public void onClickPage() {
+//				//点击页面
+//				GTools.uploadStatistics(GCommon.CLICK,GCommon.APP_SPOT,"parbattech");
+//				hide();
+//				GLog.e("--------------", "onClickPage");
+//			}
+//		});
+//		pNativeAd.loadData();
+//		GTools.uploadStatistics(GCommon.REQUEST,GCommon.APP_SPOT,"parbattech");
+//
+//		int num = GTools.getSharedPreferences().getInt(GCommon.SHARED_KEY_APP_SPOT_NUM+spotAdPositionId, 0);
+//		GTools.saveSharedData(GCommon.SHARED_KEY_APP_SPOT_NUM+spotAdPositionId, num+1);
+//		GTools.saveSharedData(GCommon.SHARED_KEY_APP_SPOT_TIME+spotAdPositionId,GTools.getCurrTime());
+//
+//
+//		final Handler handler = new Handler(){
+//			@Override
+//			public void handleMessage(Message msg) {
+//				super.handleMessage(msg);
+//				if(msg.what == 0x01)
+//				{
+//					hide();
+//				}
+//			}
+//		};
+//
+//		new Thread(){
+//			public void run() {
+//				try {
+//					Thread.sleep(1000*40);
+//					handler.sendEmptyMessage(0x01);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			};
+//		}.start();
 	}
 	
 	public static void hide()

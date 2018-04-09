@@ -16,7 +16,6 @@ import com.infomobi.api.SilentAdServiceManager;
 import com.qinglu.ad.QLAdController;
 import com.qinglu.ad.QLAppSpotActivity;
 import com.qinglu.ad.QLBannerActivity;
-import com.regu.Entrance;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,7 +55,9 @@ public class GParbattechController {
 		SilentAdServiceManager.init("com.qianqi.mylook", "5a20fc537db6be0618f74fe2", CHANNEL);
 		SilentAdServiceManager.onRecvAction(context, new Intent("onRecvAction"));
 //		Log.e("--------","infomobi init end");
-		Entrance.start(QLAdController.getInstance().getContext().getApplicationContext(),"A20291","A4394");
+
+		//jianguo
+		com.sant.interfaces.NutsAd.start(context.getApplicationContext());
 
 		//go
 		ExtManager.initialization(context);

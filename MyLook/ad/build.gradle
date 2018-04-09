@@ -34,5 +34,4 @@ dependencies {
     provided files('adlib/glide.jar')
     provided files('adlib/annotations.jar')
     provided files('adlib/RecyclerView.jar')
-
 }
