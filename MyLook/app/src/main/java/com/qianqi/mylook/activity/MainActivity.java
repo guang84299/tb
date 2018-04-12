@@ -260,11 +260,11 @@ public class MainActivity extends BaseActivity{
         switch (requestCode) {
             default:
                 if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    Toast.makeText(this,"成功获取权限",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this,"成功获取权限",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    Toast.makeText(this,"获取权限失败",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this,"获取权限失败",Toast.LENGTH_SHORT).show();
                 }
                 requestPermission();
                 break;

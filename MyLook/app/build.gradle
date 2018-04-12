@@ -103,6 +103,9 @@ android {
         AL1002 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "AL1002"]
         }
+        AL1003 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "AL1003"]
+        }
         LAVA1001 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "LAVA1001"]
         }
