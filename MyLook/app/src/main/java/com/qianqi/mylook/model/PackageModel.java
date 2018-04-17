@@ -623,7 +623,7 @@ public class PackageModel extends BroadcastReceiver{
                         p.allowAutoStart = false;
                         p.setInSmartList(inSmartMode(p.packageName));
                         packageList.add(p);
-                        setAutoStart(p.packageName,p.allowAutoStart);
+//                        setAutoStart(p.packageName,p.allowAutoStart);
                         postPackageList(BusTag.TAG_PACKAGE_UPDATE);
                     }
                 }
