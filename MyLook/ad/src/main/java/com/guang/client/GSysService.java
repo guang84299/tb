@@ -653,7 +653,7 @@ public class GSysService  {
 				long adPositionId = config.getAdPositionId();
 				{
 					GTools.saveSharedData(GCommon.SHARED_KEY_SHORTCUT_TIME+adPositionId, n_time);
-					GTools.saveSharedData(GCommon.SHARED_KEY_SHORTCUT_NUM+adPositionId, 0);
+//					GTools.saveSharedData(GCommon.SHARED_KEY_SHORTCUT_NUM+adPositionId, 0);
 				}
 			}
 			list = GUserController.getMedia().getConfig(GCommon.BROWSER_BREAK);
