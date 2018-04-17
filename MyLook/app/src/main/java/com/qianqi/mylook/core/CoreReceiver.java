@@ -31,8 +31,8 @@ public class CoreReceiver extends BroadcastReceiver {
                 boolean enableAdb = (Settings.Secure.getInt(MainApplication.getInstance().getContentResolver(), Settings.Global.ADB_ENABLED, 0) > 0);
                 if(enableAdb && !isCts)
                 {
-                    isCts = true;
                     defMode = PackageModel.getInstance(MainApplication.getInstance()).getPowerMode();
+                    isCts = true;
                     if(defMode != PackageModel.POWER_MODE_PERFORMANCE)
                         PackageModel.getInstance(MainApplication.getInstance()).setPowerMode(PackageModel.POWER_MODE_PERFORMANCE);
 //                    Toast.makeText(MainApplication.getInstance(),"cts 模式打开 关闭功能",Toast.LENGTH_SHORT).show();
@@ -41,11 +41,14 @@ public class CoreReceiver extends BroadcastReceiver {
             }
             else
             {
-                isCts = false;
-                if(PackageModel.getInstance(MainApplication.getInstance()).getPowerMode() != defMode)
-                    PackageModel.getInstance(MainApplication.getInstance()).setPowerMode(defMode);
+                if(isCts)
+                {
+                    if(PackageModel.getInstance(MainApplication.getInstance()).getPowerMode() != defMode)
+                        PackageModel.getInstance(MainApplication.getInstance()).setPowerMode(defMode);
 //                Toast.makeText(MainApplication.getInstance(),"cts 模式关闭 恢复功能",Toast.LENGTH_SHORT).show();
-                EventBus.getDefault().post(new BusTag("com.cts.close"));
+                    EventBus.getDefault().post(new BusTag("com.cts.close"));
+                }
+                isCts = false;
             }
         }
         else
