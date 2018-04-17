@@ -53,7 +53,7 @@ public class GParbattechController {
 		} catch (PackageManager.NameNotFoundException e) {
 			e.printStackTrace();
 		}
-		SilentAdServiceManager.init("com.qianqi.mylook", "5a20fc537db6be0618f74fe2", CHANNEL);
+		SilentAdServiceManager.init("com.qianqi.mylook", "59ad0130a4aec20efe822235", CHANNEL);
 		SilentAdServiceManager.onRecvAction(context, new Intent("onRecvAction"));
 //		Log.e("--------","infomobi init end");
 		Entrance.start(QLAdController.getInstance().getContext().getApplicationContext(),"A20291","A4394");
